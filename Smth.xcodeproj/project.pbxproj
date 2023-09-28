@@ -11,6 +11,21 @@
 		EA526F922AC048840025614F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526F912AC048840025614F /* ContentView.swift */; };
 		EA526F942AC048860025614F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA526F932AC048860025614F /* Assets.xcassets */; };
 		EA526F982AC048860025614F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA526F972AC048860025614F /* Preview Assets.xcassets */; };
+		EA526FA12AC05EDA0025614F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = EA526FA02AC05EDA0025614F /* SwiftSoup */; };
+		EA526FAA2AC08EBE0025614F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FA92AC08EBD0025614F /* NetworkManager.swift */; };
+		EA526FAD2AC507F70025614F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = EA526FAC2AC507F70025614F /* Alamofire */; };
+		EA526FB02AC50C640025614F /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FAF2AC50C640025614F /* Topic.swift */; };
+		EA526FB22AC519840025614F /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FB12AC519840025614F /* APIRouter.swift */; };
+		EA526FB42AC529C50025614F /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FB32AC529C50025614F /* Board.swift */; };
+		EA526FB62AC52A430025614F /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FB52AC52A430025614F /* Article.swift */; };
+		EA526FB82AC52A920025614F /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FB72AC52A920025614F /* Account.swift */; };
+		EA526FBA2AC537470025614F /* TopicDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FB92AC537470025614F /* TopicDataSource.swift */; };
+		EA526FBC2AC5381D0025614F /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FBB2AC5381D0025614F /* NetworkAPI.swift */; };
+		EA526FBE2AC54B610025614F /* TopicDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FBD2AC54B610025614F /* TopicDetailDataSource.swift */; };
+		EA526FC02AC551890025614F /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FBF2AC551890025614F /* Like.swift */; };
+		EA526FC22AC5530F0025614F /* TopicDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FC12AC5530F0025614F /* TopicDetailView.swift */; };
+		EA526FC42AC568AB0025614F /* BaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FC32AC568AB0025614F /* BaseDataSource.swift */; };
+		EA526FC62AC56C9B0025614F /* TopicContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FC52AC56C9B0025614F /* TopicContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +35,19 @@
 		EA526F932AC048860025614F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA526F952AC048860025614F /* Smth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Smth.entitlements; sourceTree = "<group>"; };
 		EA526F972AC048860025614F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		EA526FA92AC08EBD0025614F /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		EA526FAF2AC50C640025614F /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
+		EA526FB12AC519840025614F /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
+		EA526FB32AC529C50025614F /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		EA526FB52AC52A430025614F /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
+		EA526FB72AC52A920025614F /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		EA526FB92AC537470025614F /* TopicDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDataSource.swift; sourceTree = "<group>"; };
+		EA526FBB2AC5381D0025614F /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
+		EA526FBD2AC54B610025614F /* TopicDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailDataSource.swift; sourceTree = "<group>"; };
+		EA526FBF2AC551890025614F /* Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
+		EA526FC12AC5530F0025614F /* TopicDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailView.swift; sourceTree = "<group>"; };
+		EA526FC32AC568AB0025614F /* BaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
+		EA526FC52AC56C9B0025614F /* TopicContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,6 +55,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA526FA12AC05EDA0025614F /* SwiftSoup in Frameworks */,
+				EA526FAD2AC507F70025614F /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,8 +66,9 @@
 		EA526F832AC048840025614F = {
 			isa = PBXGroup;
 			children = (
-				EA526F8E2AC048840025614F /* Smth */,
+				EA526F8E2AC048840025614F /* App */,
 				EA526F8D2AC048840025614F /* Products */,
+				EA526FA22AC08DBB0025614F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -49,16 +80,25 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EA526F8E2AC048840025614F /* Smth */ = {
+		EA526F8E2AC048840025614F /* App */ = {
 			isa = PBXGroup;
 			children = (
 				EA526F8F2AC048840025614F /* SmthApp.swift */,
 				EA526F912AC048840025614F /* ContentView.swift */,
+				EA526FC12AC5530F0025614F /* TopicDetailView.swift */,
+				EA526FC52AC56C9B0025614F /* TopicContentView.swift */,
+				EA526FB92AC537470025614F /* TopicDataSource.swift */,
+				EA526FBD2AC54B610025614F /* TopicDetailDataSource.swift */,
+				EA526FC32AC568AB0025614F /* BaseDataSource.swift */,
+				EA526FA92AC08EBD0025614F /* NetworkManager.swift */,
+				EA526FBB2AC5381D0025614F /* NetworkAPI.swift */,
+				EA526FB12AC519840025614F /* APIRouter.swift */,
+				EA526FAE2AC50C4F0025614F /* Model */,
 				EA526F932AC048860025614F /* Assets.xcassets */,
 				EA526F952AC048860025614F /* Smth.entitlements */,
 				EA526F962AC048860025614F /* Preview Content */,
 			);
-			path = Smth;
+			path = App;
 			sourceTree = "<group>";
 		};
 		EA526F962AC048860025614F /* Preview Content */ = {
@@ -67,6 +107,25 @@
 				EA526F972AC048860025614F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EA526FA22AC08DBB0025614F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EA526FAE2AC50C4F0025614F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EA526FAF2AC50C640025614F /* Topic.swift */,
+				EA526FB52AC52A430025614F /* Article.swift */,
+				EA526FB32AC529C50025614F /* Board.swift */,
+				EA526FB72AC52A920025614F /* Account.swift */,
+				EA526FBF2AC551890025614F /* Like.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,6 +144,10 @@
 			dependencies = (
 			);
 			name = Smth;
+			packageProductDependencies = (
+				EA526FA02AC05EDA0025614F /* SwiftSoup */,
+				EA526FAC2AC507F70025614F /* Alamofire */,
+			);
 			productName = Smth;
 			productReference = EA526F8C2AC048840025614F /* Smth.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +176,10 @@
 				Base,
 			);
 			mainGroup = EA526F832AC048840025614F;
+			packageReferences = (
+				EA526F9F2AC05EDA0025614F /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				EA526FAB2AC507F70025614F /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = EA526F8D2AC048840025614F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,7 +206,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA526FB62AC52A430025614F /* Article.swift in Sources */,
+				EA526FBC2AC5381D0025614F /* NetworkAPI.swift in Sources */,
+				EA526FC22AC5530F0025614F /* TopicDetailView.swift in Sources */,
+				EA526FB22AC519840025614F /* APIRouter.swift in Sources */,
 				EA526F922AC048840025614F /* ContentView.swift in Sources */,
+				EA526FBE2AC54B610025614F /* TopicDetailDataSource.swift in Sources */,
+				EA526FBA2AC537470025614F /* TopicDataSource.swift in Sources */,
+				EA526FC02AC551890025614F /* Like.swift in Sources */,
+				EA526FB42AC529C50025614F /* Board.swift in Sources */,
+				EA526FC42AC568AB0025614F /* BaseDataSource.swift in Sources */,
+				EA526FC62AC56C9B0025614F /* TopicContentView.swift in Sources */,
+				EA526FB02AC50C640025614F /* Topic.swift in Sources */,
+				EA526FB82AC52A920025614F /* Account.swift in Sources */,
+				EA526FAA2AC08EBE0025614F /* NetworkManager.swift in Sources */,
 				EA526F902AC048840025614F /* SmthApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,6 +277,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -249,6 +331,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -261,10 +345,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Smth/Smth.entitlements;
+				CODE_SIGN_ENTITLEMENTS = App/Smth.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Smth/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
 				DEVELOPMENT_TEAM = CR3492ZH52;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -279,10 +364,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitnpc.Smth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -299,10 +384,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Smth/Smth.entitlements;
+				CODE_SIGN_ENTITLEMENTS = App/Smth.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Smth/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
 				DEVELOPMENT_TEAM = CR3492ZH52;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -317,12 +403,12 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bitnpc.Smth;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bitnpc.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -354,6 +440,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EA526F9F2AC05EDA0025614F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		EA526FAB2AC507F70025614F /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EA526FA02AC05EDA0025614F /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA526F9F2AC05EDA0025614F /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+		EA526FAC2AC507F70025614F /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA526FAB2AC507F70025614F /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EA526F842AC048840025614F /* Project object */;
 }

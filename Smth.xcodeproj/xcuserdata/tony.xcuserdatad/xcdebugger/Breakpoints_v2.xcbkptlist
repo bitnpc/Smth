@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "2DADB043-D346-4026-833A-EA96D816773C"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2D61ED99-E5FA-484D-8CB1-E610BA439330"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "App/APIService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "getTopFeeds()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5D586A77-4CC5-4C19-ACD4-027CC77A22C6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "App/APIService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "getTopFeeds()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3BAD1D51-A5EB-4C90-B1DA-A9A49859F668"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "App/ArticleDataSource.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "fetchArticles(topicID:page:sortType:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3BAD1D51-A5EB-4C90-B1DA-A9A49859F668 - f17915e3869c7dfe"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Smth.ArticleDataSource.fetchArticles() async -&gt; ()"
+                  moduleName = "Smth"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tony/Desktop/Smth/App/ArticleDataSource.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "128">
+               </Location>
+               <Location
+                  uuid = "3BAD1D51-A5EB-4C90-B1DA-A9A49859F668 - 972dc584437dd477"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor @Sendable () async -&gt; () in Smth.ArticleDataSource.fetchArticles() async -&gt; ()"
+                  moduleName = "Smth"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tony/Desktop/Smth/App/ArticleDataSource.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  uuid = "3BAD1D51-A5EB-4C90-B1DA-A9A49859F668 - e51e2b134570c481"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Swift.MainActor @Sendable () async -&gt; () in Smth.ArticleDataSource.fetchArticles() async -&gt; ()"
+                  moduleName = "Smth"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tony/Desktop/Smth/App/ArticleDataSource.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "22"
+                  endingLineNumber = "22"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

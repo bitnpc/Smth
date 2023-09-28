@@ -1,0 +1,51 @@
+//
+//  File.swift
+//  Smth
+//
+//  Created by Tony Clark on 2023/9/28.
+//
+
+import Foundation
+import Alamofire
+
+enum APIRouter: URLRequestConvertible {
+    
+    case hot([String: String])
+    case topic([String: String])
+    case article(topicID: String,
+                 page: Int,
+                 sortType: SortType,
+                 parameters: [String: String])
+    
+    var baseURL: URL {
+        return URL(string: "https://wap.newsmth.net")!
+    }
+    
+    var method: HTTPMethod {
+        return .get
+    }
+    
+    var path: String {
+        switch self {
+        case .hot: return "wap/api/hot/global"
+        case .topic: return "wap/api/topic/loadArticlesByMode"
+        case .article(let topicID, let page, let sortType, _): return "wap/api/topic/loadArticlesByMode/\(topicID)/\(sortType.rawValue)/\(page)/20"
+        }
+    }
+    
+    func asURLRequest() throws -> URLRequest {
+        let url = baseURL.appendingPathComponent(path)
+        var request = URLRequest(url: url)
+        request.method = method
+        
+        switch self {
+        case let .hot(parameters):
+            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+        case let .topic(parameters):
+            request = try JSONParameterEncoder().encode(parameters, into: request)
+        case let .article(_, _, _, parameters):
+            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+        }
+        return request
+   }
+}
