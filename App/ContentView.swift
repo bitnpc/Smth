@@ -9,25 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var dataSource = TopicDataSource()
-    
+    // all system image symble
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(dataSource.topics, id: \.id) { topic in
-                    NavigationLink(value: topic) {
-                        Text("\(topic.subject)")
-                    }
-                }
+        TabView {
+            HotTopicView().tabItem {
+                Image(systemName: "star")
             }
-            .onAppear() {
-                Task {
-                    await dataSource.fetchTopics()
-                }
+            SectionListView().tabItem {
+                Image(systemName: "list.bullet.clipboard")
             }
-            .navigationTitle("热门")
-            .navigationDestination(for: Topic.self) { topic in
-                TopicDetailView(topic: topic)
+            HotTopicView().tabItem {
+                Image(systemName: "person.circle")
             }
         }
     }

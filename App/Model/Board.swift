@@ -12,3 +12,15 @@ struct Board: Codable, Hashable {
     var title: String = ""
     var isFavorite: Int
 }
+
+struct BoardCollection: Codable, Hashable {
+    
+    let boards: [Board]
+    
+}
+
+struct BoardResponse: Codable, Hashable {
+    
+    let data: BoardCollection
+
+}

@@ -15,7 +15,7 @@ struct Topic: Codable, Hashable {
     var likeAvailables: Int
     var flushTime: TimeInterval
     
-//    var board: Board
+    var board: Board?
     
     var article: Article?
     

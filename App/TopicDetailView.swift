@@ -13,9 +13,9 @@ struct TopicDetailView: View {
     
     var body: some View {
         List {
-            TopicContentView(article: dataSource.articles.first)
+            TopicContentRowView(article: dataSource.articles.first)
             ForEach(dataSource.articles.dropFirst(), id: \.id) { article in
-                Text("\(article.content)")
+                ArticleRowView(article: article)
             }
         }
         .onAppear() {
@@ -25,7 +25,7 @@ struct TopicDetailView: View {
         }
         .listStyle(.plain)
         .navigationTitle(dataSource.board?.title ?? "")
-        .navigationBarTitleDisplayMode(.inline)
+//        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

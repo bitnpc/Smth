@@ -25,7 +25,15 @@
 		EA526FC02AC551890025614F /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FBF2AC551890025614F /* Like.swift */; };
 		EA526FC22AC5530F0025614F /* TopicDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FC12AC5530F0025614F /* TopicDetailView.swift */; };
 		EA526FC42AC568AB0025614F /* BaseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FC32AC568AB0025614F /* BaseDataSource.swift */; };
-		EA526FC62AC56C9B0025614F /* TopicContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FC52AC56C9B0025614F /* TopicContentView.swift */; };
+		EA526FC62AC56C9B0025614F /* TopicContentRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FC52AC56C9B0025614F /* TopicContentRowView.swift */; };
+		EA526FCA2AC5A3A40025614F /* ArticleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FC92AC5A3A40025614F /* ArticleRowView.swift */; };
+		EA526FCC2AC5A6CF0025614F /* TopicRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FCB2AC5A6CF0025614F /* TopicRowView.swift */; };
+		EA526FCF2AC5D67A0025614F /* HotTopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FCE2AC5D67A0025614F /* HotTopicView.swift */; };
+		EA526FD12AC5DA540025614F /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD02AC5DA540025614F /* Section.swift */; };
+		EA526FD32AC5DAD90025614F /* SectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD22AC5DAD90025614F /* SectionDataSource.swift */; };
+		EA526FD52AC5DCAF0025614F /* SectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD42AC5DCAF0025614F /* SectionListView.swift */; };
+		EA526FD72AC5DD980025614F /* BoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD62AC5DD980025614F /* BoardListView.swift */; };
+		EA526FD92AC5DDA50025614F /* BoardDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD82AC5DDA50025614F /* BoardDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +55,16 @@
 		EA526FBF2AC551890025614F /* Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
 		EA526FC12AC5530F0025614F /* TopicDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicDetailView.swift; sourceTree = "<group>"; };
 		EA526FC32AC568AB0025614F /* BaseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataSource.swift; sourceTree = "<group>"; };
-		EA526FC52AC56C9B0025614F /* TopicContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicContentView.swift; sourceTree = "<group>"; };
+		EA526FC52AC56C9B0025614F /* TopicContentRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicContentRowView.swift; sourceTree = "<group>"; };
+		EA526FC92AC5A3A40025614F /* ArticleRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleRowView.swift; sourceTree = "<group>"; };
+		EA526FCB2AC5A6CF0025614F /* TopicRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicRowView.swift; sourceTree = "<group>"; };
+		EA526FCD2AC5D2810025614F /* SmthRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmthRelease.entitlements; sourceTree = "<group>"; };
+		EA526FCE2AC5D67A0025614F /* HotTopicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotTopicView.swift; sourceTree = "<group>"; };
+		EA526FD02AC5DA540025614F /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		EA526FD22AC5DAD90025614F /* SectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDataSource.swift; sourceTree = "<group>"; };
+		EA526FD42AC5DCAF0025614F /* SectionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionListView.swift; sourceTree = "<group>"; };
+		EA526FD62AC5DD980025614F /* BoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListView.swift; sourceTree = "<group>"; };
+		EA526FD82AC5DDA50025614F /* BoardDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +83,7 @@
 		EA526F832AC048840025614F = {
 			isa = PBXGroup;
 			children = (
+				EA526FCD2AC5D2810025614F /* SmthRelease.entitlements */,
 				EA526F8E2AC048840025614F /* App */,
 				EA526F8D2AC048840025614F /* Products */,
 				EA526FA22AC08DBB0025614F /* Frameworks */,
@@ -85,9 +103,16 @@
 			children = (
 				EA526F8F2AC048840025614F /* SmthApp.swift */,
 				EA526F912AC048840025614F /* ContentView.swift */,
+				EA526FCE2AC5D67A0025614F /* HotTopicView.swift */,
+				EA526FD42AC5DCAF0025614F /* SectionListView.swift */,
+				EA526FD62AC5DD980025614F /* BoardListView.swift */,
 				EA526FC12AC5530F0025614F /* TopicDetailView.swift */,
-				EA526FC52AC56C9B0025614F /* TopicContentView.swift */,
+				EA526FCB2AC5A6CF0025614F /* TopicRowView.swift */,
+				EA526FC52AC56C9B0025614F /* TopicContentRowView.swift */,
+				EA526FC92AC5A3A40025614F /* ArticleRowView.swift */,
 				EA526FB92AC537470025614F /* TopicDataSource.swift */,
+				EA526FD22AC5DAD90025614F /* SectionDataSource.swift */,
+				EA526FD82AC5DDA50025614F /* BoardDataSource.swift */,
 				EA526FBD2AC54B610025614F /* TopicDetailDataSource.swift */,
 				EA526FC32AC568AB0025614F /* BaseDataSource.swift */,
 				EA526FA92AC08EBD0025614F /* NetworkManager.swift */,
@@ -124,6 +149,7 @@
 				EA526FB32AC529C50025614F /* Board.swift */,
 				EA526FB72AC52A920025614F /* Account.swift */,
 				EA526FBF2AC551890025614F /* Like.swift */,
+				EA526FD02AC5DA540025614F /* Section.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -208,18 +234,26 @@
 			files = (
 				EA526FB62AC52A430025614F /* Article.swift in Sources */,
 				EA526FBC2AC5381D0025614F /* NetworkAPI.swift in Sources */,
+				EA526FD32AC5DAD90025614F /* SectionDataSource.swift in Sources */,
 				EA526FC22AC5530F0025614F /* TopicDetailView.swift in Sources */,
 				EA526FB22AC519840025614F /* APIRouter.swift in Sources */,
 				EA526F922AC048840025614F /* ContentView.swift in Sources */,
 				EA526FBE2AC54B610025614F /* TopicDetailDataSource.swift in Sources */,
+				EA526FD12AC5DA540025614F /* Section.swift in Sources */,
+				EA526FCA2AC5A3A40025614F /* ArticleRowView.swift in Sources */,
 				EA526FBA2AC537470025614F /* TopicDataSource.swift in Sources */,
+				EA526FCF2AC5D67A0025614F /* HotTopicView.swift in Sources */,
+				EA526FD72AC5DD980025614F /* BoardListView.swift in Sources */,
 				EA526FC02AC551890025614F /* Like.swift in Sources */,
+				EA526FCC2AC5A6CF0025614F /* TopicRowView.swift in Sources */,
 				EA526FB42AC529C50025614F /* Board.swift in Sources */,
 				EA526FC42AC568AB0025614F /* BaseDataSource.swift in Sources */,
-				EA526FC62AC56C9B0025614F /* TopicContentView.swift in Sources */,
+				EA526FC62AC56C9B0025614F /* TopicContentRowView.swift in Sources */,
 				EA526FB02AC50C640025614F /* Topic.swift in Sources */,
+				EA526FD52AC5DCAF0025614F /* SectionListView.swift in Sources */,
 				EA526FB82AC52A920025614F /* Account.swift in Sources */,
 				EA526FAA2AC08EBE0025614F /* NetworkManager.swift in Sources */,
+				EA526FD92AC5DDA50025614F /* BoardDataSource.swift in Sources */,
 				EA526F902AC048840025614F /* SmthApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,7 +401,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitnpc.Smth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -384,7 +418,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = App/Smth.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SmthRelease.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -406,7 +440,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitnpc.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";

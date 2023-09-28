@@ -20,18 +20,33 @@ struct Article: Codable, Hashable {
     
     var likes: [Like]?
     
-    var content: String {
+    var quoteContent: String {
+        var quote = ""
         do {
-            let elements = try SwiftSoup.parse(body).select("p")
-            var resut = ""
+            let quoteString = body.components(separatedBy: "<div").last ?? ""
+            let elements = try SwiftSoup.parse(quoteString).select("p")
+            for node in elements {
+                quote += try node.text()
+                quote += "\n"
+            }
+        }catch {
+        }
+        return quote
+    }
+    
+    var content: String {
+        var resut = ""
+        do {
+            let paragraph = body.components(separatedBy: "<div").first ?? ""
+            let elements = try SwiftSoup.parse(paragraph).select("p")
             for node in elements {
                 resut += try node.text()
                 resut += "\n"
             }
-            return resut
         }catch {
-            return ""
+        
         }
+        return resut
     }
     
     var postTimeString: String {
