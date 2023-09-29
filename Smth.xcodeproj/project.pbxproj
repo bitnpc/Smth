@@ -34,6 +34,11 @@
 		EA526FD52AC5DCAF0025614F /* SectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD42AC5DCAF0025614F /* SectionListView.swift */; };
 		EA526FD72AC5DD980025614F /* BoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD62AC5DD980025614F /* BoardListView.swift */; };
 		EA526FD92AC5DDA50025614F /* BoardDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD82AC5DDA50025614F /* BoardDataSource.swift */; };
+		EA526FDB2AC6675F0025614F /* MineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FDA2AC6675E0025614F /* MineView.swift */; };
+		EA526FDD2AC669E20025614F /* TopicListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FDC2AC669E20025614F /* TopicListView.swift */; };
+		EA526FDF2AC674B20025614F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FDE2AC674B20025614F /* LoginView.swift */; };
+		EA526FE12AC676460025614F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE02AC676460025614F /* WebView.swift */; };
+		EA526FE32AC70B4B0025614F /* SubBoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE22AC70B4B0025614F /* SubBoardListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +70,11 @@
 		EA526FD42AC5DCAF0025614F /* SectionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionListView.swift; sourceTree = "<group>"; };
 		EA526FD62AC5DD980025614F /* BoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListView.swift; sourceTree = "<group>"; };
 		EA526FD82AC5DDA50025614F /* BoardDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDataSource.swift; sourceTree = "<group>"; };
+		EA526FDA2AC6675E0025614F /* MineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineView.swift; sourceTree = "<group>"; };
+		EA526FDC2AC669E20025614F /* TopicListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicListView.swift; sourceTree = "<group>"; };
+		EA526FDE2AC674B20025614F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		EA526FE02AC676460025614F /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		EA526FE22AC70B4B0025614F /* SubBoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubBoardListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +115,12 @@
 				EA526F912AC048840025614F /* ContentView.swift */,
 				EA526FCE2AC5D67A0025614F /* HotTopicView.swift */,
 				EA526FD42AC5DCAF0025614F /* SectionListView.swift */,
+				EA526FDA2AC6675E0025614F /* MineView.swift */,
+				EA526FDE2AC674B20025614F /* LoginView.swift */,
+				EA526FE02AC676460025614F /* WebView.swift */,
 				EA526FD62AC5DD980025614F /* BoardListView.swift */,
+				EA526FE22AC70B4B0025614F /* SubBoardListView.swift */,
+				EA526FDC2AC669E20025614F /* TopicListView.swift */,
 				EA526FC12AC5530F0025614F /* TopicDetailView.swift */,
 				EA526FCB2AC5A6CF0025614F /* TopicRowView.swift */,
 				EA526FC52AC56C9B0025614F /* TopicContentRowView.swift */,
@@ -232,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA526FDD2AC669E20025614F /* TopicListView.swift in Sources */,
 				EA526FB62AC52A430025614F /* Article.swift in Sources */,
 				EA526FBC2AC5381D0025614F /* NetworkAPI.swift in Sources */,
 				EA526FD32AC5DAD90025614F /* SectionDataSource.swift in Sources */,
@@ -241,10 +257,13 @@
 				EA526FBE2AC54B610025614F /* TopicDetailDataSource.swift in Sources */,
 				EA526FD12AC5DA540025614F /* Section.swift in Sources */,
 				EA526FCA2AC5A3A40025614F /* ArticleRowView.swift in Sources */,
+				EA526FDF2AC674B20025614F /* LoginView.swift in Sources */,
 				EA526FBA2AC537470025614F /* TopicDataSource.swift in Sources */,
 				EA526FCF2AC5D67A0025614F /* HotTopicView.swift in Sources */,
 				EA526FD72AC5DD980025614F /* BoardListView.swift in Sources */,
+				EA526FE32AC70B4B0025614F /* SubBoardListView.swift in Sources */,
 				EA526FC02AC551890025614F /* Like.swift in Sources */,
+				EA526FDB2AC6675F0025614F /* MineView.swift in Sources */,
 				EA526FCC2AC5A6CF0025614F /* TopicRowView.swift in Sources */,
 				EA526FB42AC529C50025614F /* Board.swift in Sources */,
 				EA526FC42AC568AB0025614F /* BaseDataSource.swift in Sources */,
@@ -253,6 +272,7 @@
 				EA526FD52AC5DCAF0025614F /* SectionListView.swift in Sources */,
 				EA526FB82AC52A920025614F /* Account.swift in Sources */,
 				EA526FAA2AC08EBE0025614F /* NetworkManager.swift in Sources */,
+				EA526FE12AC676460025614F /* WebView.swift in Sources */,
 				EA526FD92AC5DDA50025614F /* BoardDataSource.swift in Sources */,
 				EA526F902AC048840025614F /* SmthApp.swift in Sources */,
 			);

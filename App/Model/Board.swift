@@ -8,19 +8,18 @@
 import Foundation
 
 struct Board: Codable, Hashable {
-    var id: String
-    var title: String = ""
-    var isFavorite: Int
+    let id: String
+    let title: String
+    let isFavorite: Int
+    let groupId: String
+    let type: Int
+    let name: String
 }
 
 struct BoardCollection: Codable, Hashable {
-    
     let boards: [Board]
-    
 }
 
 struct BoardResponse: Codable, Hashable {
-    
     let data: BoardCollection
-
 }

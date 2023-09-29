@@ -31,6 +31,7 @@ struct SectionListView: View {
                 BoardListView(section: section)
             }
         }
+        
     }
 }
 

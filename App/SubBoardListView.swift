@@ -1,5 +1,5 @@
 //
-//  BoardListView.swift
+//  SubBoardListView.swift
 //  Smth
 //
 //  Created by Tony Clark on 2023/9/29.
@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct BoardListView: View {
-    let section: Section
+struct SubBoardListView: View {
     
-    @StateObject var dataSource = BoardDataSource()
+    let boardName: String
+    let boards: [Board]
     
     var body: some View {
         List {
-            ForEach(dataSource.boards, id: \.id) { board in
+            ForEach(boards, id: \.id) { board in
                 NavigationLink(value: board) {
                     HStack {
                         if board.type == 0 {
@@ -28,18 +28,13 @@ struct BoardListView: View {
                 }
             }
         }
-        .onAppear() {
-            Task {
-                await dataSource.fetchBoards(sectionID: section.id)
-            }
-        }
         .listStyle(.plain)
-        .navigationTitle(section.name)
+        .navigationTitle(boardName)
         .navigationDestination(for: Board.self) { board in
             if (board.type == 0) {
                 TopicListView(board: board)
             }else {
-                let subBoardArray = dataSource.allboards.filter { subBoard in
+                let subBoardArray = boards.filter { subBoard in
                     subBoard.groupId == board.id
                 }
                 SubBoardListView(boardName: board.title, boards: subBoardArray)
@@ -47,3 +42,4 @@ struct BoardListView: View {
         }
     }
 }
+

@@ -13,17 +13,12 @@ struct Section: Codable, Hashable {
     let cover: String
     let name: String
     let description: String
-    
 }
 
 struct SectionCollection: Codable, Hashable {
-    
     let sections: [Section]
-    
 }
 
 struct SectionResponse: Codable, Hashable {
-    
     let data: SectionCollection
-
 }

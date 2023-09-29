@@ -9,19 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @State private var selectedTabIndex = 0;
+    
     // all system image symble
     var body: some View {
-        TabView {
-            HotTopicView().tabItem {
-                Image(systemName: "star")
+            TabView (selection: $selectedTabIndex){
+                HotTopicView().tabItem {
+                    Image(systemName: "star")
+                }
+                SectionListView().tabItem {
+                    Image(systemName: "list.bullet.clipboard")
+                }
+                MineView().tabItem {
+                    Image(systemName: "person.circle")
+                }
             }
-            SectionListView().tabItem {
-                Image(systemName: "list.bullet.clipboard")
-            }
-            HotTopicView().tabItem {
-                Image(systemName: "person.circle")
-            }
-        }
     }
 }
 

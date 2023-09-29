@@ -26,10 +26,10 @@ struct TopicRowView: View {
                     Image(systemName: "photo")
                 }
                 Text(topic.article!.account.name).font(.footnote)
-                Text(String(topic.availables) + "回复").font(.footnote)
-                Text(String(topic.likeAvailables) + "Like").font(.footnote)
+                Text(String(topic.availables) + "回复").font(.footnote).foregroundColor(.gray)
+                Text(String(topic.likeAvailables) + "Like").font(.footnote).foregroundColor(.gray)
                 Spacer()
-                Text(String(topic.board!.title)).font(.footnote)
+                Text(String(topic.board!.title)).font(.footnote).foregroundColor(.gray)
             }
         }
         
