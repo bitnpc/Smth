@@ -13,17 +13,17 @@ struct ContentView: View {
     
     // all system image symble
     var body: some View {
-            TabView (selection: $selectedTabIndex){
-                HotTopicView().tabItem {
-                    Image(systemName: "star")
-                }
-                SectionListView().tabItem {
-                    Image(systemName: "list.bullet.clipboard")
-                }
-                MineView().tabItem {
-                    Image(systemName: "person.circle")
-                }
+        TabView (selection: $selectedTabIndex){
+            HotTopicView().tabItem {
+                Image(systemName: "star")
             }
+            SectionListView().tabItem {
+                Image(systemName: "list.bullet.clipboard")
+            }
+            MineView().tabItem {
+                Image(systemName: "person.circle")
+            }
+        }
     }
 }
 

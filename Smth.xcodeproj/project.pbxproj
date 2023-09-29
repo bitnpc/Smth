@@ -39,6 +39,8 @@
 		EA526FDF2AC674B20025614F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FDE2AC674B20025614F /* LoginView.swift */; };
 		EA526FE12AC676460025614F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE02AC676460025614F /* WebView.swift */; };
 		EA526FE32AC70B4B0025614F /* SubBoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE22AC70B4B0025614F /* SubBoardListView.swift */; };
+		EA526FE52AC71D5E0025614F /* MineDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE42AC71D5E0025614F /* MineDataSource.swift */; };
+		EA526FE72AC71EB80025614F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE62AC71EB80025614F /* Profile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +77,8 @@
 		EA526FDE2AC674B20025614F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		EA526FE02AC676460025614F /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		EA526FE22AC70B4B0025614F /* SubBoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubBoardListView.swift; sourceTree = "<group>"; };
+		EA526FE42AC71D5E0025614F /* MineDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineDataSource.swift; sourceTree = "<group>"; };
+		EA526FE62AC71EB80025614F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +130,7 @@
 				EA526FC52AC56C9B0025614F /* TopicContentRowView.swift */,
 				EA526FC92AC5A3A40025614F /* ArticleRowView.swift */,
 				EA526FB92AC537470025614F /* TopicDataSource.swift */,
+				EA526FE42AC71D5E0025614F /* MineDataSource.swift */,
 				EA526FD22AC5DAD90025614F /* SectionDataSource.swift */,
 				EA526FD82AC5DDA50025614F /* BoardDataSource.swift */,
 				EA526FBD2AC54B610025614F /* TopicDetailDataSource.swift */,
@@ -163,6 +168,7 @@
 				EA526FB52AC52A430025614F /* Article.swift */,
 				EA526FB32AC529C50025614F /* Board.swift */,
 				EA526FB72AC52A920025614F /* Account.swift */,
+				EA526FE62AC71EB80025614F /* Profile.swift */,
 				EA526FBF2AC551890025614F /* Like.swift */,
 				EA526FD02AC5DA540025614F /* Section.swift */,
 			);
@@ -248,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA526FDD2AC669E20025614F /* TopicListView.swift in Sources */,
+				EA526FE72AC71EB80025614F /* Profile.swift in Sources */,
 				EA526FB62AC52A430025614F /* Article.swift in Sources */,
 				EA526FBC2AC5381D0025614F /* NetworkAPI.swift in Sources */,
 				EA526FD32AC5DAD90025614F /* SectionDataSource.swift in Sources */,
@@ -257,6 +264,7 @@
 				EA526FBE2AC54B610025614F /* TopicDetailDataSource.swift in Sources */,
 				EA526FD12AC5DA540025614F /* Section.swift in Sources */,
 				EA526FCA2AC5A3A40025614F /* ArticleRowView.swift in Sources */,
+				EA526FE52AC71D5E0025614F /* MineDataSource.swift in Sources */,
 				EA526FDF2AC674B20025614F /* LoginView.swift in Sources */,
 				EA526FBA2AC537470025614F /* TopicDataSource.swift in Sources */,
 				EA526FCF2AC5D67A0025614F /* HotTopicView.swift in Sources */,

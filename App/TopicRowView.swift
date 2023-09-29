@@ -15,7 +15,7 @@ struct TopicRowView: View {
         VStack (alignment: .leading) {
             Text(topic.subject).font(.headline).lineLimit(2)
             Spacer().frame(height: 8)
-            Text(topic.article!.body).lineLimit(2)
+            Text(topic.article!.body).lineLimit(2).foregroundColor(.gray)
             
             HStack {
                 AsyncImage(url: URL.init(string: topic.article!.account.avatarUrl)) { image in

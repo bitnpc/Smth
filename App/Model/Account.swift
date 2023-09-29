@@ -15,3 +15,11 @@ struct Account: Codable, Hashable {
     
     var loginTime: TimeInterval
 }
+
+extension Account {
+    static let defaultAccount = Account(id: UUID().uuidString,
+                                     avatarUrl: "",
+                                     nick: "Nickname",
+                                     name: "UserName",
+                                     loginTime: 0)
+}

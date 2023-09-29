@@ -18,13 +18,17 @@ enum APIRouter: URLRequestConvertible {
                  parameters: [String: String])
     case section([String: String])
     case board([String: String])
+    case profile([String: String])
     
     var baseURL: URL {
         return URL(string: "https://wap.newsmth.net")!
     }
     
     var method: HTTPMethod {
-        return .get
+        switch self {
+        case .profile: return .post
+        default: return .get
+        }
     }
     
     var path: String {
@@ -34,6 +38,7 @@ enum APIRouter: URLRequestConvertible {
         case .article(let topicID, let page, let sortType, _): return "wap/api/topic/loadArticlesByMode/\(topicID)/\(sortType.rawValue)/\(page)/20"
         case .section: return "wap/api/section/all"
         case .board: return "wap/api/section/subs"
+        case .profile: return "wap/api/profile"
         }
     }
     
@@ -52,6 +57,8 @@ enum APIRouter: URLRequestConvertible {
         case let .section(parameters):
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
         case let .board(parameters):
+            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+        case let .profile(parameters):
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
         }
         return request
