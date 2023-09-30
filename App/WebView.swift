@@ -8,7 +8,13 @@
 import SwiftUI
 import WebKit
 
-struct WebView: UIViewRepresentable {
+#if os(iOS)
+typealias WebViewRepresentable = UIViewRepresentable
+#elseif os(macOS)
+typealias WebViewRepresentable = NSViewRepresentable
+#endif
+
+struct WebView: WebViewRepresentable {
     
     let url: URL
 //    @Binding var isLoading: Bool
@@ -17,16 +23,31 @@ struct WebView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
+#if os(iOS)
     func makeUIView(context: Context) -> WKWebView  {
-        let wkwebView = WKWebView()
-        wkwebView.navigationDelegate = context.coordinator
-        wkwebView.load(URLRequest(url: url))
-        return wkwebView
+        makeView(context: context)
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
         // This space is left intentionally blank.
+    }
+#endif
+    
+#if os(macOS)
+    public func makeNSView(context: Context) -> WKWebView {
+        makeView(context: context)
+    }
+
+    public func updateNSView(_ view: WKWebView, context: Context) {
+        
+    }
+#endif
+    
+    private func makeView(context: Context) -> WKWebView {
+        let wkwebView = WKWebView()
+        wkwebView.navigationDelegate = context.coordinator
+        wkwebView.load(URLRequest(url: url))
+        return wkwebView
     }
     
     class Coordinator: NSObject, WKNavigationDelegate {
@@ -55,9 +76,14 @@ struct WebView: UIViewRepresentable {
         
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             WKWebsiteDataStore.default().httpCookieStore.getAllCookies { cookies in
+                var isLoggedIn = false
                 for cookie in cookies {
                     HTTPCookieStorage.shared.setCookie(cookie)
+                    if cookie.name == "kbs-key" {
+                        isLoggedIn = true;
+                    }
                 }
+                UserDefaults.standard.set(isLoggedIn, forKey: "isLoggedIn")
             }
             decisionHandler(.allow)
         }

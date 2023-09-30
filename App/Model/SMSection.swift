@@ -1,5 +1,5 @@
 //
-//  Section.swift
+//  SMSection.swift
 //  Smth
 //
 //  Created by Tony Clark on 2023/9/28.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Section: Codable, Hashable {
+struct SMSection: Codable, Hashable {
     
     let id: String
     let cover: String
@@ -16,7 +16,7 @@ struct Section: Codable, Hashable {
 }
 
 struct SectionCollection: Codable, Hashable {
-    let sections: [Section]
+    let sections: [SMSection]
 }
 
 struct SectionResponse: Codable, Hashable {

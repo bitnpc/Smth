@@ -19,6 +19,7 @@ enum APIRouter: URLRequestConvertible {
     case section([String: String])
     case board([String: String])
     case profile([String: String])
+    case myTopic([String: String])
     
     var baseURL: URL {
         return URL(string: "https://wap.newsmth.net")!
@@ -39,6 +40,7 @@ enum APIRouter: URLRequestConvertible {
         case .section: return "wap/api/section/all"
         case .board: return "wap/api/section/subs"
         case .profile: return "wap/api/profile"
+        case .myTopic: return "wap/api/profile/myarticle"
         }
     }
     
@@ -59,6 +61,8 @@ enum APIRouter: URLRequestConvertible {
         case let .board(parameters):
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
         case let .profile(parameters):
+            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+        case let .myTopic(parameters):
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
         }
         return request

@@ -8,24 +8,28 @@
 import SwiftUI
 
 struct TopicDetailView: View {
-    var topic: Topic
+    let topicID: String
     @StateObject var dataSource = TopicDetailDataSource()
     
     var body: some View {
-        List {
-            TopicContentRowView(article: dataSource.articles.first)
-            ForEach(dataSource.articles.dropFirst(), id: \.id) { article in
-                ArticleRowView(article: article)
+        if dataSource.articles.first == nil {
+            Text("Loading")
+            .onAppear() {
+                Task {
+                    await dataSource.fetchArticles(topicID: topicID, page: 0, sortType: .Defatul)
+                }
             }
-        }
-        .onAppear() {
-            Task {
-                await dataSource.fetchArticles(topicID: topic.id, page: 0, sortType: .Defatul)
+        }else {
+            List {
+                TopicContentRowView(article: dataSource.articles.first!)
+                ForEach(dataSource.articles.dropFirst(), id: \.id) { article in
+                    ArticleRowView(article: article)
+                }
             }
+            .listStyle(.plain)
+            .navigationTitle(dataSource.board?.title ?? "")
+            //        .navigationBarTitleDisplayMode(.inline)
         }
-        .listStyle(.plain)
-        .navigationTitle(dataSource.board?.title ?? "")
-//        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

@@ -25,10 +25,15 @@ struct HotTopicView: View {
                     await dataSource.fetchTopics()
                 }
             }
+            .refreshable(action: {
+                Task {
+                    await dataSource.fetchTopics()
+                }
+            })
             .listStyle(.plain)
             .navigationTitle("热门")
             .navigationDestination(for: Topic.self) { topic in
-                TopicDetailView(topic: topic)
+                TopicDetailView(topicID: topic.id)
             }
         }
     }

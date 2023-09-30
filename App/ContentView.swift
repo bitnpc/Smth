@@ -9,26 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var selectedTabIndex = 0;
+    @State private var selectedTabIndex: Int = 0
     
     // all system image symble
     var body: some View {
         TabView (selection: $selectedTabIndex){
             HotTopicView().tabItem {
                 Image(systemName: "star")
+                Text("话题")
             }
             SectionListView().tabItem {
                 Image(systemName: "list.bullet.clipboard")
+                Text("版面")
             }
             MineView().tabItem {
                 Image(systemName: "person.circle")
+                Text("我的")
             }
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}

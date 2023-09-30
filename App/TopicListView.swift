@@ -29,7 +29,7 @@ struct TopicListView: View {
         .listStyle(.plain)
         .navigationTitle(board.title)
         .navigationDestination(for: Topic.self) { topic in
-            TopicDetailView(topic: topic)
+            TopicDetailView(topicID: topic.id)
         }
     }
 }

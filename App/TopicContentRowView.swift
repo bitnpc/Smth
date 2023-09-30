@@ -9,29 +9,25 @@ import SwiftUI
 
 struct TopicContentRowView: View {
     
-    let article: Article?
+    let article: Article
     
     var body: some View {
-        if article == nil {
-            Text("Loading")
-        }else {
-            VStack (alignment: .leading) {
-                Text(article!.subject).font(.title2)
-                HStack {
-                    AsyncImage(url: URL.init(string: article!.account.avatarUrl)) { image in
-                        image.resizable()
-                            .frame(maxWidth: 30, maxHeight: 30)
-                            .cornerRadius(15)
-                    } placeholder: {
-                        Image(systemName: "photo")
-                    }
-                    Text(article!.account.name)
-                    Spacer()
-                    Text(String(article!.postTimeString)).font(.caption).foregroundColor(.gray)
+        VStack (alignment: .leading) {
+            Text(article.subject).font(.title2)
+            HStack {
+                AsyncImage(url: URL.init(string: article.account.avatarUrl)) { image in
+                    image.resizable()
+                        .frame(maxWidth: 30, maxHeight: 30)
+                        .cornerRadius(15)
+                } placeholder: {
+                    Image(systemName: "photo")
                 }
-                .frame(height: 50)
-                Text(article!.content).font(.body).lineSpacing(6)
+                Text(article.account.name)
+                Spacer()
+                Text(String(article.postTimeString)).font(.caption).foregroundColor(.gray)
             }
+            .frame(height: 50)
+            Text(article.content).font(.body).lineSpacing(6)
         }
     }
 }

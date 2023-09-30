@@ -19,6 +19,7 @@ struct Article: Codable, Hashable {
     var account: Account
     
     var likes: [Like]?
+    var topicId: String
     
     var quoteContent: String {
         var quote = ""
@@ -55,5 +56,12 @@ struct Article: Codable, Hashable {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         return dateFormatter.string(from: date)
     }
-    
+}
+
+struct ArticleCollection: Codable {
+    var articles: [Article]
+}
+
+struct ArticleResponse: Codable {
+    var data: ArticleCollection
 }

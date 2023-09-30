@@ -15,15 +15,15 @@ struct TopicRowView: View {
         VStack (alignment: .leading) {
             Text(topic.subject).font(.headline).lineLimit(2)
             Spacer().frame(height: 8)
-            Text(topic.article!.body).lineLimit(2).foregroundColor(.gray)
+            Text(topic.article!.body).font(.subheadline).lineLimit(2).foregroundColor(.gray)
             
             HStack {
                 AsyncImage(url: URL.init(string: topic.article!.account.avatarUrl)) { image in
                     image.resizable()
-                        .frame(maxWidth: 30, maxHeight: 30)
+                        .frame(width: 30, height: 30)
                         .cornerRadius(15)
                 } placeholder: {
-                    Image(systemName: "photo")
+                    Image(systemName: "person.circle").resizable().frame(width: 30, height: 30)
                 }
                 Text(topic.article!.account.name).font(.footnote)
                 Text(String(topic.availables) + "回复").font(.footnote).foregroundColor(.gray)
@@ -32,6 +32,5 @@ struct TopicRowView: View {
                 Text(String(topic.board!.title)).font(.footnote).foregroundColor(.gray)
             }
         }
-        
     }
 }

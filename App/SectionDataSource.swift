@@ -10,7 +10,7 @@ import Alamofire
 
 class SectionDataSource: BaseDataSource {
     
-    @MainActor @Published var sections: [Section] = []
+    @MainActor @Published var sections: [SMSection] = []
     
     func fetchSections () async {
         let parameters: [String: String] = [:]

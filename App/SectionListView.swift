@@ -27,7 +27,7 @@ struct SectionListView: View {
             }
             .listStyle(.plain)
             .navigationTitle("所有版面")
-            .navigationDestination(for: Section.self) { section in
+            .navigationDestination(for: SMSection.self) { section in
                 BoardListView(section: section)
             }
         }

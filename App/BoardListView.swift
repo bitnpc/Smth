@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BoardListView: View {
-    let section: Section
+    let section: SMSection
     
     @StateObject var dataSource = BoardDataSource()
     

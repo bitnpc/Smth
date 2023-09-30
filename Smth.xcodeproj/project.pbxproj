@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA21107C2AC87A910095044B /* MyTopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA21107B2AC87A910095044B /* MyTopicView.swift */; };
 		EA526F902AC048840025614F /* SmthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526F8F2AC048840025614F /* SmthApp.swift */; };
 		EA526F922AC048840025614F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526F912AC048840025614F /* ContentView.swift */; };
 		EA526F942AC048860025614F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA526F932AC048860025614F /* Assets.xcassets */; };
@@ -29,7 +30,7 @@
 		EA526FCA2AC5A3A40025614F /* ArticleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FC92AC5A3A40025614F /* ArticleRowView.swift */; };
 		EA526FCC2AC5A6CF0025614F /* TopicRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FCB2AC5A6CF0025614F /* TopicRowView.swift */; };
 		EA526FCF2AC5D67A0025614F /* HotTopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FCE2AC5D67A0025614F /* HotTopicView.swift */; };
-		EA526FD12AC5DA540025614F /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD02AC5DA540025614F /* Section.swift */; };
+		EA526FD12AC5DA540025614F /* SMSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD02AC5DA540025614F /* SMSection.swift */; };
 		EA526FD32AC5DAD90025614F /* SectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD22AC5DAD90025614F /* SectionDataSource.swift */; };
 		EA526FD52AC5DCAF0025614F /* SectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD42AC5DCAF0025614F /* SectionListView.swift */; };
 		EA526FD72AC5DD980025614F /* BoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD62AC5DD980025614F /* BoardListView.swift */; };
@@ -41,9 +42,12 @@
 		EA526FE32AC70B4B0025614F /* SubBoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE22AC70B4B0025614F /* SubBoardListView.swift */; };
 		EA526FE52AC71D5E0025614F /* MineDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE42AC71D5E0025614F /* MineDataSource.swift */; };
 		EA526FE72AC71EB80025614F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE62AC71EB80025614F /* Profile.swift */; };
+		EA526FE92AC801560025614F /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE82AC801560025614F /* SettingView.swift */; };
+		EA526FEB2AC825FA0025614F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FEA2AC825FA0025614F /* ProfileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EA21107B2AC87A910095044B /* MyTopicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTopicView.swift; sourceTree = "<group>"; };
 		EA526F8C2AC048840025614F /* Smth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA526F8F2AC048840025614F /* SmthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmthApp.swift; sourceTree = "<group>"; };
 		EA526F912AC048840025614F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -67,7 +71,7 @@
 		EA526FCB2AC5A6CF0025614F /* TopicRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicRowView.swift; sourceTree = "<group>"; };
 		EA526FCD2AC5D2810025614F /* SmthRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmthRelease.entitlements; sourceTree = "<group>"; };
 		EA526FCE2AC5D67A0025614F /* HotTopicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotTopicView.swift; sourceTree = "<group>"; };
-		EA526FD02AC5DA540025614F /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		EA526FD02AC5DA540025614F /* SMSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSection.swift; sourceTree = "<group>"; };
 		EA526FD22AC5DAD90025614F /* SectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDataSource.swift; sourceTree = "<group>"; };
 		EA526FD42AC5DCAF0025614F /* SectionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionListView.swift; sourceTree = "<group>"; };
 		EA526FD62AC5DD980025614F /* BoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListView.swift; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 		EA526FE22AC70B4B0025614F /* SubBoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubBoardListView.swift; sourceTree = "<group>"; };
 		EA526FE42AC71D5E0025614F /* MineDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineDataSource.swift; sourceTree = "<group>"; };
 		EA526FE62AC71EB80025614F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		EA526FE82AC801560025614F /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		EA526FEA2AC825FA0025614F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,7 +126,10 @@
 				EA526FCE2AC5D67A0025614F /* HotTopicView.swift */,
 				EA526FD42AC5DCAF0025614F /* SectionListView.swift */,
 				EA526FDA2AC6675E0025614F /* MineView.swift */,
+				EA526FEA2AC825FA0025614F /* ProfileView.swift */,
+				EA21107B2AC87A910095044B /* MyTopicView.swift */,
 				EA526FDE2AC674B20025614F /* LoginView.swift */,
+				EA526FE82AC801560025614F /* SettingView.swift */,
 				EA526FE02AC676460025614F /* WebView.swift */,
 				EA526FD62AC5DD980025614F /* BoardListView.swift */,
 				EA526FE22AC70B4B0025614F /* SubBoardListView.swift */,
@@ -170,7 +179,7 @@
 				EA526FB72AC52A920025614F /* Account.swift */,
 				EA526FE62AC71EB80025614F /* Profile.swift */,
 				EA526FBF2AC551890025614F /* Like.swift */,
-				EA526FD02AC5DA540025614F /* Section.swift */,
+				EA526FD02AC5DA540025614F /* SMSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -257,12 +266,13 @@
 				EA526FE72AC71EB80025614F /* Profile.swift in Sources */,
 				EA526FB62AC52A430025614F /* Article.swift in Sources */,
 				EA526FBC2AC5381D0025614F /* NetworkAPI.swift in Sources */,
+				EA526FE92AC801560025614F /* SettingView.swift in Sources */,
 				EA526FD32AC5DAD90025614F /* SectionDataSource.swift in Sources */,
 				EA526FC22AC5530F0025614F /* TopicDetailView.swift in Sources */,
 				EA526FB22AC519840025614F /* APIRouter.swift in Sources */,
 				EA526F922AC048840025614F /* ContentView.swift in Sources */,
 				EA526FBE2AC54B610025614F /* TopicDetailDataSource.swift in Sources */,
-				EA526FD12AC5DA540025614F /* Section.swift in Sources */,
+				EA526FD12AC5DA540025614F /* SMSection.swift in Sources */,
 				EA526FCA2AC5A3A40025614F /* ArticleRowView.swift in Sources */,
 				EA526FE52AC71D5E0025614F /* MineDataSource.swift in Sources */,
 				EA526FDF2AC674B20025614F /* LoginView.swift in Sources */,
@@ -276,6 +286,8 @@
 				EA526FB42AC529C50025614F /* Board.swift in Sources */,
 				EA526FC42AC568AB0025614F /* BaseDataSource.swift in Sources */,
 				EA526FC62AC56C9B0025614F /* TopicContentRowView.swift in Sources */,
+				EA21107C2AC87A910095044B /* MyTopicView.swift in Sources */,
+				EA526FEB2AC825FA0025614F /* ProfileView.swift in Sources */,
 				EA526FB02AC50C640025614F /* Topic.swift in Sources */,
 				EA526FD52AC5DCAF0025614F /* SectionListView.swift in Sources */,
 				EA526FB82AC52A920025614F /* Account.swift in Sources */,
