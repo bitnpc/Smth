@@ -27,9 +27,13 @@ struct Article: Codable, Hashable {
             let quoteString = body.components(separatedBy: "<div").last ?? ""
             let elements = try SwiftSoup.parse(quoteString).select("p")
             for node in elements {
-                quote += try node.text()
-                quote += "\n"
+                let line = try node.text()
+                quote += line
+                if line.count != 0 {
+                    quote += "\n"
+                }
             }
+            quote.removeLast()
         }catch {
         }
         return quote
@@ -41,9 +45,13 @@ struct Article: Codable, Hashable {
             let paragraph = body.components(separatedBy: "<div").first ?? ""
             let elements = try SwiftSoup.parse(paragraph).select("p")
             for node in elements {
-                resut += try node.text()
-                resut += "\n"
+                let line = try node.text()
+                resut += line
+                if line.count != 0 {
+                    resut += "\n"
+                }
             }
+            resut.removeLast()
         }catch {
         
         }

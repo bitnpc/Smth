@@ -17,6 +17,7 @@ typealias WebViewRepresentable = NSViewRepresentable
 struct WebView: WebViewRepresentable {
     
     let url: URL
+    let onComplete: () -> Void?
 //    @Binding var isLoading: Bool
 //    @Binding var error: Error?
     
@@ -74,6 +75,20 @@ struct WebView: WebViewRepresentable {
             }
         }
         
+//        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+//            WKWebsiteDataStore.default().httpCookieStore.getAllCookies { cookies in
+////                var isLoggedIn = false
+//                for cookie in cookies {
+//                    HTTPCookieStorage.shared.setCookie(cookie)
+//                    if cookie.name == "kbs-key" {
+////                        isLoggedIn = true;
+////                        /*parent*/.onComplete()
+//                    }
+//                }
+//            }
+//            return .allow
+//        }
+        
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             WKWebsiteDataStore.default().httpCookieStore.getAllCookies { cookies in
                 var isLoggedIn = false
@@ -81,6 +96,7 @@ struct WebView: WebViewRepresentable {
                     HTTPCookieStorage.shared.setCookie(cookie)
                     if cookie.name == "kbs-key" {
                         isLoggedIn = true;
+                        self.parent.onComplete()
                     }
                 }
                 UserDefaults.standard.set(isLoggedIn, forKey: "isLoggedIn")

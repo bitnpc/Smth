@@ -56,7 +56,7 @@ struct MineView: View {
                     Button("登录") {
                         showLoginView = true
                     }.sheet(isPresented: $showLoginView) {
-                        LoginView()
+                        LoginView(showLoginView: $showLoginView)
                     }
                 }
             }

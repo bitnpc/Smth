@@ -26,7 +26,12 @@ struct ArticleRowView: View {
             .frame(height: 50)
             Text(article.content).font(.body).lineSpacing(6)
             if (article.quoteContent.count != 0) {
-                Text(article.quoteContent).font(.footnote).lineSpacing(6).foregroundColor(.gray)
+                Text(article.quoteContent)
+                    .font(.footnote)
+                    .lineSpacing(8)
+                    .lineLimit(5)
+                    .foregroundColor(.gray)
+                    .padding(.top, 5)
             }
         }
     }

@@ -28,7 +28,7 @@ struct TopicDetailView: View {
             }
             .listStyle(.plain)
             .navigationTitle(dataSource.board?.title ?? "")
-            //        .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

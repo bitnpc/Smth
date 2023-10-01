@@ -20,7 +20,7 @@ struct TopicContentRowView: View {
                         .frame(maxWidth: 30, maxHeight: 30)
                         .cornerRadius(15)
                 } placeholder: {
-                    Image(systemName: "photo")
+                    Image(systemName: "person.circle").frame(maxWidth: 30, maxHeight: 30)
                 }
                 Text(article.account.name)
                 Spacer()

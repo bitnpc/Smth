@@ -13,24 +13,16 @@ struct TopicRowView: View {
     
     var body: some View {
         VStack (alignment: .leading) {
-            Text(topic.subject).font(.headline).lineLimit(2)
+            Text(topic.subject).font(.headline).lineLimit(1)
             Spacer().frame(height: 8)
             Text(topic.article!.body).font(.subheadline).lineLimit(2).foregroundColor(.gray)
             
             HStack {
-                AsyncImage(url: URL.init(string: topic.article!.account.avatarUrl)) { image in
-                    image.resizable()
-                        .frame(width: 30, height: 30)
-                        .cornerRadius(15)
-                } placeholder: {
-                    Image(systemName: "person.circle").resizable().frame(width: 30, height: 30)
-                }
-                Text(topic.article!.account.name).font(.footnote)
                 Text(String(topic.availables) + "回复").font(.footnote).foregroundColor(.gray)
                 Text(String(topic.likeAvailables) + "Like").font(.footnote).foregroundColor(.gray)
                 Spacer()
                 Text(String(topic.board!.title)).font(.footnote).foregroundColor(.gray)
-            }
+            }.padding(.top, 5)
         }
     }
 }
