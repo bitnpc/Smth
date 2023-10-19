@@ -34,9 +34,3 @@ struct ProfileView: View {
         }.navigationTitle("修改资料")
     }
 }
-
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView(account: Account.defaultAccount)
-    }
-}

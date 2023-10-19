@@ -15,9 +15,7 @@ struct TopicDetailView: View {
         if dataSource.articles.first == nil {
             Text("Loading")
             .onAppear() {
-                Task {
-                    await dataSource.fetchArticles(topicID: topicID, page: 0, sortType: .Defatul)
-                }
+                dataSource.fetchArticles(topicID: topicID, page: 0, sortType: .Defatul)
             }
         }else {
             List {

@@ -9,8 +9,8 @@ import Foundation
 
 struct Like: Codable, Hashable {
     
-    var id: String
-    var body: String
-    var score: Int
-    var account: Account
+    let id: String
+    let body: String
+    let score: Int
+    let account: Account
 }

@@ -9,33 +9,33 @@ import Foundation
 
 struct Topic: Codable, Hashable {
     
-    var id: String
-    var subject: String
-    var availables: Int
-    var likeAvailables: Int
-    var flushTime: TimeInterval
+    let id: String
+    let subject: String
+    let availables: Int
+    let likeAvailables: Int
+    let flushTime: TimeInterval
     
-    var board: Board?
+    let board: Board?
     
-    var article: Article?
+    let article: Article?
     
 }
 
 struct TopicDetail: Codable, Hashable {
-    var topic: Topic
-    var articles: [Article]
-    var board: Board
+    let topic: Topic
+    let articles: [Article]
+    let board: Board
 }
 
 struct TopicCollection: Codable {
-    var topics: [Topic]
+    let topics: [Topic]
 }
 
 struct TopicResponse: Codable {
-    var data: TopicCollection
+    let data: TopicCollection
 }
 
 struct TopicDetailResponse: Codable {
-    var data: TopicDetail
+    let data: TopicDetail
 }
 

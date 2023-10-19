@@ -44,6 +44,9 @@
 		EA526FE72AC71EB80025614F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE62AC71EB80025614F /* Profile.swift */; };
 		EA526FE92AC801560025614F /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FE82AC801560025614F /* SettingView.swift */; };
 		EA526FEB2AC825FA0025614F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FEA2AC825FA0025614F /* ProfileView.swift */; };
+		EA8295952ADB989D003D101E /* Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8295942ADB989D003D101E /* Attachment.swift */; };
+		EA8295972ADBE923003D101E /* ImageGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8295962ADBE923003D101E /* ImageGroupView.swift */; };
+		EAC0B31F2AC9B01A00ACC9E6 /* PublishView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC0B31E2AC9B01A00ACC9E6 /* PublishView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +88,9 @@
 		EA526FE62AC71EB80025614F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		EA526FE82AC801560025614F /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		EA526FEA2AC825FA0025614F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		EA8295942ADB989D003D101E /* Attachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attachment.swift; sourceTree = "<group>"; };
+		EA8295962ADBE923003D101E /* ImageGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGroupView.swift; sourceTree = "<group>"; };
+		EAC0B31E2AC9B01A00ACC9E6 /* PublishView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +144,8 @@
 				EA526FCB2AC5A6CF0025614F /* TopicRowView.swift */,
 				EA526FC52AC56C9B0025614F /* TopicContentRowView.swift */,
 				EA526FC92AC5A3A40025614F /* ArticleRowView.swift */,
+				EA8295962ADBE923003D101E /* ImageGroupView.swift */,
+				EAC0B31E2AC9B01A00ACC9E6 /* PublishView.swift */,
 				EA526FB92AC537470025614F /* TopicDataSource.swift */,
 				EA526FE42AC71D5E0025614F /* MineDataSource.swift */,
 				EA526FD22AC5DAD90025614F /* SectionDataSource.swift */,
@@ -175,6 +183,7 @@
 			children = (
 				EA526FAF2AC50C640025614F /* Topic.swift */,
 				EA526FB52AC52A430025614F /* Article.swift */,
+				EA8295942ADB989D003D101E /* Attachment.swift */,
 				EA526FB32AC529C50025614F /* Board.swift */,
 				EA526FB72AC52A920025614F /* Account.swift */,
 				EA526FE62AC71EB80025614F /* Profile.swift */,
@@ -216,7 +225,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					EA526F8B2AC048840025614F = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -276,10 +285,12 @@
 				EA526FCA2AC5A3A40025614F /* ArticleRowView.swift in Sources */,
 				EA526FE52AC71D5E0025614F /* MineDataSource.swift in Sources */,
 				EA526FDF2AC674B20025614F /* LoginView.swift in Sources */,
+				EA8295972ADBE923003D101E /* ImageGroupView.swift in Sources */,
 				EA526FBA2AC537470025614F /* TopicDataSource.swift in Sources */,
 				EA526FCF2AC5D67A0025614F /* HotTopicView.swift in Sources */,
 				EA526FD72AC5DD980025614F /* BoardListView.swift in Sources */,
 				EA526FE32AC70B4B0025614F /* SubBoardListView.swift in Sources */,
+				EAC0B31F2AC9B01A00ACC9E6 /* PublishView.swift in Sources */,
 				EA526FC02AC551890025614F /* Like.swift in Sources */,
 				EA526FDB2AC6675F0025614F /* MineView.swift in Sources */,
 				EA526FCC2AC5A6CF0025614F /* TopicRowView.swift in Sources */,
@@ -290,6 +301,7 @@
 				EA526FEB2AC825FA0025614F /* ProfileView.swift in Sources */,
 				EA526FB02AC50C640025614F /* Topic.swift in Sources */,
 				EA526FD52AC5DCAF0025614F /* SectionListView.swift in Sources */,
+				EA8295952ADB989D003D101E /* Attachment.swift in Sources */,
 				EA526FB82AC52A920025614F /* Account.swift in Sources */,
 				EA526FAA2AC08EBE0025614F /* NetworkManager.swift in Sources */,
 				EA526FE12AC676460025614F /* WebView.swift in Sources */,
@@ -334,9 +346,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -394,9 +408,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -423,6 +439,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
 				DEVELOPMENT_TEAM = CR3492ZH52;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -443,7 +460,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bitnpc.Smth;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bitnpc.smth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -462,6 +479,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"App/Preview Content\"";
 				DEVELOPMENT_TEAM = CR3492ZH52;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -482,7 +500,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bitnpc.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bitnpc.smth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";

@@ -9,14 +9,14 @@ import Foundation
 import WebKit
 
 struct Account: Codable, Hashable {
-    var id: String
-    var avatarUrl: String
-    var nick: String
-    var name: String
-    var levelTitle: String
-    var birthday: String?
-    var gender: Int
-    var loginTime: TimeInterval
+    let id: String
+    let avatarUrl: String
+    let nick: String
+    let name: String
+    let levelTitle: String
+    let birthday: String?
+    let gender: Int
+    let loginTime: TimeInterval
 }
 
 extension Account {
@@ -27,11 +27,6 @@ extension Account {
     static func logout() {
         UserDefaults.standard.set(false, forKey: "isLoggedIn")
         HTTPCookieStorage.shared.removeCookies(since: NSDate.distantPast)
-        let cookies = HTTPCookieStorage.shared.cookies(for: URL(string: "https://wap.newsmth.net")!)
-        for cookie in cookies ?? [] {
-            WKWebsiteDataStore.default().httpCookieStore.delete(cookie)
-        }
-        
         WKWebsiteDataStore.default().httpCookieStore.getAllCookies { cookies in
             for cookie in cookies {
                 WKWebsiteDataStore.default().httpCookieStore.delete(cookie)

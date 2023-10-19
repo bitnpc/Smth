@@ -27,9 +27,3 @@ struct SettingView: View {
         }.navigationTitle("设置")
     }
 }
-
-struct SettingView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingView()
-    }
-}

@@ -10,6 +10,7 @@ import SwiftUI
 struct HotTopicView: View {
     
     @StateObject var dataSource = TopicDataSource()
+    @State private var showPublishView = false
     
     var body: some View {
         NavigationStack {
@@ -31,16 +32,19 @@ struct HotTopicView: View {
                 }
             })
             .listStyle(.plain)
-            .navigationTitle("热门")
+            .navigationTitle("话题")
             .navigationDestination(for: Topic.self) { topic in
                 TopicDetailView(topicID: topic.id)
             }
+            .toolbar {
+                Button {
+                    showPublishView = true
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                }.sheet(isPresented: $showPublishView) {
+                    PublishView()
+                }
+            }
         }
-    }
-}
-
-struct HotTopicView_Previews: PreviewProvider {
-    static var previews: some View {
-        HotTopicView()
     }
 }

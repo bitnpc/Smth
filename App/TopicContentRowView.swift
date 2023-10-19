@@ -28,6 +28,9 @@ struct TopicContentRowView: View {
             }
             .frame(height: 50)
             Text(article.content).font(.body).lineSpacing(6)
+            if article.attachments != nil {
+                ImageGroupView(attachments: article.attachments!)
+            }
         }
     }
 }

@@ -19,13 +19,14 @@ struct ArticleRowView: View {
                         .frame(maxWidth: 30, maxHeight: 30)
                         .cornerRadius(15)
                 } placeholder: {
-                    Image(systemName: "photo")
+                    Image(systemName: "person.circle").frame(maxWidth: 30, maxHeight: 30)
                 }
                 Text(article.account.name)
-                Spacer()            }
+                Spacer()
+            }
             .frame(height: 50)
             Text(article.content).font(.body).lineSpacing(6)
-            if (article.quoteContent.count != 0) {
+            if article.quoteContent.count != 0 {
                 Text(article.quoteContent)
                     .font(.footnote)
                     .lineSpacing(8)

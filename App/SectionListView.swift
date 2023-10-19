@@ -34,9 +34,3 @@ struct SectionListView: View {
         
     }
 }
-
-struct SectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        SectionListView()
-    }
-}

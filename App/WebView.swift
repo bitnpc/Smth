@@ -75,33 +75,21 @@ struct WebView: WebViewRepresentable {
             }
         }
         
-//        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
-//            WKWebsiteDataStore.default().httpCookieStore.getAllCookies { cookies in
-////                var isLoggedIn = false
-//                for cookie in cookies {
-//                    HTTPCookieStorage.shared.setCookie(cookie)
-//                    if cookie.name == "kbs-key" {
-////                        isLoggedIn = true;
-////                        /*parent*/.onComplete()
-//                    }
-//                }
-//            }
-//            return .allow
-//        }
-        
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-            WKWebsiteDataStore.default().httpCookieStore.getAllCookies { cookies in
-                var isLoggedIn = false
-                for cookie in cookies {
-                    HTTPCookieStorage.shared.setCookie(cookie)
-                    if cookie.name == "kbs-key" {
-                        isLoggedIn = true;
-                        self.parent.onComplete()
-                    }
-                }
-                UserDefaults.standard.set(isLoggedIn, forKey: "isLoggedIn")
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+            let task = Task { @MainActor in
+                await WKWebsiteDataStore.default().httpCookieStore.allCookies()
             }
-            decisionHandler(.allow)
+            var isLoggedIn = false
+            let cookies = try! await task.result.get()
+            for cookie in cookies {
+                HTTPCookieStorage.shared.setCookie(cookie)
+                if cookie.name == "kbs-key" {
+                    isLoggedIn = true;
+                    self.parent.onComplete()
+                }
+            }
+            UserDefaults.standard.set(isLoggedIn, forKey: "isLoggedIn")
+            return .allow
         }
         
         func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
