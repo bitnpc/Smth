@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Topic: Codable, Hashable {
+struct Topic: Codable, Hashable, Identifiable {
     
     let id: String
     let subject: String
@@ -18,7 +18,6 @@ struct Topic: Codable, Hashable {
     let board: Board?
     
     let article: Article?
-    
 }
 
 struct TopicDetail: Codable, Hashable {

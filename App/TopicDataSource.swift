@@ -13,15 +13,15 @@ class TopicDataSource: BaseDataSource {
     @MainActor @Published var topics: [Topic] = []
     @MainActor @Published var myTopics: [Article] = []
     
-    func fetchTopics () async {
+    func fetchTopics (page: Int) async {
         let ts = String(Int(NSDate().timeIntervalSince1970 * 1000))
         let parameters = ["t": ts,
-                          "page": "1",
+                          "page": String(page),
                           "size": "20"]
         do {
             let response = try await AF.request(APIRouter.hot(parameters)).serializingDecodable(TopicResponse.self).value
             Task { @MainActor in
-                self.topics = response.data.topics
+                self.topics.append(contentsOf: response.data.topics)
             }
         }catch {
             debugPrint(error)

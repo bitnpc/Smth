@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA0ADF1B2BAC57720065BB53 /* RefreshableListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0ADF1A2BAC57720065BB53 /* RefreshableListView.swift */; };
 		EA21107C2AC87A910095044B /* MyTopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA21107B2AC87A910095044B /* MyTopicView.swift */; };
 		EA526F902AC048840025614F /* SmthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526F8F2AC048840025614F /* SmthApp.swift */; };
 		EA526F922AC048840025614F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526F912AC048840025614F /* ContentView.swift */; };
@@ -50,6 +51,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EA0ADF1A2BAC57720065BB53 /* RefreshableListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableListView.swift; sourceTree = "<group>"; };
 		EA21107B2AC87A910095044B /* MyTopicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTopicView.swift; sourceTree = "<group>"; };
 		EA526F8C2AC048840025614F /* Smth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA526F8F2AC048840025614F /* SmthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmthApp.swift; sourceTree = "<group>"; };
@@ -106,6 +108,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EA0ADF192BAC575D0065BB53 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				EA0ADF1A2BAC57720065BB53 /* RefreshableListView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		EA526F832AC048840025614F = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +144,7 @@
 				EA526FDA2AC6675E0025614F /* MineView.swift */,
 				EA526FEA2AC825FA0025614F /* ProfileView.swift */,
 				EA21107B2AC87A910095044B /* MyTopicView.swift */,
+				EA0ADF192BAC575D0065BB53 /* Components */,
 				EA526FDE2AC674B20025614F /* LoginView.swift */,
 				EA526FE82AC801560025614F /* SettingView.swift */,
 				EA526FE02AC676460025614F /* WebView.swift */,
@@ -303,6 +314,7 @@
 				EA526FD52AC5DCAF0025614F /* SectionListView.swift in Sources */,
 				EA8295952ADB989D003D101E /* Attachment.swift in Sources */,
 				EA526FB82AC52A920025614F /* Account.swift in Sources */,
+				EA0ADF1B2BAC57720065BB53 /* RefreshableListView.swift in Sources */,
 				EA526FAA2AC08EBE0025614F /* NetworkManager.swift in Sources */,
 				EA526FE12AC676460025614F /* WebView.swift in Sources */,
 				EA526FD92AC5DDA50025614F /* BoardDataSource.swift in Sources */,
