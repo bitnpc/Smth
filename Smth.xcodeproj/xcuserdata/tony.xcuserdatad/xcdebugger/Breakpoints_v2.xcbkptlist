@@ -18,53 +18,6 @@
             endingLineNumber = "22"
             landmarkName = "fetchBoards(sectionID:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "05A36892-CC3C-4853-8B09-87E5B623E312 - 53af4ef92b3b917f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Smth.BoardDataSource.fetchBoards(sectionID: Swift.String) async -&gt; ()"
-                  moduleName = "Smth"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tony/Desktop/Smth/App/BoardDataSource.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21"
-                  offsetFromSymbolStart = "144">
-               </Location>
-               <Location
-                  uuid = "05A36892-CC3C-4853-8B09-87E5B623E312 - 8b1256b1c96ee552"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor @Sendable () async -&gt; () in Smth.BoardDataSource.fetchBoards(sectionID: Swift.String) async -&gt; ()"
-                  moduleName = "Smth"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tony/Desktop/Smth/App/BoardDataSource.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21"
-                  offsetFromSymbolStart = "92">
-               </Location>
-               <Location
-                  uuid = "05A36892-CC3C-4853-8B09-87E5B623E312 - 72a1eda17050221a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for closure #1 @Swift.MainActor @Sendable () async -&gt; () in Smth.BoardDataSource.fetchBoards(sectionID: Swift.String) async -&gt; ()"
-                  moduleName = "Smth"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tony/Desktop/Smth/App/BoardDataSource.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21"
-                  offsetFromSymbolStart = "44">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -79,7 +32,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "98"
             endingLineNumber = "98"
-            landmarkName = "webView(_:decidePolicyFor:decisionHandler:)"
+            landmarkName = "webView(_:didFailProvisionalNavigation:withError:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -95,8 +48,24 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "94"
             endingLineNumber = "94"
-            landmarkName = "webView(_:decidePolicyFor:decisionHandler:)"
-            landmarkType = "7">
+            landmarkName = "Coordinator"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "129FF166-3230-4247-BE2A-5ADE62DD8B43"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "App/Section/BoardListView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

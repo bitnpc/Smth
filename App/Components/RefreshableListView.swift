@@ -38,11 +38,12 @@ struct RefreshableListView<Item, Content: View>: View where Item: Identifiable {
             }
             HStack(content: {
                 Spacer()
-                ProgressView().frame(height: 50)
-                    .onAppear(perform: {
-                        loadMore?()
-                    })
+                if (self.isLoading) {
+                    ProgressView().frame(width:50, height: 50)
+                }
                 Spacer()
+            }).onAppear(perform: {
+                loadMore?()
             })
         }
         .refreshable {
@@ -52,5 +53,7 @@ struct RefreshableListView<Item, Content: View>: View where Item: Identifiable {
 }
 
 //#Preview {
-//    RefreshableListView()
+//    RefreshableListView(items: ["1", "2", "3"], isRefreshing: false, onRefresh: {}, isLoading: false, loadMore: nil) { title in
+//        Label(title)
+//    }
 //}

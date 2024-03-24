@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EA0ADF1B2BAC57720065BB53 /* RefreshableListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0ADF1A2BAC57720065BB53 /* RefreshableListView.swift */; };
+		EA0ADF212BB074A30065BB53 /* AllSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0ADF202BB074A30065BB53 /* AllSectionView.swift */; };
 		EA21107C2AC87A910095044B /* MyTopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA21107B2AC87A910095044B /* MyTopicView.swift */; };
 		EA526F902AC048840025614F /* SmthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526F8F2AC048840025614F /* SmthApp.swift */; };
 		EA526F922AC048840025614F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526F912AC048840025614F /* ContentView.swift */; };
@@ -33,7 +34,7 @@
 		EA526FCF2AC5D67A0025614F /* HotTopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FCE2AC5D67A0025614F /* HotTopicView.swift */; };
 		EA526FD12AC5DA540025614F /* SMSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD02AC5DA540025614F /* SMSection.swift */; };
 		EA526FD32AC5DAD90025614F /* SectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD22AC5DAD90025614F /* SectionDataSource.swift */; };
-		EA526FD52AC5DCAF0025614F /* SectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD42AC5DCAF0025614F /* SectionListView.swift */; };
+		EA526FD52AC5DCAF0025614F /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD42AC5DCAF0025614F /* SectionView.swift */; };
 		EA526FD72AC5DD980025614F /* BoardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD62AC5DD980025614F /* BoardListView.swift */; };
 		EA526FD92AC5DDA50025614F /* BoardDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FD82AC5DDA50025614F /* BoardDataSource.swift */; };
 		EA526FDB2AC6675F0025614F /* MineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA526FDA2AC6675E0025614F /* MineView.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		EA0ADF1A2BAC57720065BB53 /* RefreshableListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableListView.swift; sourceTree = "<group>"; };
+		EA0ADF202BB074A30065BB53 /* AllSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSectionView.swift; sourceTree = "<group>"; };
 		EA21107B2AC87A910095044B /* MyTopicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTopicView.swift; sourceTree = "<group>"; };
 		EA526F8C2AC048840025614F /* Smth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA526F8F2AC048840025614F /* SmthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmthApp.swift; sourceTree = "<group>"; };
@@ -78,7 +80,7 @@
 		EA526FCE2AC5D67A0025614F /* HotTopicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotTopicView.swift; sourceTree = "<group>"; };
 		EA526FD02AC5DA540025614F /* SMSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSection.swift; sourceTree = "<group>"; };
 		EA526FD22AC5DAD90025614F /* SectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDataSource.swift; sourceTree = "<group>"; };
-		EA526FD42AC5DCAF0025614F /* SectionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionListView.swift; sourceTree = "<group>"; };
+		EA526FD42AC5DCAF0025614F /* SectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		EA526FD62AC5DD980025614F /* BoardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardListView.swift; sourceTree = "<group>"; };
 		EA526FD82AC5DDA50025614F /* BoardDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardDataSource.swift; sourceTree = "<group>"; };
 		EA526FDA2AC6675E0025614F /* MineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MineView.swift; sourceTree = "<group>"; };
@@ -112,8 +114,58 @@
 			isa = PBXGroup;
 			children = (
 				EA0ADF1A2BAC57720065BB53 /* RefreshableListView.swift */,
+				EA8295962ADBE923003D101E /* ImageGroupView.swift */,
+				EA526FE02AC676460025614F /* WebView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		EA0ADF1C2BB009E60065BB53 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				EA526FB92AC537470025614F /* TopicDataSource.swift */,
+				EA526FE42AC71D5E0025614F /* MineDataSource.swift */,
+				EA526FD22AC5DAD90025614F /* SectionDataSource.swift */,
+				EA526FD82AC5DDA50025614F /* BoardDataSource.swift */,
+				EA526FBD2AC54B610025614F /* TopicDetailDataSource.swift */,
+				EA526FC32AC568AB0025614F /* BaseDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		EA0ADF1D2BB00A8A0065BB53 /* Topic */ = {
+			isa = PBXGroup;
+			children = (
+				EA526FCE2AC5D67A0025614F /* HotTopicView.swift */,
+				EA526FDC2AC669E20025614F /* TopicListView.swift */,
+				EA526FC12AC5530F0025614F /* TopicDetailView.swift */,
+				EA526FCB2AC5A6CF0025614F /* TopicRowView.swift */,
+				EA526FC52AC56C9B0025614F /* TopicContentRowView.swift */,
+				EA526FC92AC5A3A40025614F /* ArticleRowView.swift */,
+			);
+			path = Topic;
+			sourceTree = "<group>";
+		};
+		EA0ADF1E2BB00ABE0065BB53 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				EA526FDA2AC6675E0025614F /* MineView.swift */,
+				EA526FEA2AC825FA0025614F /* ProfileView.swift */,
+				EA21107B2AC87A910095044B /* MyTopicView.swift */,
+				EA526FE82AC801560025614F /* SettingView.swift */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		EA0ADF1F2BB00CB90065BB53 /* Section */ = {
+			isa = PBXGroup;
+			children = (
+				EA526FD42AC5DCAF0025614F /* SectionView.swift */,
+				EA0ADF202BB074A30065BB53 /* AllSectionView.swift */,
+				EA526FD62AC5DD980025614F /* BoardListView.swift */,
+				EA526FE22AC70B4B0025614F /* SubBoardListView.swift */,
+			);
+			path = Section;
 			sourceTree = "<group>";
 		};
 		EA526F832AC048840025614F = {
@@ -139,34 +191,17 @@
 			children = (
 				EA526F8F2AC048840025614F /* SmthApp.swift */,
 				EA526F912AC048840025614F /* ContentView.swift */,
-				EA526FCE2AC5D67A0025614F /* HotTopicView.swift */,
-				EA526FD42AC5DCAF0025614F /* SectionListView.swift */,
-				EA526FDA2AC6675E0025614F /* MineView.swift */,
-				EA526FEA2AC825FA0025614F /* ProfileView.swift */,
-				EA21107B2AC87A910095044B /* MyTopicView.swift */,
-				EA0ADF192BAC575D0065BB53 /* Components */,
+				EA0ADF1D2BB00A8A0065BB53 /* Topic */,
+				EA0ADF1F2BB00CB90065BB53 /* Section */,
+				EA0ADF1E2BB00ABE0065BB53 /* Mine */,
 				EA526FDE2AC674B20025614F /* LoginView.swift */,
-				EA526FE82AC801560025614F /* SettingView.swift */,
-				EA526FE02AC676460025614F /* WebView.swift */,
-				EA526FD62AC5DD980025614F /* BoardListView.swift */,
-				EA526FE22AC70B4B0025614F /* SubBoardListView.swift */,
-				EA526FDC2AC669E20025614F /* TopicListView.swift */,
-				EA526FC12AC5530F0025614F /* TopicDetailView.swift */,
-				EA526FCB2AC5A6CF0025614F /* TopicRowView.swift */,
-				EA526FC52AC56C9B0025614F /* TopicContentRowView.swift */,
-				EA526FC92AC5A3A40025614F /* ArticleRowView.swift */,
-				EA8295962ADBE923003D101E /* ImageGroupView.swift */,
 				EAC0B31E2AC9B01A00ACC9E6 /* PublishView.swift */,
-				EA526FB92AC537470025614F /* TopicDataSource.swift */,
-				EA526FE42AC71D5E0025614F /* MineDataSource.swift */,
-				EA526FD22AC5DAD90025614F /* SectionDataSource.swift */,
-				EA526FD82AC5DDA50025614F /* BoardDataSource.swift */,
-				EA526FBD2AC54B610025614F /* TopicDetailDataSource.swift */,
-				EA526FC32AC568AB0025614F /* BaseDataSource.swift */,
+				EA0ADF192BAC575D0065BB53 /* Components */,
+				EA526FAE2AC50C4F0025614F /* Model */,
+				EA0ADF1C2BB009E60065BB53 /* DataSource */,
 				EA526FA92AC08EBD0025614F /* NetworkManager.swift */,
 				EA526FBB2AC5381D0025614F /* NetworkAPI.swift */,
 				EA526FB12AC519840025614F /* APIRouter.swift */,
-				EA526FAE2AC50C4F0025614F /* Model */,
 				EA526F932AC048860025614F /* Assets.xcassets */,
 				EA526F952AC048860025614F /* Smth.entitlements */,
 				EA526F962AC048860025614F /* Preview Content */,
@@ -236,7 +271,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					EA526F8B2AC048840025614F = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -306,12 +341,13 @@
 				EA526FDB2AC6675F0025614F /* MineView.swift in Sources */,
 				EA526FCC2AC5A6CF0025614F /* TopicRowView.swift in Sources */,
 				EA526FB42AC529C50025614F /* Board.swift in Sources */,
+				EA0ADF212BB074A30065BB53 /* AllSectionView.swift in Sources */,
 				EA526FC42AC568AB0025614F /* BaseDataSource.swift in Sources */,
 				EA526FC62AC56C9B0025614F /* TopicContentRowView.swift in Sources */,
 				EA21107C2AC87A910095044B /* MyTopicView.swift in Sources */,
 				EA526FEB2AC825FA0025614F /* ProfileView.swift in Sources */,
 				EA526FB02AC50C640025614F /* Topic.swift in Sources */,
-				EA526FD52AC5DCAF0025614F /* SectionListView.swift in Sources */,
+				EA526FD52AC5DCAF0025614F /* SectionView.swift in Sources */,
 				EA8295952ADB989D003D101E /* Attachment.swift in Sources */,
 				EA526FB82AC52A920025614F /* Account.swift in Sources */,
 				EA0ADF1B2BAC57720065BB53 /* RefreshableListView.swift in Sources */,
@@ -329,6 +365,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -391,6 +428,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

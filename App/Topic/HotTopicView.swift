@@ -19,20 +19,17 @@ struct HotTopicView: View {
     
     var body: some View {
         NavigationStack {
-            RefreshableListView(items: dataSource.topics, isRefreshing: isRefresh, onRefresh: {
-                Task {
-                    await dataSource.fetchTopics(page: 1)
-                }
-            }, isLoading: isLoading, loadMore: {
-                page = page + 1
-                Task {
-                    await dataSource.fetchTopics(page: page)
-                }
-            }) { topic in
+            RefreshableListView(items: dataSource.topics, 
+                                isRefreshing: isRefresh,
+                                onRefresh: refreshData,
+                                isLoading: isLoading,
+                                loadMore: loadMoreData,
+                                content:
+            { topic in
                 NavigationLink(value: topic) {
                     TopicRowView(topic: topic)
                 }
-            }
+            })
             .listStyle(.plain)
             .navigationTitle("话题")
             .navigationDestination(for: Topic.self) { topic in
@@ -47,6 +44,23 @@ struct HotTopicView: View {
                     PublishView()
                 }
             }
+        }
+    }
+    
+    func refreshData() {
+        isRefresh = true
+        Task {
+            await dataSource.fetchTopics(page: 1)
+            isRefresh = false
+        }
+    }
+    
+    func loadMoreData() {
+        isLoading = true
+        page = page + 1
+        Task {
+            await dataSource.fetchTopics(page: page)
+            isLoading = false
         }
     }
 }

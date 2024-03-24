@@ -1,13 +1,13 @@
 //
-//  SectionListView.swift
+//  AllSectionView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/29.
+//  Created by tony on 2024/3/24.
 //
 
 import SwiftUI
 
-struct SectionListView: View {
+struct AllSectionView: View {
     
     @StateObject var dataSource = SectionDataSource()
     
@@ -31,6 +31,6 @@ struct SectionListView: View {
                 BoardListView(section: section)
             }
         }
-        
     }
 }
+

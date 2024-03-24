@@ -17,6 +17,7 @@ enum APIRouter: URLRequestConvertible {
                  sortType: SortType,
                  parameters: [String: String])
     case section([String: String])
+    case favBoard([String: String])
     case board([String: String])
     case profile([String: String])
     case myTopic([String: String])
@@ -38,6 +39,7 @@ enum APIRouter: URLRequestConvertible {
         case .topicList: return "wap/api/board/topic/list"
         case .article(let topicID, let page, let sortType, _): return "wap/api/topic/loadArticlesByMode/\(topicID)/\(sortType.rawValue)/\(page)/20"
         case .section: return "wap/api/section/all"
+        case .favBoard: return "wap/api/profile/fav/boards"
         case .board: return "wap/api/section/subs"
         case .profile: return "wap/api/profile"
         case .myTopic: return "wap/api/profile/myarticle"
@@ -57,6 +59,8 @@ enum APIRouter: URLRequestConvertible {
         case let .article(_, _, _, parameters):
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
         case let .section(parameters):
+            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+        case let .favBoard(parameters):
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
         case let .board(parameters):
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)

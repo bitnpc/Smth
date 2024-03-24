@@ -18,7 +18,7 @@ struct ContentView: View {
                 Image(systemName: "star")
                 Text("话题")
             }
-            SectionListView().tabItem {
+            SectionView().tabItem {
                 Image(systemName: "list.bullet.clipboard")
                 Text("版面")
             }

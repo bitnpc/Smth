@@ -23,3 +23,25 @@ struct BoardCollection: Codable, Hashable {
 struct BoardResponse: Codable, Hashable {
     let data: BoardCollection
 }
+
+struct FavBoardItem: Codable, Hashable {
+    let addTime: Int
+    let bid: Board
+    let type: String
+}
+
+struct FavBoard: Codable, Hashable, Identifiable {
+    let id: Int
+    let name: String
+    let bnum: Int
+    let father: Int
+    var items: [FavBoardItem] = []
+}
+
+struct FavBoardCollection: Codable, Hashable {
+    let favBoards: [FavBoard]
+}
+
+struct FavBoardResponse: Codable, Hashable {
+    let data: FavBoardCollection
+}
