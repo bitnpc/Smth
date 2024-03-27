@@ -13,7 +13,7 @@ struct TopicRowView: View {
     
     var body: some View {
         VStack (alignment: .leading) {
-            Text(topic.subject).font(.body).lineLimit(1)
+            Text(topic.subject).font(.body).lineLimit(2)
             Spacer().frame(height: 8)
             HStack {
                 Text(String(topic.availables) + "回复").font(.footnote).foregroundColor(.gray)

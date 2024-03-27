@@ -38,12 +38,15 @@ struct SectionView: View {
             .navigationDestination(for: FavBoardItem.self) { favBoardItem in
                 TopicListView(board: favBoardItem.bid)
             }
+            .navigationDestination(for: String.self, destination: { _ in
+                AllSectionView()
+            })
             .toolbar {
-                ToolbarItem(placement: .primaryAction, content: {
-                    NavigationLink(destination: AllSectionView()) {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(value: "AllSectionView") {
                         Image(systemName: "list.bullet.clipboard")
                     }
-                })
+                }
             }
         }
         
