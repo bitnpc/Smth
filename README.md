@@ -12,5 +12,5 @@
 ## 使用截图
 |话题|版面|我的|
 |---|---|----|
-|![tab_topic](./Snapshots/tab_mine.PNG)|![tab_section](./Snapshots/tab_secion.PNG)|![tab_mine](./Snapshots/tab_mine.PNG)
+|![tab_topic](./Snapshots/tab_topic.PNG)|![tab_section](./Snapshots/tab_section.PNG)|![tab_mine](./Snapshots/tab_mine.PNG)
 
