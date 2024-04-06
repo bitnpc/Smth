@@ -30,16 +30,6 @@ struct SubBoardListView: View {
         }
         .listStyle(.plain)
         .navigationTitle(boardName)
-        .navigationDestination(for: Board.self) { board in
-            if (board.type == 0) {
-                TopicListView(board: board)
-            }else {
-                let subBoardArray = boards.filter { subBoard in
-                    subBoard.groupId == board.id
-                }
-                SubBoardListView(boardName: board.title, boards: subBoardArray)
-            }
-        }
     }
 }
 

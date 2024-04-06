@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum Route: Hashable {
+    case favBoardItem(FavBoardItem)
+    case allSection
+}
+
 struct SectionView: View {
     
     @StateObject var dataSource = SectionDataSource()
@@ -18,7 +23,7 @@ struct SectionView: View {
                     ForEach(dataSource.favSections) { favBoard in
                         Section(header: Text(favBoard.name.isEmpty ? "收藏版面" : favBoard.name)) {
                             ForEach(favBoard.items, id: \.self) { favBoardItem in
-                                NavigationLink(value: favBoardItem) {
+                                NavigationLink(value: Route.favBoardItem(favBoardItem)) {
                                     Text(favBoardItem.bid.title)
                                 }
                             }
@@ -35,15 +40,17 @@ struct SectionView: View {
             }
             .listStyle(.plain)
             .navigationTitle("版面")
-            .navigationDestination(for: FavBoardItem.self) { favBoardItem in
-                TopicListView(board: favBoardItem.bid)
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case let .favBoardItem(item):
+                    TopicListView(board: item.bid)
+                case .allSection:
+                    AllSectionView()
+                }
             }
-            .navigationDestination(for: String.self, destination: { _ in
-                AllSectionView()
-            })
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(value: "AllSectionView") {
+                    NavigationLink(value: Route.allSection) {
                         Image(systemName: "list.bullet.clipboard")
                     }
                 }
