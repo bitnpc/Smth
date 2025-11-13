@@ -1,0 +1,48 @@
+//
+//  AllSectionView.swift
+//  Smth
+//
+//  Created by tony on 2024/3/24.
+//
+
+import SwiftUI
+
+struct AllSectionView: View {
+    @StateObject private var viewModel: AllSectionsViewModel
+
+    @MainActor
+    init(viewModel: AllSectionsViewModel? = nil) {
+        _viewModel = StateObject(wrappedValue: viewModel ?? AllSectionsViewModel())
+    }
+    
+    var body: some View {
+        List {
+            ForEach(viewModel.sections, id: \.id) { section in
+                NavigationLink(value: section) {
+                    Text(section.name)
+                }
+            }
+            if viewModel.sections.isEmpty {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                } else if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .foregroundStyle(.secondary)
+                } else {
+                    Text("暂无版面数据")
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+        .onAppear() {
+            Task {
+                await viewModel.loadSectionsIfNeeded()
+            }
+        }
+        .listStyle(.plain)
+        .navigationTitle("所有版面")
+        .toolbar(.hidden, for: .tabBar)
+    }
+}
+

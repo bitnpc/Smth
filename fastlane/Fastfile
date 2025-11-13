@@ -1,0 +1,27 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "运行 SwiftLint 代码规范检查"
+  lane :lint do
+    sh("swiftlint --config swiftlint.yml")
+  end
+
+  desc "执行单元测试"
+  lane :tests do
+    scan(
+      project: "Smth.xcodeproj",
+      scheme: "Smth",
+      clean: true,
+      code_coverage: false,
+      skip_package_dependencies_resolution: false
+    )
+  end
+
+  desc "CI 流程：Lint + 测试"
+  lane :ci do
+    lint
+    tests
+  end
+end
+
+
