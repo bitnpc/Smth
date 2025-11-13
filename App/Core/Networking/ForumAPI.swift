@@ -10,6 +10,7 @@ import Alamofire
 
 struct ForumAPI {
     var hotTopics: @Sendable (_ page: Int, _ pageSize: Int) async throws -> [Topic]
+    var topTopics: @Sendable () async throws -> [Topic]
     var boardTopics: @Sendable (_ boardID: String, _ page: Int, _ pageSize: Int) async throws -> [Topic]
 }
 
@@ -23,6 +24,18 @@ extension ForumAPI {
                 "size": String(size)
             ]
             let response = try await AF.request(APIRouter.hot(parameters))
+                .serializingDecodable(TopicResponse.self)
+                .value
+            return response.data.topics
+        },
+        topTopics: {
+            let ts = String(Int(Date().timeIntervalSince1970 * 1000))
+            let parameters = [
+                "t": ts,
+                "page": "1",
+                "size": "20"
+            ]
+            let response = try await AF.request(APIRouter.top(parameters))
                 .serializingDecodable(TopicResponse.self)
                 .value
             return response.data.topics
@@ -47,6 +60,7 @@ extension ForumAPI {
 extension ForumAPI {
     static let preview = ForumAPI(
         hotTopics: { _, _ in Topic.previewSamples },
+        topTopics: { Topic.previewSamples },
         boardTopics: { _, _, _ in Topic.previewSamples }
     )
 }

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     private let boards: [Board] = Board.defaultBoard()
 
     @State private var selectedIndex: Int = 0
@@ -29,11 +31,16 @@ struct HomeView: View {
                     TopicListView(board: board) { offset in
                         updateHeaderHidden(for: board.id, with: offset)
                     }
+                    .smthScaffoldBackground()
                     .tag(index)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
+            .animation(.easeInOut(duration: 0.2), value: selectedIndex)
+            .background(Color.clear)
         }
+        .smthScaffoldBackground()
+        .tint(AppTheme.accentColor(for: colorScheme))
         .navigationDestination(for: Topic.self) { topic in
             TopicDetailView(topicID: topic.id)
         }

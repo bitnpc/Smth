@@ -8,31 +8,62 @@
 import SwiftUI
 
 struct TopicContentRowView: View {
-    
+    @Environment(\.colorScheme) private var colorScheme
+
     let article: Article
-    
+
     var body: some View {
-        VStack (alignment: .leading) {
-            Text(article.subject).font(.title2)
-            HStack {
-                AsyncImage(url: URL.init(string: article.account.avatarUrl)) { image in
+        VStack(alignment: .leading, spacing: 18) {
+            Text(article.subject)
+                .font(.system(.title2, design: .rounded).weight(.bold))
+                .foregroundColor(.primary)
+                .lineSpacing(6)
+
+            HStack(alignment: .center, spacing: 14) {
+                AsyncImage(url: URL(string: article.account.avatarUrl)) { image in
                     image.resizable()
-                        .frame(maxWidth: 30, maxHeight: 30)
-                        .cornerRadius(15)
+                        .scaledToFill()
                 } placeholder: {
-                    Image(systemName: "person.circle").frame(maxWidth: 30, maxHeight: 30)
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundStyle(.secondary)
                 }
-                Text(article.account.name)
+                .frame(width: 44, height: 44)
+                .clipShape(Circle())
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(article.account.name)
+                        .font(.system(.headline, design: .rounded))
+                        .foregroundColor(.primary)
+                    Text(article.postTimeString)
+                        .font(.system(.footnote, design: .rounded))
+                        .foregroundStyle(.secondary)
+                }
+
                 Spacer()
-                Text(String(article.postTimeString)).font(.caption).foregroundColor(.gray)
             }
-            .frame(height: 50)
-            Text(article.content).font(.body).lineSpacing(6)
-            if article.attachments != nil {
-                ImageGroupView(attachments: article.attachments!)
+
+            Text(article.content)
+                .font(.system(.body, design: .rounded))
+                .foregroundColor(.primary)
+                .lineSpacing(8)
+
+            if let attachments = article.attachments, !attachments.isEmpty {
+                ImageGroupView(attachments: attachments)
             }
         }
+        .padding(.vertical, 24)
+        .padding(.horizontal, 26)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
+                .fill(AppTheme.surfaceBackground(for: colorScheme))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
+                .stroke(AppTheme.borderColor(for: colorScheme), lineWidth: 1)
+        )
+        .shadow(color: AppTheme.shadowColor(for: colorScheme).opacity(0.16), radius: 18, y: 12)
     }
 }
-
-

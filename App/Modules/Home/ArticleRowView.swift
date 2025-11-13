@@ -8,32 +8,67 @@
 import SwiftUI
 
 struct ArticleRowView: View {
-    
+    @Environment(\.colorScheme) private var colorScheme
+
     let article: Article
-    
+
     var body: some View {
-        VStack (alignment: .leading) {
-            HStack {
-                AsyncImage(url: URL.init(string: article.account.avatarUrl)) { image in
+        VStack(alignment: .leading, spacing: 16) {
+            HStack(alignment: .center, spacing: 12) {
+                AsyncImage(url: URL(string: article.account.avatarUrl)) { image in
                     image.resizable()
-                        .frame(maxWidth: 30, maxHeight: 30)
-                        .cornerRadius(15)
+                        .scaledToFill()
                 } placeholder: {
-                    Image(systemName: "person.circle").frame(maxWidth: 30, maxHeight: 30)
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundStyle(.secondary)
                 }
-                Text(article.account.name)
+                .frame(width: 36, height: 36)
+                .clipShape(Circle())
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(article.account.name)
+                        .font(.system(.subheadline, design: .rounded).weight(.semibold))
+                        .foregroundColor(.primary)
+                    Text(article.postTimeString)
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundStyle(.secondary)
+                }
+
                 Spacer()
             }
-            .frame(height: 50)
-            Text(article.content).font(.body).lineSpacing(6)
-            if article.quoteContent.count != 0 {
+
+            Text(article.content)
+                .font(.system(.body, design: .rounded))
+                .foregroundColor(.primary)
+                .lineSpacing(8)
+
+            if !article.quoteContent.isEmpty {
                 Text(article.quoteContent)
-                    .font(.footnote)
-                    .lineSpacing(8)
-                    .lineLimit(5)
-                    .foregroundColor(.gray)
-                    .padding(.top, 5)
+                    .font(.system(.footnote, design: .rounded))
+                    .lineSpacing(6)
+                    .foregroundStyle(.secondary)
+                    .padding(.leading, 12)
+                    .padding(.vertical, 12)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(
+                        RoundedRectangle(cornerRadius: AppTheme.smallCornerRadius, style: .continuous)
+                            .fill(AppTheme.subduedSurface(for: colorScheme))
+                    )
             }
         }
+        .padding(.vertical, 18)
+        .padding(.horizontal, 22)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
+                .fill(AppTheme.surfaceBackground(for: colorScheme))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
+                .stroke(AppTheme.borderColor(for: colorScheme), lineWidth: 1)
+        )
+        .shadow(color: AppTheme.shadowColor(for: colorScheme).opacity(0.09), radius: 12, y: 6)
     }
 }

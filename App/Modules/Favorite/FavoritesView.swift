@@ -8,22 +8,17 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    
+    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var loginState: LoginState
+
     @State private var selection: FavoritesTab = .boards
     @StateObject private var viewModel = FavoritesViewModel()
     @State private var showLoginView = false
 
     var body: some View {
-        VStack(spacing: 0) {
-            Picker("收藏类型", selection: $selection) {
-                ForEach(FavoritesTab.allCases, id: \.self) { tab in
-                    Text(tab.title)
-                        .tag(tab)
-                }
-            }
-            .pickerStyle(.segmented)
-            .padding()
+        VStack(spacing: AppTheme.verticalSpacing) {
+            segmentedControl
+                .padding(.top, AppTheme.verticalSpacing)
 
             Group {
                 if loginState.isLoggedIn {
@@ -33,31 +28,34 @@ struct FavoritesView: View {
                     case .topics:
                         FavTopicList(viewModel: viewModel)
                     }
-                    
-                }else {
+                } else {
                     loginPromptView
                 }
             }
             .animation(.easeInOut(duration: 0.2), value: selection)
-            .navigationDestination(for: FavoriteRoute.self) { route in
-                switch route {
-                case let .favBoardItem(item):
-                    TopicListView(board: item.bid)
-                case let .favTopic(topic):
-                    TopicDetailView(topicID: topic.id)
-                case .allSection:
-                    AllSectionView()
-                }
-            }
-            .navigationDestination(for: SMSection.self) { section in
-                BoardListView(section: section)
-            }
-            .navigationDestination(for: Topic.self) { topic in
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .background(Color.clear)
+        .smthScaffoldBackground()
+        .tint(AppTheme.accentColor(for: colorScheme))
+        .navigationDestination(for: FavoriteRoute.self) { route in
+            switch route {
+            case let .favBoardItem(item):
+                TopicListView(board: item.bid)
+            case let .favTopic(topic):
                 TopicDetailView(topicID: topic.id)
+            case .allSection:
+                AllSectionView()
             }
         }
+        .navigationDestination(for: SMSection.self) { section in
+            BoardListView(section: section)
+        }
+        .navigationDestination(for: Topic.self) { topic in
+            TopicDetailView(topicID: topic.id)
+        }
         .toolbarVisibility(.hidden, for: .navigationBar)
-        .onAppear() {
+        .onAppear {
             handleLoginStateChange(isLoggedIn: loginState.isLoggedIn)
         }
         .onChange(of: loginState.isLoggedIn) { isLoggedIn in
@@ -79,26 +77,56 @@ struct FavoritesView: View {
             }
         }
     }
+
+    private var segmentedControl: some View {
+        return VStack(alignment: .leading, spacing: 8) {
+            Text("我的收藏")
+                .font(.system(.largeTitle, design: .rounded).weight(.bold))
+
+            Picker("收藏类型", selection: $selection) {
+                ForEach(FavoritesTab.allCases, id: \.self) { tab in
+                    Text(tab.title)
+                        .tag(tab)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(10)
+            .background(
+                RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
+                    .fill(AppTheme.subduedSurface(for: colorScheme))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
+                            .stroke(AppTheme.borderColor(for: colorScheme))
+                    )
+            )
+        }
+    }
     
     private var loginPromptView: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 18) {
             Image(systemName: "lock.shield")
-                .font(.system(size: 36))
-                .foregroundStyle(.secondary)
-            Text("登录后可查看收藏内容")
-                .foregroundStyle(.secondary)
+                .font(.system(size: 42))
+                .foregroundStyle(AppTheme.accentColor(for: colorScheme))
+            VStack(spacing: 6) {
+                Text("登录后可查看收藏内容")
+                    .font(.system(.headline, design: .rounded))
+                Text("同步你的版面与主题收藏，随时掌握关注动态。")
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundStyle(.secondary)
+            }
             Button {
                 showLoginView = true
             } label: {
                 Text("立即登录")
-                    .font(.body)
+                    .font(.system(.headline, design: .rounded))
+                    .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .padding(.vertical, 48)
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
+        .padding(.horizontal, 36)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .smthSurfaceBackground()
     }
     
     private func handleLoginStateChange(isLoggedIn: Bool, forceReload: Bool = false) {

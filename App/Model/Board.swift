@@ -19,14 +19,13 @@ struct Board: Codable, Hashable {
 extension Board {
     static func defaultBoard() -> [Board] {
         return [
-            Board.init(id: "a317717325f16d68583d66294fe60044", title: "热帖", isFavorite: 0, groupId: "1", type: 0, name: "热门"),
-            Board.init(id: "4ae455859a94230d1aaf93812db8e759", title: "十大", isFavorite: 0, groupId: "2", type: 0, name: "十大"),
-            Board.init(id: "96e49d69096a5444d556bfd472d91c4f", title: "房产", isFavorite: 0, groupId: "3d1a6f8d2521f6066507f2bc3cca2bf5", type: 0, name: "房产"),
-            Board.init(id: "3", title: "亲子", isFavorite: 0, groupId: "4", type: 0, name: "亲子"),
-            Board.init(id: "4", title: "汽车", isFavorite: 0, groupId: "5", type: 0, name: "汽车"),
-            Board.init(id: "5", title: "家庭", isFavorite: 0, groupId: "6", type: 0, name: "家庭"),
-            Board.init(id: "6", title: "理财", isFavorite: 0, groupId: "7", type: 0, name: "理财"),
-            Board.init(id: "7", title: "图览", isFavorite: 0, groupId: "8", type: 0, name: "图览")
+            Board.init(id: "1", title: "热帖", isFavorite: 0, groupId: "1", type: 0, name: "热门"),
+            Board.init(id: "0", title: "十大", isFavorite: 0, groupId: "2", type: 0, name: "十大"),
+            Board.init(id: "c2ea7c56020eb65b0f4dfc2a867d97e7", title: "房产", isFavorite: 0, groupId: "3d1a6f8d2521f6066507f2bc3cca2bf5", type: 0, name: "房产"),
+            Board.init(id: "db0bbb22ae11a11c352110e2cf31ce41", title: "亲子", isFavorite: 0, groupId: "4", type: 0, name: "亲子"),
+            Board.init(id: "e8d1470f8c33b86d8dae444090e81be4", title: "汽车", isFavorite: 0, groupId: "5", type: 0, name: "汽车"),
+            Board.init(id: "eb8324a810531dc904815d120988e6de", title: "家庭", isFavorite: 0, groupId: "6", type: 0, name: "家庭"),
+            Board.init(id: "3bcda03dcf4ca0e36c3cc96eaa4cf6f8", title: "理财", isFavorite: 0, groupId: "7", type: 0, name: "理财"),
         ]
     }
 }

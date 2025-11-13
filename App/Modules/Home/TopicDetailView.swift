@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TopicDetailView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     let topicID: String
     @StateObject private var viewModel: TopicDetailViewModel
 
@@ -26,29 +28,27 @@ struct TopicDetailView: View {
             if viewModel.isLoading {
                 ProgressView()
             } else if let errorMessage = viewModel.errorMessage {
-                VStack(spacing: 12) {
+                VStack(spacing: 16) {
                     Text(errorMessage)
                         .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
                     Button("重试") {
                         Task {
                             await viewModel.load(page: 0)
                         }
                     }
-                    .buttonStyle(.bordered)
+                    .buttonStyle(.borderedProminent)
                 }
+                .padding()
             } else if let firstArticle = viewModel.articles.first {
-                List {
-                    TopicContentRowView(article: firstArticle)
-                    ForEach(viewModel.articles.dropFirst(), id: \.id) { article in
-                        ArticleRowView(article: article)
-                    }
-                }
-                .listStyle(.plain)
+                listView(with: firstArticle)
             } else {
                 Text("暂无内容")
                     .foregroundStyle(.secondary)
             }
         }
+        .smthScaffoldBackground()
+        .tint(AppTheme.accentColor(for: colorScheme))
         .navigationTitle(viewModel.board?.title ?? "")
         .toolbar(.hidden, for: .tabBar)
         .applyNavigationDisplayMode()
@@ -57,6 +57,39 @@ struct TopicDetailView: View {
                 await viewModel.loadIfNeeded()
             }
         }
+    }
+
+    @ViewBuilder
+    private func listView(with firstArticle: Article) -> some View {
+        List {
+            TopicContentRowView(article: firstArticle)
+                .listRowInsets(.init(top: AppTheme.verticalSpacing, leading: 0, bottom: AppTheme.compactSpacing, trailing: 0))
+                .listRowBackground(Color.clear)
+
+            ForEach(viewModel.articles.dropFirst(), id: \.id) { article in
+                ArticleRowView(article: article)
+                    .listRowInsets(.init(top: AppTheme.compactSpacing, leading: 0, bottom: AppTheme.compactSpacing, trailing: 0))
+                    .listRowBackground(Color.clear)
+            }
+        }
+        .listStyle(.plain)
+        .environment(\.defaultMinListRowHeight, 10)
+        .modifier(HideListBackgroundModifier())
+    }
+}
+
+private struct HideListBackgroundModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        #if os(iOS)
+        if #available(iOS 16.0, *) {
+            content
+                .scrollContentBackground(.hidden)
+        } else {
+            content
+        }
+        #else
+        content
+        #endif
     }
 }
 
@@ -70,5 +103,3 @@ private extension View {
         #endif
     }
 }
-
-

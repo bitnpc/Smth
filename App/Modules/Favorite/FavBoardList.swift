@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct FavBoardList: View {
-    private let gridColumns: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: 12), count: 2)
+    @Environment(\.colorScheme) private var colorScheme
+
+    private let gridColumns: [GridItem] = Array(
+        repeating: GridItem(.flexible(), spacing: AppTheme.compactSpacing),
+        count: 2
+    )
 
     @ObservedObject private var viewModel: FavoritesViewModel
     
@@ -18,75 +23,111 @@ struct FavBoardList: View {
     
     var body: some View {
         ScrollView {
-            if viewModel.favBoards.isEmpty {
-                if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
-                        .foregroundStyle(.secondary)
-                } else if viewModel.isLoading {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                } else {
-                    Text("暂无收藏")
-                        .foregroundStyle(.secondary)
-                }
-            } else {
-                ForEach(viewModel.favBoards) { favBoard in
-                    LazyVGrid(columns: gridColumns) {
-                        ForEach(favBoard.items, id: \.self) { favBoardItem in
-                            NavigationLink(value: FavoriteRoute.favBoardItem(favBoardItem)) {
-                                boardCard(for: favBoardItem)
+            VStack(spacing: AppTheme.verticalSpacing) {
+                if viewModel.favBoards.isEmpty {
+                    if let errorMessage = viewModel.errorMessage {
+                        VStack(spacing: 12) {
+                            Text(errorMessage)
+                                .foregroundStyle(.secondary)
+                                .multilineTextAlignment(.center)
+                            Button("重试") {
+                                Task {
+                                    await viewModel.loadFavoriteBoards()
+                                }
                             }
-                            .buttonStyle(.plain)
+                            .buttonStyle(.borderedProminent)
                         }
+                        .padding(.vertical, 64)
+                        .smthSurfaceBackground()
+                    } else if viewModel.isLoading {
+                        ProgressView()
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.vertical, 64)
+                    } else {
+                        VStack(spacing: 10) {
+                            Image(systemName: "star")
+                                .font(.system(size: 36, weight: .semibold))
+                                .foregroundStyle(AppTheme.accentColor(for: colorScheme))
+                            Text("暂无收藏版面")
+                                .font(.system(.headline, design: .rounded))
+                            Text("收藏你常去的版面，首页快速进入。")
+                                .font(.system(.subheadline, design: .rounded))
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(.vertical, 64)
+                        .smthSurfaceBackground(subdued: true)
                     }
-                    .padding()
-                }
-                NavigationLink(value: FavoriteRoute.allSection) {
-                    Image(systemName: "list.bullet.clipboard")
-                    Text("全部版面")
+                } else {
+                    ForEach(viewModel.favBoards) { favBoard in
+                        VStack(alignment: .leading, spacing: AppTheme.compactSpacing) {
+                            Text(favBoard.name)
+                                .font(.system(.title3, design: .rounded).weight(.semibold))
+                                .foregroundStyle(.primary)
+
+                            LazyVGrid(columns: gridColumns, spacing: AppTheme.compactSpacing) {
+                                ForEach(favBoard.items, id: \.self) { favBoardItem in
+                                    NavigationLink(value: FavoriteRoute.favBoardItem(favBoardItem)) {
+                                        boardCard(for: favBoardItem)
+                                    }
+                                    .buttonStyle(.plain)
+                                }
+                            }
+                        }
+                        .padding(.vertical, AppTheme.compactSpacing)
+                        .padding(.horizontal, AppTheme.verticalSpacing)
+                        .smthSurfaceBackground()
+                    }
+
+                    NavigationLink(value: FavoriteRoute.allSection) {
+                        HStack(spacing: 12) {
+                            Image(systemName: "list.bullet.clipboard")
+                                .font(.system(size: 20, weight: .semibold))
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("全部版面")
+                                    .font(.system(.headline, design: .rounded))
+                                Text("探索全部分类，快速定位喜爱的社区。")
+                                    .font(.system(.footnote, design: .rounded))
+                                    .foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(.vertical, 22)
+                        .padding(.horizontal, AppTheme.verticalSpacing)
+                        .smthSurfaceBackground(subdued: true)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
+            .padding(.vertical, AppTheme.verticalSpacing)
         }
-        .navigationTitle("收藏版面")
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 
     @ViewBuilder
     private func boardCard(for item: FavBoardItem) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 10) {
             Text(item.bid.title)
-                .font(.body)
+                .font(.system(.body, design: .rounded).weight(.semibold))
                 .foregroundStyle(.primary)
                 .lineLimit(2)
             Text(item.bid.name)
-                .font(.caption)
+                .font(.system(.caption, design: .rounded))
                 .foregroundStyle(.secondary)
         }
+        .padding(.vertical, 18)
+        .padding(.horizontal, 16)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, 12)
-        .padding(.horizontal, 14)
-        .background(cardBackgroundColor)
-        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .strokeBorder(borderColor, lineWidth: 0.5)
-        }
-    }
-
-    private var cardBackgroundColor: Color {
-        #if os(macOS)
-        return Color(nsColor: .windowBackgroundColor)
-        #else
-        return Color(uiColor: .secondarySystemBackground)
-        #endif
-    }
-
-    private var borderColor: Color {
-        #if os(macOS)
-        return Color(nsColor: .separatorColor).opacity(0.4)
-        #else
-        return Color(uiColor: .separator).opacity(0.3)
-        #endif
+        .background(
+            RoundedRectangle(cornerRadius: AppTheme.smallCornerRadius, style: .continuous)
+                .fill(AppTheme.surfaceBackground(for: colorScheme))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: AppTheme.smallCornerRadius, style: .continuous)
+                .stroke(AppTheme.borderColor(for: colorScheme), lineWidth: 1)
+        )
     }
 }
 

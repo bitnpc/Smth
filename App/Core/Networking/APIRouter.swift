@@ -9,6 +9,7 @@ import Foundation
 import Alamofire
 
 enum APIRouter: URLRequestConvertible {
+    case top([String: String])
     case hot([String: String])
     case topicList([String: String])
     case article(topicID: String, page: Int, sortType: SortType, parameters: [String: String])
@@ -32,6 +33,7 @@ enum APIRouter: URLRequestConvertible {
 
     private var path: String {
         switch self {
+        case .top: return "wap/api/hot/ten"
         case .hot: return "wap/api/hot/global"
         case .topicList: return "wap/api/board/topic/list"
         case let .article(topicID, page, sortType, _):
@@ -52,6 +54,7 @@ enum APIRouter: URLRequestConvertible {
 
         switch self {
         case let .hot(parameters),
+            let .top(parameters),
              let .topicList(parameters),
              let .article(_, _, _, parameters),
              let .section(parameters),

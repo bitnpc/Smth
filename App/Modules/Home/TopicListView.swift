@@ -35,16 +35,16 @@ struct TopicListView: View {
             }
             .frame(height: 0)
 
-            LazyVStack(spacing: 12) {
+            LazyVStack(spacing: AppTheme.verticalSpacing) {
                 ForEach(viewModel.topics) { topic in
                     NavigationLink(value: topic) {
                         TopicRowView(
                             topic: topic,
                             isVisited: browsingHistory.visitedTopicIDs.contains(topic.id)
                         )
-                            .onAppear {
-                                viewModel.loadNextPageIfNeeded(currentItem: topic)
-                            }
+                        .onAppear {
+                            viewModel.loadNextPageIfNeeded(currentItem: topic)
+                        }
                     }
                     .buttonStyle(.plain)
                     .simultaneousGesture(TapGesture().onEnded {
@@ -55,14 +55,13 @@ struct TopicListView: View {
 
                 if viewModel.isLoadingPage {
                     ProgressView()
-                        .padding(.vertical, 24)
+                        .padding(.vertical, 32)
                 }
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 10)
+            .padding(.vertical, AppTheme.verticalSpacing)
         }
         .coordinateSpace(name: coordinateSpaceID)
-        .background(listBackgroundColor)
+        .smthScaffoldBackground()
         .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
             guard let onScroll else { return }
             DispatchQueue.main.async {
@@ -76,7 +75,7 @@ struct TopicListView: View {
                 VStack(spacing: 12) {
                     Text(errorMessage)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                     Button("重试") {
                         Task {
                             await viewModel.retry()
@@ -97,14 +96,6 @@ struct TopicListView: View {
                 await viewModel.loadInitialIfNeeded()
             }
         }
-    }
-
-    private var listBackgroundColor: Color {
-        #if os(macOS)
-        return Color(nsColor: .windowBackgroundColor)
-        #else
-        return Color(uiColor: .systemGroupedBackground)
-        #endif
     }
 }
 

@@ -10,6 +10,7 @@ import Alamofire
 
 protocol TopicRepositoryProtocol {
     func fetchHotTopics(page: Int, pageSize: Int) async throws -> [Topic]
+    func fetchTopTopics() async throws -> [Topic]
     func fetchTopics(in boardID: String, page: Int, pageSize: Int) async throws -> [Topic]
     func fetchMyTopics(page: Int) async throws -> [Article]
     func fetchTopicDetail(topicID: String, page: Int, sortType: SortType) async throws -> TopicDetail
@@ -25,6 +26,14 @@ struct TopicRepository: TopicRepositoryProtocol {
     func fetchHotTopics(page: Int, pageSize: Int) async throws -> [Topic] {
         do {
             return try await api.hotTopics(page, pageSize)
+        } catch {
+            throw AppError.network(message: error.localizedDescription)
+        }
+    }
+    
+    func fetchTopTopics() async throws -> [Topic] {
+        do {
+            return try await api.topTopics()
         } catch {
             throw AppError.network(message: error.localizedDescription)
         }
@@ -99,13 +108,16 @@ struct TopicRepository: TopicRepositoryProtocol {
 }
 
 struct StubTopicRepository: TopicRepositoryProtocol {
+    
     var hotTopics: (_ page: Int, _ size: Int) async throws -> [Topic]
+    var topTopics: () async throws -> [Topic]
     var boardTopics: (_ boardID: String, _ page: Int, _ size: Int) async throws -> [Topic]
     var myTopics: (_ page: Int) async throws -> [Article]
     var topicDetail: (_ topicID: String, _ page: Int, _ sortType: SortType) async throws -> TopicDetail
 
     init(
         hotTopics: @escaping (_ page: Int, _ size: Int) async throws -> [Topic] = { _, _ in [] },
+        topTopics: @escaping () async throws -> [Topic] = { [] },
         boardTopics: @escaping (_ boardID: String, _ page: Int, _ size: Int) async throws -> [Topic] = { _, _, _ in [] },
         myTopics: @escaping (_ page: Int) async throws -> [Article] = { _ in [] },
         topicDetail: @escaping (_ topicID: String, _ page: Int, _ sortType: SortType) async throws -> TopicDetail = { _, _, _ in
@@ -125,6 +137,7 @@ struct StubTopicRepository: TopicRepositoryProtocol {
         }
     ) {
         self.hotTopics = hotTopics
+        self.topTopics = topTopics
         self.boardTopics = boardTopics
         self.myTopics = myTopics
         self.topicDetail = topicDetail
@@ -132,6 +145,10 @@ struct StubTopicRepository: TopicRepositoryProtocol {
 
     func fetchHotTopics(page: Int, pageSize: Int) async throws -> [Topic] {
         try await hotTopics(page, pageSize)
+    }
+    
+    func fetchTopTopics() async throws -> [Topic] {
+        try await topTopics()
     }
 
     func fetchTopics(in boardID: String, page: Int, pageSize: Int) async throws -> [Topic] {

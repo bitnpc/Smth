@@ -6,11 +6,10 @@
 //
 
 import SwiftUI
-#if os(macOS)
-import AppKit
-#endif
 
 struct TopicRowView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     let topic: Topic
     let isVisited: Bool
 
@@ -24,73 +23,63 @@ struct TopicRowView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 14) {
             Text(topic.subject)
-                .font(.headline)
+                .font(.system(.title3, design: .rounded).weight(.semibold))
                 .foregroundColor(.primary)
                 .lineLimit(3)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .multilineTextAlignment(.leading)
+                .lineSpacing(4)
 
-            HStack(alignment: .firstTextBaseline, spacing: 12) {
-                Label("\(topic.availables)", systemImage: "text.bubble")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+            HStack(alignment: .center, spacing: 18) {
+                HStack(spacing: 6) {
+                    Image(systemName: "text.bubble")
+                    Text("\(topic.availables)")
+                }
+                .font(.system(.subheadline, design: .rounded).weight(.medium))
+                .foregroundStyle(.secondary)
 
-                Label("\(topic.likeAvailables)", systemImage: "hand.thumbsup")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                HStack(spacing: 6) {
+                    Image(systemName: "hand.thumbsup")
+                    Text("\(topic.likeAvailables)")
+                }
+                .font(.system(.subheadline, design: .rounded).weight(.medium))
+                .foregroundStyle(.secondary)
 
                 Spacer()
 
                 Text(boardTitle)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .font(.system(.footnote, design: .rounded))
+                    .foregroundStyle(AppTheme.accentColor(for: colorScheme))
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(
+                        Capsule(style: .continuous)
+                            .fill(AppTheme.accentColor(for: colorScheme).opacity(0.12))
+                    )
             }
         }
-        .padding(.vertical, 10)
-        .padding(.horizontal, 12)
+        .padding(.vertical, 20)
+        .padding(.horizontal, 22)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(background)
-        .overlay {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .strokeBorder(borderColor, lineWidth: 0.5)
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-    }
-
-    private var background: some View {
-        Group {
-            if isVisited {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(visitedBackgroundColor)
-            } else {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(cardBackgroundColor)
-            }
-        }
-    }
-
-    private var cardBackgroundColor: Color {
-        #if os(macOS)
-        return Color(nsColor: .windowBackgroundColor)
-        #else
-        return Color(uiColor: .secondarySystemBackground)
-        #endif
-    }
-
-    private var visitedBackgroundColor: Color {
-        #if os(macOS)
-        return Color(nsColor: .controlHighlightColor)
-        #else
-        return Color(uiColor: .systemGray5)
-        #endif
-    }
-
-    private var borderColor: Color {
-        #if os(macOS)
-        return Color(nsColor: .separatorColor).opacity(0.4)
-        #else
-        return Color(uiColor: .separator).opacity(0.4)
-        #endif
+        .background(
+            RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
+                .fill(isVisited ? AppTheme.subduedSurface(for: colorScheme) : AppTheme.surfaceBackground(for: colorScheme))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
+                .stroke(
+                    AppTheme.borderColor(for: colorScheme).opacity(isVisited ? 0.4 : 1.0),
+                    lineWidth: 1
+                )
+        )
+        .shadow(
+            color: AppTheme.shadowColor(for: colorScheme).opacity(isVisited ? 0.08 : 0.16),
+            radius: isVisited ? 10 : 14,
+            y: isVisited ? 3 : 8
+        )
+        .contentShape(RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(topic.subject)，回复 \(topic.availables) 条，点赞 \(topic.likeAvailables) 次，所属版面 \(boardTitle)")
     }
 }

@@ -9,18 +9,23 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.colorScheme) private var colorScheme
     @State private var selection: RootDestination? = .home
 
     var body: some View {
-        #if os(macOS)
-        sidebarLayout
-        #else
-        if horizontalSizeClass == .compact {
-            tabLayout
-        } else {
+        Group {
+            #if os(macOS)
             sidebarLayout
+            #else
+            if horizontalSizeClass == .compact {
+                tabLayout
+            } else {
+                sidebarLayout
+            }
+            #endif
         }
-        #endif
+        .smthScaffoldBackground()
+        .tint(AppTheme.accentColor(for: colorScheme))
     }
 
     private var tabLayout: some View {
@@ -61,6 +66,7 @@ struct ContentView: View {
             }
             .tag(RootDestination.mine)
         }
+        .background(Color.clear)
     }
 
     private var sidebarLayout: some View {

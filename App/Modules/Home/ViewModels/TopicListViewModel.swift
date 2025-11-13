@@ -17,11 +17,11 @@ final class TopicListViewModel: ObservableObject {
     private let repository: TopicRepositoryProtocol
     private let pageSize: Int
     private var paginationState = PaginationState<Topic>()
-    private let boardID: String?
+    private let boardID: String
 
     init(
         repository: TopicRepositoryProtocol = AppContainer.shared.resolve(TopicRepositoryProtocol.self),
-        boardID: String? = nil,
+        boardID: String,
         pageSize: Int = 20
     ) {
         self.repository = repository
@@ -81,10 +81,12 @@ final class TopicListViewModel: ObservableObject {
         guard let nextPage = paginationState.startLoadingNextPage() else { return }
         do {
             let newItems: [Topic]
-            if let boardID {
-                newItems = try await repository.fetchTopics(in: boardID, page: nextPage, pageSize: pageSize)
-            } else {
+            if boardID == "0" {
+                newItems = try await repository.fetchTopTopics()
+            } else if boardID == "1" {
                 newItems = try await repository.fetchHotTopics(page: nextPage, pageSize: pageSize)
+            } else {
+                newItems = try await repository.fetchTopics(in: boardID, page: nextPage, pageSize: pageSize)
             }
             paginationState.completeLoading(with: newItems, pageSize: pageSize)
             topics = paginationState.items
