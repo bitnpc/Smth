@@ -23,13 +23,18 @@ struct TopicRowView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: 5) {
             Text(topic.subject)
-                .font(.system(.title3, design: .rounded).weight(.semibold))
+                .font(.headline)
                 .foregroundColor(.primary)
-                .lineLimit(3)
-                .multilineTextAlignment(.leading)
-                .lineSpacing(4)
+                .lineLimit(2)
+            
+            if let article = topic.article {
+                Text(article.body)
+                    .font(.callout)
+                    .foregroundColor(.secondary)
+                    .lineLimit(2)
+            }
 
             HStack(alignment: .center, spacing: 18) {
                 HStack(spacing: 6) {
@@ -59,8 +64,8 @@ struct TopicRowView: View {
                     )
             }
         }
-        .padding(.vertical, 20)
-        .padding(.horizontal, 22)
+        .padding(.vertical, 10)
+        .padding(.horizontal, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
