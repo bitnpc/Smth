@@ -50,7 +50,6 @@ struct TopicDetailView: View {
         .smthScaffoldBackground()
         .tint(AppTheme.accentColor(for: colorScheme))
         .navigationTitle(viewModel.board?.title ?? "")
-        .toolbar(.hidden, for: .tabBar)
         .applyNavigationDisplayMode()
         .onAppear {
             Task {

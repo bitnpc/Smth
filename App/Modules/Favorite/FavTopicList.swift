@@ -16,25 +16,23 @@ struct FavTopicList: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: AppTheme.verticalSpacing) {
-                if viewModel.favTopics.isEmpty {
-                    emptyState
-                } else {
-                    LazyVStack(spacing: AppTheme.verticalSpacing) {
-                        ForEach(viewModel.favTopics) { topic in
-                            NavigationLink(value: FavoriteRoute.favTopic(topic)) {
-                                TopicRowView(topic: topic)
-                            }
-                            .buttonStyle(.plain)
+        VStack(spacing: AppTheme.verticalSpacing) {
+            if viewModel.favTopics.isEmpty {
+                emptyState
+            } else {
+//                LazyVStack(spacing: AppTheme.verticalSpacing) {
+                    ForEach(viewModel.favTopics) { topic in
+                        NavigationLink(value: FavoriteRoute.favTopic(topic)) {
+                            TopicRowView(topic: topic)
                         }
+                        .buttonStyle(.plain)
                     }
-                    .padding(.vertical, AppTheme.compactSpacing)
-                }
+//                }
+//                .padding(.vertical, AppTheme.compactSpacing)
             }
-            .padding(.vertical, AppTheme.verticalSpacing)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .padding(.vertical, AppTheme.verticalSpacing)
+//        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 
     private var emptyState: some View {

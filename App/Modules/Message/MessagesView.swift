@@ -14,31 +14,27 @@ struct MessagesView: View {
 
     var body: some View {
         VStack(spacing: AppTheme.verticalSpacing) {
-            header
-
             ScrollView {
-                LazyVStack(spacing: AppTheme.verticalSpacing) {
-                    ForEach(1...12, id: \.self) { index in
-                        messageCard(
-                            title: "\(selection.title) · 消息 \(index)",
-                            body: "这里展示示例消息内容，真实数据接入后可替换，可展示多行文字描述当前通知的具体信息。"
-                        )
+                LazyVStack(spacing: AppTheme.verticalSpacing, pinnedViews: [.sectionHeaders]) {
+                    Section {
+                        ForEach(1...12, id: \.self) { index in
+                            messageCard(
+                                title: "\(selection.title) · 消息 \(index)",
+                                body: "这里展示示例消息内容，真实数据接入后可替换，可展示多行文字描述当前通知的具体信息。"
+                            )
+                        }
+                    } header: {
+                        header
                     }
                 }
-                .padding(.vertical, AppTheme.verticalSpacing)
             }
         }
-        .padding(.horizontal, AppTheme.verticalSpacing)
-        .padding(.top, AppTheme.verticalSpacing)
         .smthScaffoldBackground()
         .tint(AppTheme.accentColor(for: colorScheme))
     }
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("消息中心")
-                .font(.system(.largeTitle, design: .rounded).weight(.bold))
-
+        VStack() {
             Picker("消息类型", selection: $selection) {
                 ForEach(MessageTab.allCases, id: \.self) { tab in
                     Text(tab.title)

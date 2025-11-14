@@ -42,7 +42,6 @@ struct AllSectionView: View {
         }
         .listStyle(.plain)
         .navigationTitle("所有版面")
-        .toolbar(.hidden, for: .tabBar)
     }
 }
 

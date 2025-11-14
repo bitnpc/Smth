@@ -16,26 +16,27 @@ struct FavoritesView: View {
     @State private var showLoginView = false
 
     var body: some View {
-        VStack(spacing: AppTheme.verticalSpacing) {
-            segmentedControl
-                .padding(.top, AppTheme.verticalSpacing)
-
-            Group {
-                if loginState.isLoggedIn {
-                    switch selection {
-                    case .boards:
-                        FavBoardList(viewModel: viewModel)
-                    case .topics:
-                        FavTopicList(viewModel: viewModel)
+        ScrollView {
+            LazyVStack(spacing: AppTheme.verticalSpacing, pinnedViews: [.sectionHeaders]) {
+                Section {
+                    Group {
+                        if loginState.isLoggedIn {
+                            switch selection {
+                            case .boards:
+                                FavBoardList(viewModel: viewModel)
+                            case .topics:
+                                FavTopicList(viewModel: viewModel)
+                            }
+                        } else {
+                            loginPromptView
+                        }
                     }
-                } else {
-                    loginPromptView
+                    .animation(.easeInOut(duration: 0.2), value: selection)
+                } header: {
+                    segmentedControl
                 }
             }
-            .animation(.easeInOut(duration: 0.2), value: selection)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .background(Color.clear)
         .smthScaffoldBackground()
         .tint(AppTheme.accentColor(for: colorScheme))
         .navigationDestination(for: FavoriteRoute.self) { route in
@@ -54,12 +55,11 @@ struct FavoritesView: View {
         .navigationDestination(for: Topic.self) { topic in
             TopicDetailView(topicID: topic.id)
         }
-        .toolbarVisibility(.hidden, for: .navigationBar)
         .onAppear {
             handleLoginStateChange(isLoggedIn: loginState.isLoggedIn)
         }
-        .onChange(of: loginState.isLoggedIn) { isLoggedIn in
-            handleLoginStateChange(isLoggedIn: isLoggedIn, forceReload: true)
+        .onChange(of: loginState.isLoggedIn) { oldValue, newValue in
+            handleLoginStateChange(isLoggedIn: newValue, forceReload: true)
         }
         .sheet(isPresented: $showLoginView) {
             LoginView(showLoginView: $showLoginView)
@@ -79,10 +79,7 @@ struct FavoritesView: View {
     }
 
     private var segmentedControl: some View {
-        return VStack(alignment: .leading, spacing: 8) {
-            Text("我的收藏")
-                .font(.system(.largeTitle, design: .rounded).weight(.bold))
-
+        return VStack() {
             Picker("收藏类型", selection: $selection) {
                 ForEach(FavoritesTab.allCases, id: \.self) { tab in
                     Text(tab.title)
@@ -143,8 +140,4 @@ struct FavoritesView: View {
             viewModel.reset()
         }
     }
-}
-
-#Preview {
-    FavoritesView()
 }

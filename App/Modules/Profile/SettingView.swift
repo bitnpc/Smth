@@ -41,6 +41,5 @@ struct SettingView: View {
             }
         }
         .navigationTitle("设置")
-        .toolbar(.hidden, for: .tabBar)
     }
 }

@@ -9,17 +9,13 @@ import SwiftUI
 
 struct TopicListView: View {
     let board: Board
-    private let onScroll: ((CGFloat) -> Void)?
-    private let coordinateSpaceID: String
 
     @EnvironmentObject private var browsingHistory: BrowsingHistoryStore
     @StateObject private var viewModel: TopicListViewModel
 
     @MainActor
-    init(board: Board, viewModel: TopicListViewModel? = nil, onScroll: ((CGFloat) -> Void)? = nil) {
+    init(board: Board, viewModel: TopicListViewModel? = nil) {
         self.board = board
-        self.onScroll = onScroll
-        self.coordinateSpaceID = "topic-list-\(board.id)"
         if let viewModel {
             _viewModel = StateObject(wrappedValue: viewModel)
         } else {
@@ -29,12 +25,6 @@ struct TopicListView: View {
 
     var body: some View {
         ScrollView {
-            GeometryReader { proxy in
-                Color.clear
-                    .preference(key: ScrollOffsetPreferenceKey.self, value: proxy.frame(in: .named(coordinateSpaceID)).minY)
-            }
-            .frame(height: 0)
-
             LazyVStack(spacing: AppTheme.verticalSpacing) {
                 ForEach(viewModel.topics) { topic in
                     NavigationLink(value: topic) {
@@ -60,14 +50,7 @@ struct TopicListView: View {
             }
             .padding(.vertical, AppTheme.verticalSpacing)
         }
-        .coordinateSpace(name: coordinateSpaceID)
         .smthScaffoldBackground()
-        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-            guard let onScroll else { return }
-            DispatchQueue.main.async {
-                onScroll(value)
-            }
-        }
         .overlay(alignment: .center) {
             if viewModel.topics.isEmpty && viewModel.isLoadingPage {
                 ProgressView()
@@ -90,7 +73,6 @@ struct TopicListView: View {
             await viewModel.refresh()
         }
         .navigationTitle(board.title)
-        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             Task {
                 await viewModel.loadInitialIfNeeded()
@@ -98,12 +80,3 @@ struct TopicListView: View {
         }
     }
 }
-
-private struct ScrollOffsetPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
-    }
-}
-

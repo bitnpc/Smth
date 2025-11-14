@@ -45,13 +45,13 @@ struct BoardSelector: View {
             )
             .padding(.horizontal, AppTheme.verticalSpacing)
             .padding(.top, AppTheme.verticalSpacing)
-            .onChange(of: selectedIndex) { newValue in
+            .onChange(of: selectedIndex, { oldValue, newValue in
                 guard boards.indices.contains(newValue) else { return }
                 let board = boards[newValue]
                 withAnimation(.easeInOut(duration: 0.2)) {
                     proxy.scrollTo(board.id, anchor: .center)
                 }
-            }
+            })
         }
     }
 

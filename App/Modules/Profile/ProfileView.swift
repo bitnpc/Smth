@@ -38,7 +38,6 @@ struct ProfileView: View {
             .smthScaffoldBackground()
             .tint(AppTheme.accentColor(for: colorScheme))
             .navigationTitle("我的")
-            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: ProfileDestination.self) { destination in
                 switch destination {
                 case let .profile(account):
@@ -65,8 +64,8 @@ struct ProfileView: View {
             .onAppear {
                 handleLoginStateChange(isLoggedIn: loginState.isLoggedIn)
             }
-            .onChange(of: loginState.isLoggedIn) { isLoggedIn in
-                handleLoginStateChange(isLoggedIn: isLoggedIn, forceReload: true)
+            .onChange(of: loginState.isLoggedIn) { oldValue, newValue in
+                handleLoginStateChange(isLoggedIn: newValue, forceReload: true)
             }
         }
     }

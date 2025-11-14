@@ -30,9 +30,7 @@ struct BrowsingHistoryView: View {
                 }
             }
         }
-        .listStyle(.insetGrouped)
         .navigationTitle("浏览历史")
-        .toolbar(.hidden, for: .tabBar)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button("清空") {

@@ -36,6 +36,7 @@ struct ContentView: View {
         })) {
             NavigationStack {
                 HomeView()
+                    .navigationTitle("首页")
             }
             .tabItem {
                 Label("首页", systemImage: "house")
@@ -44,6 +45,7 @@ struct ContentView: View {
 
             NavigationStack {
                 FavoritesView()
+                    .navigationTitle("收藏")
             }
             .tabItem {
                 Label("收藏", systemImage: "heart")
@@ -52,6 +54,7 @@ struct ContentView: View {
 
             NavigationStack {
                 MessagesView()
+                    .navigationTitle("消息")
             }
             .tabItem {
                 Label("消息", systemImage: "bubble.left.and.bubble.right")
@@ -60,6 +63,7 @@ struct ContentView: View {
 
             NavigationStack {
                 ProfileView()
+                    .navigationTitle("我的")
             }
             .tabItem {
                 Label("我的", systemImage: "person.circle")
@@ -90,22 +94,18 @@ struct ContentView: View {
         case .home:
             NavigationStack {
                 HomeView()
-                    .navigationTitle("首页")
             }
         case .favorites:
             NavigationStack {
                 FavoritesView()
-                    .navigationTitle("收藏")
             }
         case .messages:
             NavigationStack {
                 MessagesView()
-                    .navigationTitle("消息")
             }
         case .mine:
             NavigationStack {
                 ProfileView()
-                    .navigationTitle("我的")
             }
         }
     }
