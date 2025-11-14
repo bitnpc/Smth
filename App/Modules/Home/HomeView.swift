@@ -44,11 +44,6 @@ struct HomeView: View {
         }
         .smthScaffoldBackground()
         .tint(AppTheme.accentColor(for: colorScheme))
-        .toolbar(content: {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                toolbarItems()
-            }
-        })
         .navigationDestination(for: Topic.self) { topic in
             TopicDetailView(topicID: topic.id)
         }
@@ -57,6 +52,15 @@ struct HomeView: View {
                 await viewModel.loadInitialIfNeeded()
             }
         }
+#if os(iOS)
+
+        .toolbar(content: {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                toolbarItems()
+            }
+        })
+#endif
+        
     }
 
     private var currentBoard: Board {

@@ -9,13 +9,15 @@ import SwiftUI
 
 struct TopicListView: View {
     let board: Board
+    let onTopicSelected: ((Topic) -> Void)?
 
     @EnvironmentObject private var browsingHistory: BrowsingHistoryStore
     @StateObject private var viewModel: TopicListViewModel
 
     @MainActor
-    init(board: Board, viewModel: TopicListViewModel? = nil) {
+    init(board: Board, viewModel: TopicListViewModel? = nil, onTopicSelected: ((Topic) -> Void)? = nil) {
         self.board = board
+        self.onTopicSelected = onTopicSelected
         if let viewModel {
             _viewModel = StateObject(wrappedValue: viewModel)
         } else {
@@ -27,20 +29,8 @@ struct TopicListView: View {
         ScrollView {
             LazyVStack(spacing: AppTheme.verticalSpacing) {
                 ForEach(viewModel.topics) { topic in
-                    NavigationLink(value: topic) {
-                        TopicRowView(
-                            topic: topic,
-                            isVisited: browsingHistory.visitedTopicIDs.contains(topic.id)
-                        )
-                        .onAppear {
-                            viewModel.loadNextPageIfNeeded(currentItem: topic)
-                        }
-                    }
-                    .buttonStyle(.plain)
-                    .simultaneousGesture(TapGesture().onEnded {
-                        browsingHistory.record(topic)
-                    })
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    topicSelectionView(for: topic)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
 
                 if viewModel.isLoadingPage {
@@ -77,6 +67,39 @@ struct TopicListView: View {
             Task {
                 await viewModel.loadInitialIfNeeded()
             }
+        }
+    }
+}
+
+extension TopicListView {
+    @ViewBuilder
+    private func topicSelectionView(for topic: Topic) -> some View {
+        if let onTopicSelected {
+            Button {
+                browsingHistory.record(topic)
+                onTopicSelected(topic)
+            } label: {
+                topicRow(for: topic)
+            }
+            .buttonStyle(.plain)
+        } else {
+            NavigationLink(value: topic) {
+                topicRow(for: topic)
+            }
+            .buttonStyle(.plain)
+            .simultaneousGesture(TapGesture().onEnded {
+                browsingHistory.record(topic)
+            })
+        }
+    }
+
+    private func topicRow(for topic: Topic) -> some View {
+        TopicRowView(
+            topic: topic,
+            isVisited: browsingHistory.visitedTopicIDs.contains(topic.id)
+        )
+        .onAppear {
+            viewModel.loadNextPageIfNeeded(currentItem: topic)
         }
     }
 }

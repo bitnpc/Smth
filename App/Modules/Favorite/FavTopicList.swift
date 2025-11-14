@@ -10,9 +10,11 @@ import SwiftUI
 struct FavTopicList: View {
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject private var viewModel: FavoritesViewModel
+    private let onTopicSelected: ((Topic) -> Void)?
     
-    init(viewModel: FavoritesViewModel) {
+    init(viewModel: FavoritesViewModel, onTopicSelected: ((Topic) -> Void)? = nil) {
         self.viewModel = viewModel
+        self.onTopicSelected = onTopicSelected
     }
     
     var body: some View {
@@ -22,10 +24,19 @@ struct FavTopicList: View {
             } else {
 //                LazyVStack(spacing: AppTheme.verticalSpacing) {
                     ForEach(viewModel.favTopics) { topic in
-                        NavigationLink(value: FavoriteRoute.favTopic(topic)) {
-                            TopicRowView(topic: topic)
+                        if let onTopicSelected {
+                            Button {
+                                onTopicSelected(topic)
+                            } label: {
+                                TopicRowView(topic: topic)
+                            }
+                            .buttonStyle(.plain)
+                        } else {
+                            NavigationLink(value: FavoriteRoute.favTopic(topic)) {
+                                TopicRowView(topic: topic)
+                            }
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
                     }
 //                }
 //                .padding(.vertical, AppTheme.compactSpacing)

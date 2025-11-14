@@ -16,9 +16,11 @@ struct FavBoardList: View {
     )
 
     @ObservedObject private var viewModel: FavoritesViewModel
+    private let onBoardSelected: ((FavBoardItem) -> Void)?
     
-    init(viewModel: FavoritesViewModel) {
+    init(viewModel: FavoritesViewModel, onBoardSelected: ((FavBoardItem) -> Void)? = nil) {
         self.viewModel = viewModel
+        self.onBoardSelected = onBoardSelected
     }
     
     var body: some View {
@@ -34,10 +36,19 @@ struct FavBoardList: View {
 
                         LazyVGrid(columns: gridColumns, spacing: AppTheme.compactSpacing) {
                             ForEach(favBoard.items, id: \.self) { favBoardItem in
-                                NavigationLink(value: FavoriteRoute.favBoardItem(favBoardItem)) {
-                                    boardCard(for: favBoardItem)
+                                if let onBoardSelected {
+                                    Button {
+                                        onBoardSelected(favBoardItem)
+                                    } label: {
+                                        boardCard(for: favBoardItem)
+                                    }
+                                    .buttonStyle(.plain)
+                                } else {
+                                    NavigationLink(value: FavoriteRoute.favBoardItem(favBoardItem)) {
+                                        boardCard(for: favBoardItem)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
-                                .buttonStyle(.plain)
                             }
                         }
                     }
