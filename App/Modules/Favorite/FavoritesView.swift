@@ -12,6 +12,7 @@ struct FavoritesView: View {
     @EnvironmentObject private var loginState: LoginState
 
     @State private var selection: FavoritesTab = .boards
+    @State private var showProfileView = false
     @StateObject private var viewModel = FavoritesViewModel()
     @State private var showLoginView = false
 
@@ -64,6 +65,24 @@ struct FavoritesView: View {
         .sheet(isPresented: $showLoginView) {
             LoginView(showLoginView: $showLoginView)
         }
+#if os(iOS)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    showProfileView = true
+                }) {
+                    Image(systemName: "person.crop.circle")
+                }
+            }
+        }
+        .sheet(isPresented: $showProfileView) {
+            NavigationStack {
+                ProfileView()
+            }
+            .presentationDetents([.large])
+            .presentationDragIndicator(.visible)
+        }
+#endif
     }
 
     private enum FavoritesTab: CaseIterable {

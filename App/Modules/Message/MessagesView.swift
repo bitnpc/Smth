@@ -11,6 +11,7 @@ struct MessagesView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     @State private var selection: MessageCategory
+    @State private var showProfileView = false
     private let onMessageSelected: ((MessagePreview) -> Void)?
 
     init(initialCategory: MessageCategory = .inbox, onMessageSelected: ((MessagePreview) -> Void)? = nil) {
@@ -43,6 +44,24 @@ struct MessagesView: View {
         }
         .smthScaffoldBackground()
         .tint(AppTheme.accentColor(for: colorScheme))
+#if os(iOS)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    showProfileView = true
+                }) {
+                    Image(systemName: "person.crop.circle")
+                }
+            }
+        }
+        .sheet(isPresented: $showProfileView) {
+            NavigationStack {
+                ProfileView()
+            }
+            .presentationDetents([.large])
+            .presentationDragIndicator(.visible)
+        }
+#endif
     }
 
     private var header: some View {

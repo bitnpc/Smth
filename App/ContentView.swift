@@ -72,22 +72,13 @@ struct ContentView: View {
                 Label("消息", systemImage: "bubble.left.and.bubble.right")
             }
             .tag(RootDestination.messages)
-
-            NavigationStack {
-                ProfileView()
-                    .navigationTitle("我的")
-            }
-            .tabItem {
-                Label("我的", systemImage: "person.circle")
-            }
-            .tag(RootDestination.mine)
         }
         .background(Color.clear)
     }
 
     private var sidebarLayout: some View {
         NavigationSplitView {
-            List(RootDestination.allCases, selection: $selection) { destination in
+            List(RootDestination.iOSCases, selection: $selection) { destination in
                 Label(destination.title, systemImage: destination.iconName)
                     .tag(destination)
             }
@@ -409,6 +400,11 @@ private enum RootDestination: String, CaseIterable, Hashable, Identifiable {
         case .messages: return "bubble.left.and.bubble.right"
         case .mine: return "person.circle"
         }
+    }
+    
+    /// iOS 平台显示的 tab 列表（不包含"我的"）
+    static var iOSCases: [RootDestination] {
+        [.home, .favorites, .messages]
     }
 }
 

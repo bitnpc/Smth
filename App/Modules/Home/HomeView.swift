@@ -15,6 +15,7 @@ struct HomeView: View {
     private let boards: [Board] = Board.defaultBoard()
 
     @State private var selectedIndex: Int = 0
+    @State private var showProfileView = false
     @StateObject private var viewModel = TopicListViewModel(boardID: Board.defaultBoard().first!.id)
 
     var body: some View {
@@ -53,14 +54,19 @@ struct HomeView: View {
             }
         }
 #if os(iOS)
-
-        .toolbar(content: {
+        .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 toolbarItems()
             }
-        })
+        }
+        .sheet(isPresented: $showProfileView) {
+            NavigationStack {
+                ProfileView()
+            }
+            .presentationDetents([.large])
+            .presentationDragIndicator(.visible)
+        }
 #endif
-        
     }
 
     private var currentBoard: Board {
@@ -76,7 +82,7 @@ struct HomeView: View {
                 Image(systemName: "magnifyingglass.circle")
             }
             Button(action: {
-                print("我的")
+                showProfileView = true
             }) {
                 Image(systemName: "person.crop.circle")
             }
