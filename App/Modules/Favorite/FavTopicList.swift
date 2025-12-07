@@ -22,24 +22,46 @@ struct FavTopicList: View {
             if viewModel.favTopics.isEmpty {
                 emptyState
             } else {
-//                LazyVStack(spacing: AppTheme.verticalSpacing) {
-                    ForEach(viewModel.favTopics) { topic in
+                LazyVStack(spacing: AppTheme.verticalSpacing) {
+                    ForEach(Array(viewModel.favTopics.enumerated()), id: \.element.id) { index, topic in
+                        let hasNewReply = viewModel.hasNewReply(for: topic.id)
                         if let onTopicSelected {
                             Button {
                                 onTopicSelected(topic)
                             } label: {
-                                TopicRowView(topic: topic)
+                                FavTopicRowView(topic: topic, hasNewReply: hasNewReply)
                             }
                             .buttonStyle(.plain)
+                            .onAppear {
+                                // 当滚动到倒数第5个时加载下一页
+                                if index == viewModel.favTopics.count - 5 {
+                                    Task {
+                                        await viewModel.loadNextFavoriteTopicsPage()
+                                    }
+                                }
+                            }
                         } else {
                             NavigationLink(value: FavoriteRoute.favTopic(topic)) {
-                                TopicRowView(topic: topic)
+                                FavTopicRowView(topic: topic, hasNewReply: hasNewReply)
                             }
                             .buttonStyle(.plain)
+                            .onAppear {
+                                // 当滚动到倒数第5个时加载下一页
+                                if index == viewModel.favTopics.count - 5 {
+                                    Task {
+                                        await viewModel.loadNextFavoriteTopicsPage()
+                                    }
+                                }
+                            }
                         }
                     }
-//                }
-//                .padding(.vertical, AppTheme.compactSpacing)
+                    
+                    if viewModel.isLoadingPage {
+                        ProgressView()
+                            .padding()
+                    }
+                }
+                .padding(.vertical, AppTheme.compactSpacing)
             }
         }
         .padding(.vertical, AppTheme.verticalSpacing)
@@ -68,5 +90,31 @@ struct FavTopicList: View {
         .padding(.vertical, 56)
         .padding(.horizontal, 28)
         .smthSurfaceBackground(subdued: true)
+    }
+}
+
+// 自定义的 FavTopic Row View，支持显示新回复标识
+struct FavTopicRowView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    let topic: Topic
+    let hasNewReply: Bool
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .top, spacing: 12) {
+                TopicRowView(topic: topic)
+                
+                if hasNewReply {
+                    VStack(spacing: 4) {
+                        Circle()
+                            .fill(AppTheme.accentColor(for: colorScheme))
+                            .frame(width: 8, height: 8)
+                            .offset(x: -4, y: 4)
+                        Spacer()
+                    }
+                    .frame(width: 8)
+                }
+            }
+        }
     }
 }

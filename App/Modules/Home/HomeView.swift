@@ -48,6 +48,7 @@ struct HomeView: View {
         .navigationDestination(for: Topic.self) { topic in
             TopicDetailView(topicID: topic.id)
         }
+        .toolbarTitleDisplayMode(.inlineLarge)
         .onAppear {
             Task {
                 await viewModel.loadInitialIfNeeded()
@@ -56,7 +57,18 @@ struct HomeView: View {
 #if os(iOS)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                toolbarItems()
+                Button(action: {
+                    print("搜索")
+                }) {
+                    Image(systemName: "magnifyingglass.circle")
+                }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    showProfileView = true
+                }) {
+                    Image(systemName: "person.crop.circle")
+                }
             }
         }
         .sheet(isPresented: $showProfileView) {
@@ -71,22 +83,6 @@ struct HomeView: View {
 
     private var currentBoard: Board {
         boards[boards.indices.contains(selectedIndex) ? selectedIndex : boards.startIndex]
-    }
-    
-    @ViewBuilder
-    private func toolbarItems() -> some View {
-        HStack {
-            Button(action: {
-                print("搜索")
-            }) {
-                Image(systemName: "magnifyingglass.circle")
-            }
-            Button(action: {
-                showProfileView = true
-            }) {
-                Image(systemName: "person.crop.circle")
-            }
-        }
     }
 }
 

@@ -20,7 +20,7 @@ struct TopicContentRowView: View {
                 .lineSpacing(6)
 
             HStack(alignment: .center, spacing: 14) {
-                AsyncImage(url: URL(string: article.account.avatarUrl)) { image in
+                AsyncImage(url: URL(string: article.account!.avatarUrl)) { image in
                     image.resizable()
                         .scaledToFill()
                 } placeholder: {
@@ -33,7 +33,7 @@ struct TopicContentRowView: View {
                 .clipShape(Circle())
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(article.account.name)
+                    Text(article.account!.name)
                         .font(.system(.headline, design: .rounded))
                         .foregroundColor(.primary)
                     Text(article.postTimeString)

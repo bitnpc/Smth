@@ -65,6 +65,7 @@ struct FavoritesView: View {
         .sheet(isPresented: $showLoginView) {
             LoginView(showLoginView: $showLoginView)
         }
+        .toolbarTitleDisplayMode(.inlineLarge)
 #if os(iOS)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -150,7 +151,7 @@ struct FavoritesView: View {
             Task {
                 if forceReload {
                     await viewModel.loadFavoriteBoards()
-                    await viewModel.loadFavoriteTopics()
+                    await viewModel.loadInitialFavoriteTopics()
                 } else {
                     await viewModel.loadFavoritesIfNeeded()
                 }

@@ -16,12 +16,43 @@ struct Article: Codable, Hashable {
     
     let postTime: TimeInterval
     
-    let account: Account
+    let account: Account?
+    let accountId: String?
     
 //    let likes: [Like]?
     let topicId: String
     
     var attachments: [Attachment]?
+    let board: Board? // 可选，在某些场景下可能没有
+    
+    enum CodingKeys: String, CodingKey {
+        case id, subject, body, postTime, account, accountId, topicId, attachments, board
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        subject = try container.decode(String.self, forKey: .subject)
+        body = try container.decode(String.self, forKey: .body)
+        postTime = try container.decode(TimeInterval.self, forKey: .postTime)
+        topicId = try container.decode(String.self, forKey: .topicId)
+        account = try? container.decodeIfPresent(Account.self, forKey: .account)
+        accountId = try? container.decodeIfPresent(String.self, forKey: .accountId)
+        attachments = try? container.decodeIfPresent([Attachment].self, forKey: .attachments)
+        board = try? container.decodeIfPresent(Board.self, forKey: .board)
+    }
+    
+    init(id: String, subject: String, body: String, postTime: TimeInterval, account: Account?, accountId: String?, topicId: String, attachments: [Attachment]? = nil, board: Board? = nil) {
+        self.id = id
+        self.subject = subject
+        self.body = body
+        self.postTime = postTime
+        self.account = account
+        self.accountId = accountId
+        self.topicId = topicId
+        self.attachments = attachments
+        self.board = board
+    }
     
     var quoteContent: String {
         var quote = ""
@@ -69,6 +100,31 @@ struct Article: Codable, Hashable {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         return dateFormatter.string(from: date)
+    }
+    
+    // 从纯文本 body 中提取内容（去掉邮件头）
+    var plainTextContent: String {
+        let lines = body.components(separatedBy: "\n")
+        var contentLines: [String] = []
+        var foundEmptyLine = false
+        
+        for line in lines {
+            if foundEmptyLine {
+                // 跳过引用内容（以 : 开头的行通常是引用）
+                if !line.trimmingCharacters(in: .whitespaces).hasPrefix(":") {
+                    // 跳过来源信息（包含 ※ 来源）
+                    if !line.contains("※ 来源") && !line.contains("发自") {
+                        contentLines.append(line)
+                    }
+                }
+            } else if line.trimmingCharacters(in: .whitespaces).isEmpty {
+                foundEmptyLine = true
+            }
+        }
+        
+        let content = contentLines.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines)
+        // 如果提取的内容为空，返回 body（可能是 HTML 格式）
+        return content.isEmpty ? body : content
     }
 }
 

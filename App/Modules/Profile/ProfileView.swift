@@ -20,13 +20,16 @@ struct ProfileView: View {
             ScrollView {
                 VStack(spacing: AppTheme.verticalSpacing) {
                     if loginState.isLoggedIn {
-                        if viewModel.isLoading {
-                            ProgressView()
-                                .padding(.vertical, 48)
-                        } else if let errorMessage = viewModel.errorMessage {
+                        if let errorMessage = viewModel.errorMessage {
                             errorCard(errorMessage)
                         } else {
                             loggedInContent
+                                .overlay(alignment: .top) {
+                                    if viewModel.isLoading {
+                                        ProgressView()
+                                            .padding(.top, 8)
+                                    }
+                                }
                         }
                     } else {
                         guestCard
