@@ -497,7 +497,7 @@ private struct ProfileAvatarView: View {
             Circle()
                 .fill(AppTheme.subduedSurface(for: colorScheme))
             if let url = URL(string: imageURL), imageURL.isEmpty == false {
-                AsyncImage(url: url) { phase in
+                CachedAsyncImagePhase(url: url) { phase in
                     switch phase {
                     case let .success(image):
                         image

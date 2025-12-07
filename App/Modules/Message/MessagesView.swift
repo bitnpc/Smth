@@ -142,7 +142,7 @@ struct MessagesView: View {
         HStack(alignment: .top, spacing: 16) {
             if let conversation = item as? Conversation {
                 // 显示 speaker 的头像
-                AsyncImage(url: URL(string: conversation.speaker?.avatarUrl ?? "")) { phase in
+                CachedAsyncImagePhase(url: URL(string: conversation.speaker?.avatarUrl ?? "")) { phase in
                     switch phase {
                     case .empty:
                         Image(systemName: "person.circle.fill")
@@ -166,7 +166,7 @@ struct MessagesView: View {
                 .clipShape(Circle())
             } else if let notify = item as? Notify {
                 // 显示回复者的头像
-                AsyncImage(url: URL(string: notify.transactor?.avatarUrl ?? notify.transactorAvatar ?? "")) { phase in
+                CachedAsyncImagePhase(url: URL(string: notify.transactor?.avatarUrl ?? notify.transactorAvatar ?? "")) { phase in
                     switch phase {
                     case .empty:
                         Image(systemName: "person.circle.fill")

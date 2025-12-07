@@ -62,7 +62,7 @@ struct FriendRowView: View {
     
     var body: some View {
         HStack(spacing: 16) {
-            AsyncImage(url: URL(string: account.avatarUrl)) { image in
+            CachedAsyncImage(url: URL(string: account.avatarUrl)) { image in
                 image
                     .resizable()
                     .scaledToFill()

@@ -129,7 +129,7 @@ struct ProfileView: View {
 
     private var profileHeaderCard: some View {
         HStack(alignment: .center, spacing: 20) {
-            AsyncImage(url: URL(string: viewModel.profile.account.avatarUrl)) { image in
+            CachedAsyncImage(url: URL(string: viewModel.profile.account.avatarUrl)) { image in
                 image.resizable()
                     .scaledToFill()
             } placeholder: {

@@ -20,7 +20,7 @@ struct TopicContentRowView: View {
                 .lineSpacing(6)
 
             HStack(alignment: .center, spacing: 14) {
-                AsyncImage(url: URL(string: article.account!.avatarUrl)) { image in
+                CachedAsyncImage(url: URL(string: article.account!.avatarUrl)) { image in
                     image.resizable()
                         .scaledToFill()
                 } placeholder: {

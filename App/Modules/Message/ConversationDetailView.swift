@@ -120,7 +120,7 @@ struct MessageRowView: View {
         HStack(alignment: .top, spacing: 8) {
             if !isCurrentUser {
                 // 对方消息：头像在左边
-                AsyncImage(url: URL(string: speakerAvatarUrl ?? "")) { phase in
+                CachedAsyncImagePhase(url: URL(string: speakerAvatarUrl ?? "")) { phase in
                     switch phase {
                     case .empty, .failure:
                         Image(systemName: "person.circle.fill")
@@ -171,7 +171,7 @@ struct MessageRowView: View {
             
             if isCurrentUser {
                 // 当前用户消息：头像在右边
-                AsyncImage(url: URL(string: currentUserAvatarUrl ?? "")) { phase in
+                CachedAsyncImagePhase(url: URL(string: currentUserAvatarUrl ?? "")) { phase in
                     switch phase {
                     case .empty, .failure:
                         Image(systemName: "person.circle.fill")

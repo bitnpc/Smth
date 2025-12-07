@@ -84,7 +84,7 @@ struct DraftRowView: View {
                     HStack(spacing: 8) {
                         ForEach(previews, id: \.key) { preview in
                             if let url = URL(string: preview.privateUrl ?? "") {
-                                AsyncImage(url: url) { image in
+                                CachedAsyncImage(url: url) { image in
                                     image
                                         .resizable()
                                         .scaledToFill()

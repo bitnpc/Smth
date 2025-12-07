@@ -15,7 +15,7 @@ struct ArticleRowView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(alignment: .center, spacing: 12) {
-                AsyncImage(url: URL(string: article.account!.avatarUrl)) { image in
+                CachedAsyncImage(url: URL(string: article.account!.avatarUrl)) { image in
                     image.resizable()
                         .scaledToFill()
                 } placeholder: {

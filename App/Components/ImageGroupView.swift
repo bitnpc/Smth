@@ -22,7 +22,7 @@ struct ImageGroupView: View {
                         ForEach(0..<3, id: \.self) { itemIndex in
                             let index = groupIndex * 3 + itemIndex
                             if index < images.count {
-                                AsyncImage(url: URL.init(string: images[index].ks3Url ?? images[index].cdnUrl)) { image in
+                                CachedAsyncImage(url: URL.init(string: images[index].ks3Url ?? images[index].cdnUrl)) { image in
                                     image.resizable().aspectRatio(contentMode: .fill)
                                         .frame(width: 100, height: 80).clipped()
                                 } placeholder: {

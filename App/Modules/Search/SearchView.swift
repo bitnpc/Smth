@@ -212,7 +212,7 @@ struct SearchArticleRowView: View {
             // 用户信息和版面
             HStack(spacing: 12) {
                 // 用户头像
-                AsyncImage(url: URL(string: article.account?.avatarUrl ?? "")) { phase in
+                CachedAsyncImagePhase(url: URL(string: article.account?.avatarUrl ?? "")) { phase in
                     switch phase {
                     case .empty, .failure:
                         Image(systemName: "person.circle.fill")
