@@ -47,6 +47,12 @@ struct ProfileView: View {
                     ProfileDetail(account: account)
                 case .myTopic:
                     MyTopicView()
+                case .drafts:
+                    DraftView()
+                case let .friends(userName):
+                    FriendsView(userName: userName)
+                case let .fans(userName):
+                    FansView(userName: userName)
                 case .settings:
                     SettingView()
                 case .history:
@@ -80,7 +86,7 @@ struct ProfileView: View {
             }
             .buttonStyle(.plain)
 
-            actionSection(title: "创作与收藏", rows: [
+            actionSection(title: "创作", rows: [
                 .init(
                     title: "文章",
                     subtitle: "查看并管理你发布的所有主题帖",
@@ -89,15 +95,9 @@ struct ProfileView: View {
                 ),
                 .init(
                     title: "草稿",
-                    subtitle: "草稿箱功能即将上线",
+                    subtitle: "查看并管理你的草稿",
                     icon: "tray.full",
-                    destination: nil
-                ),
-                .init(
-                    title: "收藏",
-                    subtitle: "快速跳转到收藏列表",
-                    icon: "heart.fill",
-                    destination: nil
+                    destination: .drafts
                 )
             ])
 
@@ -106,13 +106,13 @@ struct ProfileView: View {
                     title: "关注",
                     subtitle: "查看你关注的用户",
                     icon: "person.2.fill",
-                    destination: nil
+                    destination: .friends(viewModel.profile.account.name)
                 ),
                 .init(
                     title: "粉丝",
                     subtitle: "了解关注你的读者",
                     icon: "person.crop.circle.badge.plus",
-                    destination: nil
+                    destination: .fans(viewModel.profile.account.name)
                 )
             ])
 
@@ -253,7 +253,9 @@ struct ProfileView: View {
                     )
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.vertical, 18)
+        .contentShape(Rectangle())
     }
 
     private var guestCard: some View {
@@ -315,6 +317,9 @@ struct ProfileView: View {
 private enum ProfileDestination: Hashable {
     case profile(Account)
     case myTopic
+    case drafts
+    case friends(String)
+    case fans(String)
     case settings
     case history
 }

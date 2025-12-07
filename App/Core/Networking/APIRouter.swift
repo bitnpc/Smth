@@ -23,6 +23,10 @@ enum APIRouter: URLRequestConvertible {
     case notify(type: Int, page: Int, parameters: [String: String])
     case conversationMessages(speakerId: String, page: Int, parameters: [String: String])
     case markConversationRead(speakerId: String, parameters: [String: String])
+    case searchArticle(parameters: [String: String])
+    case drafts(parameters: [String: String])
+    case friends(name: String, parameters: [String: String])
+    case fans(name: String, parameters: [String: String])
 
     private var baseURL: URL {
         URL(string: "https://wap.newsmth.net")!
@@ -53,6 +57,10 @@ enum APIRouter: URLRequestConvertible {
         case let .notify(type, page, _): return "wap/api/notify/\(type)/\(page)"
         case let .conversationMessages(speakerId, page, _): return "wap/api/message/\(speakerId)/messages/\(page)"
         case .markConversationRead: return "wap/api/message/read"
+        case .searchArticle: return "wap/api/search/article"
+        case .drafts: return "wap/api/draft/drafts"
+        case let .friends(name, _): return "wap/api/account/friends/\(name)"
+        case let .fans(name, _): return "wap/api/account/fans/\(name)"
         }
     }
 
@@ -75,7 +83,11 @@ enum APIRouter: URLRequestConvertible {
              let .conversations(parameters),
              let .notify(_, _, parameters),
              let .conversationMessages(_, _, parameters),
-             let .markConversationRead(_, parameters):
+             let .markConversationRead(_, parameters),
+             let .searchArticle(parameters),
+             let .drafts(parameters),
+             let .friends(_, parameters),
+             let .fans(_, parameters):
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
         }
         return request

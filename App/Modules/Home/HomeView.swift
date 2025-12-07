@@ -48,6 +48,12 @@ struct HomeView: View {
         .navigationDestination(for: Topic.self) { topic in
             TopicDetailView(topicID: topic.id)
         }
+        .navigationDestination(for: SearchDestination.self) { destination in
+            switch destination {
+            case .search:
+                SearchView()
+            }
+        }
         .toolbarTitleDisplayMode(.inlineLarge)
         .onAppear {
             Task {
@@ -57,10 +63,9 @@ struct HomeView: View {
 #if os(iOS)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    print("搜索")
-                }) {
-                    Image(systemName: "magnifyingglass.circle")
+                NavigationLink(value: SearchDestination.search) {
+                    Image(systemName: "magnifyingglass")
+                        .font(.system(size: 18, weight: .semibold))
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -84,6 +89,10 @@ struct HomeView: View {
     private var currentBoard: Board {
         boards[boards.indices.contains(selectedIndex) ? selectedIndex : boards.startIndex]
     }
+}
+
+private enum SearchDestination: Hashable {
+    case search
 }
 
 #Preview {
