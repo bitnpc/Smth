@@ -65,11 +65,13 @@ struct TopicDetailView: View {
             TopicContentRowView(article: firstArticle)
                 .listRowInsets(.init(top: 0, leading: 0, bottom: AppTheme.compactSpacing, trailing: 0))
                 .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
 
             ForEach(viewModel.articles.dropFirst(), id: \.id) { article in
                 ArticleRowView(article: article)
-                    .listRowInsets(.init(top: AppTheme.compactSpacing, leading: 0, bottom: AppTheme.compactSpacing, trailing: 0))
+                    .listRowInsets(.init(top: 0, leading: 0, bottom: AppTheme.compactSpacing, trailing: 0))
                     .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
             }
         }
         .listStyle(.plain)

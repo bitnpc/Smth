@@ -65,8 +65,8 @@ struct TopicRowView: View {
                     )
             }
         }
-        .padding(.vertical, 10)
-        .padding(.horizontal, 10)
+        .padding(.vertical, AppTheme.compactSpacing)
+        .padding(.horizontal, AppTheme.compactSpacing)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)

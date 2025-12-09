@@ -21,7 +21,7 @@ struct HomeView: View {
 
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: AppTheme.verticalSpacing, pinnedViews: [.sectionHeaders]) {
+            LazyVStack(spacing: AppTheme.compactSpacing, pinnedViews: [.sectionHeaders]) {
                 Section {
                     ForEach(viewModel.topics) { topic in
                         NavigationLink(value: topic) {
