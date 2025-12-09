@@ -18,25 +18,27 @@ struct FavoritesView: View {
     @State private var showLoginView = false
 
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: AppTheme.verticalSpacing, pinnedViews: [.sectionHeaders]) {
-                Section {
-                    Group {
-                        if loginState.isLoggedIn {
-                            switch selection {
-                            case .boards:
-                                FavBoardList(viewModel: viewModel)
-                            case .topics:
-                                FavTopicList(viewModel: viewModel)
+        Group {
+            if loginState.isLoggedIn {
+                ScrollView {
+                    LazyVStack(spacing: AppTheme.verticalSpacing, pinnedViews: [.sectionHeaders]) {
+                        Section {
+                            Group {
+                                switch selection {
+                                case .boards:
+                                    FavBoardList(viewModel: viewModel)
+                                case .topics:
+                                    FavTopicList(viewModel: viewModel)
+                                }
                             }
-                        } else {
-                            loginPromptView
+                            .animation(.easeInOut(duration: 0.2), value: selection)
+                        } header: {
+                            segmentedControl
                         }
                     }
-                    .animation(.easeInOut(duration: 0.2), value: selection)
-                } header: {
-                    segmentedControl
                 }
+            } else {
+                loginPromptView
             }
         }
         .smthScaffoldBackground()

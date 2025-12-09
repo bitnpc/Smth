@@ -22,7 +22,7 @@ struct MessagesView: View {
     }
 
     var body: some View {
-        VStack(spacing: AppTheme.verticalSpacing) {
+        Group {
             if loginState.isLoggedIn {
                 ScrollView {
                     LazyVStack(spacing: AppTheme.verticalSpacing, pinnedViews: [.sectionHeaders]) {
