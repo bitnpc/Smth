@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA1E05012EE8788B00315FDC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EA1E05002EE8788B00315FDC /* SnapKit */; };
 		EA526FA12AC05EDA0025614F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = EA526FA02AC05EDA0025614F /* SwiftSoup */; };
 		EA526FAD2AC507F70025614F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = EA526FAC2AC507F70025614F /* Alamofire */; };
 /* End PBXBuildFile section */
@@ -25,6 +26,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA1E05012EE8788B00315FDC /* SnapKit in Frameworks */,
 				EA526FA12AC05EDA0025614F /* SwiftSoup in Frameworks */,
 				EA526FAD2AC507F70025614F /* Alamofire in Frameworks */,
 			);
@@ -80,6 +82,7 @@
 			packageProductDependencies = (
 				EA526FA02AC05EDA0025614F /* SwiftSoup */,
 				EA526FAC2AC507F70025614F /* Alamofire */,
+				EA1E05002EE8788B00315FDC /* SnapKit */,
 			);
 			productName = Smth;
 			productReference = EA526F8C2AC048840025614F /* Smth.app */;
@@ -112,6 +115,7 @@
 			packageReferences = (
 				EA526F9F2AC05EDA0025614F /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				EA526FAB2AC507F70025614F /* XCRemoteSwiftPackageReference "Alamofire" */,
+				EA1E04FF2EE8788B00315FDC /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = EA526F8D2AC048840025614F /* Products */;
 			projectDirPath = "";
@@ -368,6 +372,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		EA1E04FF2EE8788B00315FDC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 		EA526F9F2AC05EDA0025614F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
@@ -387,6 +399,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		EA1E05002EE8788B00315FDC /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA1E04FF2EE8788B00315FDC /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
 		EA526FA02AC05EDA0025614F /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EA526F9F2AC05EDA0025614F /* XCRemoteSwiftPackageReference "SwiftSoup" */;

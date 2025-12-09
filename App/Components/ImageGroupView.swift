@@ -8,11 +8,14 @@
 
 import SwiftUI
 
+private struct ImageIndex: Identifiable {
+    let id: Int
+}
+
 struct ImageGroupView: View {
     let attachments: [Attachment]
     
-    @State private var selectedImageIndex: Int?
-    @State private var isImageViewerPresented = false
+    @State private var selectedImageIndex: ImageIndex?
     @State private var sourceFrame: CGRect?
     
     var body: some View {
@@ -37,15 +40,16 @@ struct ImageGroupView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $isImageViewerPresented) {
-            if let selectedIndex = selectedImageIndex {
-                ImageViewer(
-                    images: imageUrls,
-                    initialIndex: selectedIndex,
-                    isPresented: $isImageViewerPresented,
-                    sourceFrame: $sourceFrame
-                )
-            }
+        .fullScreenCover(item: $selectedImageIndex) { imageIndex in
+            ImageViewer(
+                images: imageUrls,
+                initialIndex: imageIndex.id,
+                isPresented: Binding(
+                    get: { selectedImageIndex != nil },
+                    set: { if !$0 { selectedImageIndex = nil } }
+                ),
+                sourceFrame: $sourceFrame
+            )
         }
     }
     
@@ -68,10 +72,8 @@ struct ImageGroupView: View {
                 // 获取图片在屏幕中的位置
                 let frame = geometry.frame(in: .global)
                 sourceFrame = frame
-                selectedImageIndex = index
-                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                    isImageViewerPresented = true
-                }
+                // 设置 selectedImageIndex，这会触发 fullScreenCover
+                selectedImageIndex = ImageIndex(id: index)
             }
         }
         .frame(width: 100, height: 80)
