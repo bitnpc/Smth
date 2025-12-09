@@ -2,7 +2,8 @@
 //  TopicDetailViewModel.swift
 //  Smth
 //
-//  Handles article list loading for a specific topic.
+//  话题详情视图模型，管理话题详情和文章列表的加载
+//  Created by tony
 //
 
 import Foundation

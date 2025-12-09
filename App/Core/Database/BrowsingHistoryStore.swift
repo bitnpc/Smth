@@ -2,7 +2,8 @@
 //  BrowsingHistoryStore.swift
 //  Smth
 //
-//  Created by GPT-5 Codex on 2025/11/13.
+//  浏览历史数据存储，管理用户浏览过的帖子历史记录
+//  Created by tony
 //
 
 import Foundation

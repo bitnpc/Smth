@@ -2,7 +2,8 @@
 //  SearchView.swift
 //  Smth
 //
-//  Search view for articles
+//  搜索页面视图，提供文章搜索功能
+//  Created by tony
 //
 
 import SwiftUI

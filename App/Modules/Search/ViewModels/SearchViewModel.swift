@@ -2,7 +2,8 @@
 //  SearchViewModel.swift
 //  Smth
 //
-//  Manages search state and results.
+//  搜索视图模型，管理搜索状态和搜索结果的分页加载
+//  Created by tony
 //
 
 import Foundation
@@ -21,7 +22,7 @@ final class SearchViewModel: ObservableObject {
     private var currentStart: Int = 0
     private let pageSize = 20
     
-    init(repository: SearchRepositoryProtocol = SearchRepository()) {
+    init(repository: SearchRepositoryProtocol = AppContainer.shared.resolve(SearchRepositoryProtocol.self)) {
         self.repository = repository
     }
     

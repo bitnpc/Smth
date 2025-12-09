@@ -2,7 +2,8 @@
 //  HomeView.swift
 //  Smth
 //
-//  Created by 仝超 on 2025/11/12.
+//  首页视图，展示热门话题和版块选择器
+//  Created by tony
 //
 
 import SwiftUI

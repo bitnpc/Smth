@@ -2,7 +2,8 @@
 //  TopicListView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/29.
+//  话题列表页面视图，展示版块中的话题列表
+//  Created by tony
 //
 
 import SwiftUI

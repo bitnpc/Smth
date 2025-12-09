@@ -2,7 +2,8 @@
 //  PublishView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/10/1.
+//  发布页面视图，提供发帖和回复功能
+//  Created by tony
 //
 
 import SwiftUI

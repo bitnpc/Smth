@@ -2,7 +2,8 @@
 //  FriendsViewModel.swift
 //  Smth
 //
-//  Loads friends list for the current user.
+//  好友列表视图模型，管理用户好友列表的加载和显示
+//  Created by tony
 //
 
 import Foundation
@@ -16,7 +17,7 @@ final class FriendsViewModel: ObservableObject {
     private let repository: UserRepositoryProtocol
     private let userName: String
 
-    init(userName: String, repository: UserRepositoryProtocol = UserRepository()) {
+    init(userName: String, repository: UserRepositoryProtocol = AppContainer.shared.resolve(UserRepositoryProtocol.self)) {
         self.userName = userName
         self.repository = repository
     }

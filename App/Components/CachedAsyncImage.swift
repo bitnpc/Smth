@@ -2,7 +2,8 @@
 //  CachedAsyncImage.swift
 //  Smth
 //
-//  Created as part of the 2025 refactor.
+//  缓存异步图片组件，提供带缓存的图片加载功能
+//  Created by tony
 //
 
 import SwiftUI

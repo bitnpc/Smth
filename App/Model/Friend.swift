@@ -2,7 +2,8 @@
 //  Friend.swift
 //  Smth
 //
-//  Created as part of the friends feature implementation.
+//  好友数据模型，定义好友信息和相关响应结构
+//  Created by tony
 //
 
 import Foundation

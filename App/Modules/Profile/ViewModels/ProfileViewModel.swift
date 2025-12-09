@@ -2,7 +2,8 @@
 //  ProfileViewModel.swift
 //  Smth
 //
-//  Loads user profile data for Mine tab.
+//  个人资料视图模型，管理用户个人资料的加载和显示
+//  Created by tony
 //
 
 import Foundation
@@ -16,7 +17,7 @@ final class ProfileViewModel: ObservableObject {
     private let repository: UserRepositoryProtocol
     private var hasLoaded = false
 
-    init(repository: UserRepositoryProtocol = UserRepository()) {
+    init(repository: UserRepositoryProtocol = AppContainer.shared.resolve(UserRepositoryProtocol.self)) {
         self.repository = repository
     }
 

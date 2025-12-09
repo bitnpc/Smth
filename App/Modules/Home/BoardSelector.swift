@@ -2,7 +2,8 @@
 //  BoardSelector.swift
 //  Smth
 //
-//  Created by 仝超 on 2025/11/12.
+//  版块选择器组件，提供版块选择功能
+//  Created by tony
 //
 
 import SwiftUI
@@ -45,7 +46,7 @@ struct BoardSelector: View {
             )
             .padding(.horizontal, AppTheme.verticalSpacing)
             .padding(.top, AppTheme.verticalSpacing)
-            .onChange(of: selectedIndex, { oldValue, newValue in
+            .onChange(of: selectedIndex, { _, newValue in
                 guard boards.indices.contains(newValue) else { return }
                 let board = boards[newValue]
                 withAnimation(.easeInOut(duration: 0.2)) {

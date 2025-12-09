@@ -2,11 +2,11 @@
 //  TopicRepository.swift
 //  Smth
 //
-//  Created as part of the 2025 refactor.
+//  话题相关的数据仓库，负责获取热门话题、版块话题、话题详情等
+//  Created by tony
 //
 
 import Foundation
-import Alamofire
 
 protocol TopicRepositoryProtocol {
     func fetchHotTopics(page: Int, pageSize: Int) async throws -> [Topic]
@@ -17,70 +17,43 @@ protocol TopicRepositoryProtocol {
 }
 
 struct TopicRepository: TopicRepositoryProtocol {
-    private let api: ForumAPI
+    private let apiService: APIService
 
-    init(api: ForumAPI = .live) {
-        self.api = api
+    init(apiService: APIService) {
+        self.apiService = apiService
     }
 
     func fetchHotTopics(page: Int, pageSize: Int) async throws -> [Topic] {
-        do {
-            return try await api.hotTopics(page, pageSize)
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.hotTopics(page: page, pageSize: pageSize).toEndpoint()
+        let response: TopicResponse = try await apiService.request(endpoint)
+        return response.data.topics
     }
     
     func fetchTopTopics() async throws -> [Topic] {
-        do {
-            return try await api.topTopics()
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.topTopics.toEndpoint()
+        let response: TopicResponse = try await apiService.request(endpoint)
+        return response.data.topics
     }
 
     func fetchTopics(in boardID: String, page: Int, pageSize: Int) async throws -> [Topic] {
-        do {
-            return try await api.boardTopics(boardID, page, pageSize)
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.topicList(boardID: boardID, page: page, pageSize: pageSize).toEndpoint()
+        let response: TopicResponse = try await apiService.request(endpoint)
+        return response.data.topics
     }
 
     func fetchMyTopics(page: Int) async throws -> [Article] {
-        let ts = String(Int(Date().timeIntervalSince1970 * 1000))
-        let parameters = [
-            "t": ts,
-            "type": "0",
-            "page": String(page),
-            "sort": "DESC"
-        ]
-        do {
-            let response = try await AF.request(APIRouter.myTopic(parameters))
-                .serializingDecodable(ArticleResponse.self)
-                .value
-            return response.data.articles
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.myTopics(page: page).toEndpoint()
+        let response: ArticleResponse = try await apiService.request(endpoint)
+        return response.data.articles
     }
 
     func fetchTopicDetail(topicID: String, page: Int, sortType: SortType) async throws -> TopicDetail {
-        let ts = String(Int(Date().timeIntervalSince1970 * 1000))
-        let parameters = ["t": ts]
-        let request = APIRouter.article(topicID: topicID, page: page, sortType: sortType, parameters: parameters)
-        do {
-            let responseString = try await AF.request(request).serializingString().value
-            guard let data = responseString.data(using: .utf8) else {
-                throw AppError.invalidResponse
-            }
-            let detail = try TopicRepository.decodeTopicDetail(from: data)
-            return detail
-        } catch let error as AppError {
-            throw error
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
+        let endpoint = APIEndpoint.topicDetail(topicID: topicID, page: page, sortType: sortType).toEndpoint()
+        let responseString = try await apiService.requestString(endpoint)
+        guard let data = responseString.data(using: .utf8) else {
+            throw AppError.invalidResponse
         }
+        return try TopicRepository.decodeTopicDetail(from: data)
     }
 
     private static func decodeTopicDetail(from data: Data) throws -> TopicDetail {

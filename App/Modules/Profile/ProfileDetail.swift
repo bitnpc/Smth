@@ -1,8 +1,9 @@
 //
-//  ProfileView.swift
+//  ProfileDetail.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/30.
+//  个人资料详情视图，展示用户详细信息
+//  Created by tony
 //
 
 import SwiftUI

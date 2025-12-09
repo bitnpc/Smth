@@ -2,7 +2,8 @@
 //  TopicContentRowView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/28.
+//  话题内容行视图组件，展示话题的详细内容
+//  Created by tony
 //
 
 import SwiftUI

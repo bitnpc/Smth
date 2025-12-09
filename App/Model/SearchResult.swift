@@ -2,7 +2,8 @@
 //  SearchResult.swift
 //  Smth
 //
-//  Search result models
+//  搜索结果数据模型，定义搜索文章和搜索结果结构
+//  Created by tony
 //
 
 import Foundation

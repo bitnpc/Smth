@@ -2,7 +2,8 @@
 //  ContentView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/24.
+//  主视图，管理应用的导航结构和布局（支持 iOS 和 macOS）
+//  Created by tony
 //
 
 import SwiftUI

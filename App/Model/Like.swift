@@ -2,7 +2,8 @@
 //  Like.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/28.
+//  点赞数据模型，定义点赞信息结构
+//  Created by tony
 //
 
 import Foundation

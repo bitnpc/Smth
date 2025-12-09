@@ -2,7 +2,8 @@
 //  LoginState.swift
 //  Smth
 //
-//  Created by ChatGPT on 2025/11/12.
+//  登录状态管理，跟踪用户的登录状态和认证信息
+//  Created by tony
 //
 
 import Combine

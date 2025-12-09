@@ -2,7 +2,8 @@
 //  ConversationDetailView.swift
 //  Smth
 //
-//  Conversation detail view showing messages in a conversation.
+//  会话详情页面视图，展示与特定用户的对话消息
+//  Created by tony
 //
 
 import SwiftUI

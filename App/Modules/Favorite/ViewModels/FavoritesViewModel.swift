@@ -2,7 +2,8 @@
 //  FavoritesViewModel.swift
 //  Smth
 //
-//  Created by 仝超 on 2025/11/13.
+//  收藏视图模型，管理收藏版块和收藏话题的加载和显示
+//  Created by tony
 //
 
 import Foundation
@@ -28,7 +29,7 @@ final class FavoritesViewModel: ObservableObject {
     private let pageSize = 20
     private let defaultSort = "desc" // 默认按回帖时间倒序
 
-    init(repository: SectionRepositoryProtocol = SectionRepository()) {
+    init(repository: SectionRepositoryProtocol = AppContainer.shared.resolve(SectionRepositoryProtocol.self)) {
         self.repository = repository
     }
     

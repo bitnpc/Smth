@@ -2,7 +2,8 @@
 //  Message.swift
 //  Smth
 //
-//  Message model for inbox and notifications
+//  消息数据模型，定义收件箱、通知、会话等消息相关结构
+//  Created by tony
 //
 
 import Foundation

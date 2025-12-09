@@ -2,7 +2,8 @@
 //  Attachment.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/10/15.
+//  附件数据模型，定义文章附件信息结构
+//  Created by tony
 //
 
 import Foundation

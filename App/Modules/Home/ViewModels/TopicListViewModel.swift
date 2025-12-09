@@ -2,7 +2,8 @@
 //  TopicListViewModel.swift
 //  Smth
 //
-//  Created for the 2025 refactor.
+//  话题列表视图模型，管理版块话题列表的分页加载和刷新
+//  Created by tony
 //
 
 import Foundation

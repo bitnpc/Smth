@@ -2,7 +2,8 @@
 //  AllSectionView.swift
 //  Smth
 //
-//  Created by tony on 2024/3/24.
+//  所有版块页面视图，展示完整的版块层级结构
+//  Created by tony
 //
 
 import SwiftUI

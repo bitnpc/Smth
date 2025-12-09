@@ -2,7 +2,8 @@
 //  SubBoardListView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/29.
+//  子版块列表视图组件，展示版块下的子版块列表
+//  Created by tony
 //
 
 import SwiftUI

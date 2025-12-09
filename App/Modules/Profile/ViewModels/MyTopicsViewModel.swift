@@ -2,7 +2,8 @@
 //  MyTopicsViewModel.swift
 //  Smth
 //
-//  Loads articles authored by the current user.
+//  我的话题视图模型，管理用户发布的话题列表
+//  Created by tony
 //
 
 import Foundation
@@ -15,7 +16,7 @@ final class MyTopicsViewModel: ObservableObject {
 
     private let repository: TopicRepositoryProtocol
 
-    init(repository: TopicRepositoryProtocol = TopicRepository()) {
+    init(repository: TopicRepositoryProtocol = AppContainer.shared.resolve(TopicRepositoryProtocol.self)) {
         self.repository = repository
     }
 

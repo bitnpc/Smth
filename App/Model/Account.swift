@@ -2,7 +2,8 @@
 //  Account.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/28.
+//  账户数据模型，定义用户账户信息和相关结构
+//  Created by tony
 //
 
 import Foundation

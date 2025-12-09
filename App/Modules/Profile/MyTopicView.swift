@@ -2,7 +2,8 @@
 //  MyTopicView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/30.
+//  我的话题页面视图，展示用户发布的话题列表
+//  Created by tony
 //
 
 import SwiftUI

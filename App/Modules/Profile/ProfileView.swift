@@ -2,7 +2,8 @@
 //  ProfileView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/29.
+//  个人中心页面视图，展示用户信息和功能入口
+//  Created by tony
 //
 
 import SwiftUI
@@ -73,7 +74,7 @@ struct ProfileView: View {
             .onAppear {
                 handleLoginStateChange(isLoggedIn: loginState.isLoggedIn)
             }
-            .onChange(of: loginState.isLoggedIn) { oldValue, newValue in
+            .onChange(of: loginState.isLoggedIn) { _, newValue in
                 handleLoginStateChange(isLoggedIn: newValue, forceReload: true)
             }
         }
@@ -259,27 +260,14 @@ struct ProfileView: View {
     }
 
     private var guestCard: some View {
-        VStack(spacing: 18) {
-            Image(systemName: "person.crop.circle.badge.plus")
-                .font(.system(size: 50, weight: .light))
-                .foregroundStyle(AppTheme.accentColor(for: colorScheme))
-            Text("登录后可查看完整资料和功能")
-                .font(.system(.headline, design: .rounded))
-            Text("同步收藏、历史记录与个性化设置。")
-                .font(.system(.subheadline, design: .rounded))
-                .foregroundStyle(.secondary)
-            Button {
+        GuestPromptView(
+            icon: "person.crop.circle.badge.plus",
+            title: "登录后可查看完整资料和功能",
+            subtitle: "同步收藏、历史记录与个性化设置。",
+            onLogin: {
                 showLoginView = true
-            } label: {
-                Text("立即登录")
-                    .font(.system(.headline, design: .rounded))
-                    .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent)
-        }
-        .padding(.vertical, 48)
-        .padding(.horizontal, 36)
-        .smthSurfaceBackground()
+        )
     }
 
     private func errorCard(_ message: String) -> some View {

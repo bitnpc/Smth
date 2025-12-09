@@ -2,7 +2,8 @@
 //  MessagesView.swift
 //  Smth
 //
-//  Created by 仝超 on 2025/11/12.
+//  消息页面视图，展示会话列表和通知消息
+//  Created by tony
 //
 
 import SwiftUI
@@ -74,10 +75,10 @@ struct MessagesView: View {
         .onAppear {
             handleLoginStateChange(isLoggedIn: loginState.isLoggedIn)
         }
-        .onChange(of: loginState.isLoggedIn) { oldValue, newValue in
+        .onChange(of: loginState.isLoggedIn) { _, newValue in
             handleLoginStateChange(isLoggedIn: newValue, forceReload: true)
         }
-        .onChange(of: selection) { oldValue, newValue in
+        .onChange(of: selection) { _, newValue in
             Task {
                 await viewModel.loadMessages(for: newValue)
             }
@@ -343,30 +344,14 @@ struct MessagesView: View {
     }
     
     private var loginPromptView: some View {
-        VStack(spacing: 18) {
-            Image(systemName: "lock.shield")
-                .font(.system(size: 42))
-                .foregroundStyle(AppTheme.accentColor(for: colorScheme))
-            VStack(spacing: 6) {
-                Text("登录后可查看消息")
-                    .font(.system(.headline, design: .rounded))
-                Text("同步你的消息和通知，随时掌握最新动态。")
-                    .font(.system(.subheadline, design: .rounded))
-                    .foregroundStyle(.secondary)
-            }
-            Button {
+        GuestPromptView(
+            icon: "envelope.fill",
+            title: "登录后可查看消息",
+            subtitle: "同步你的消息和通知，随时掌握最新动态。",
+            onLogin: {
                 showLoginView = true
-            } label: {
-                Text("立即登录")
-                    .font(.system(.headline, design: .rounded))
-                    .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent)
-        }
-        .padding(.vertical, 48)
-        .padding(.horizontal, 36)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-        .smthSurfaceBackground()
+        )
     }
     
     private func handleLoginStateChange(isLoggedIn: Bool, forceReload: Bool = false) {

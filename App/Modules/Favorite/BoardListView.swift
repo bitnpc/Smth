@@ -2,7 +2,8 @@
 //  BoardListView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/29.
+//  版块列表页面视图，展示版块列表
+//  Created by tony
 //
 
 import SwiftUI

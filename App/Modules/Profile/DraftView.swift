@@ -2,7 +2,8 @@
 //  DraftView.swift
 //  Smth
 //
-//  Created as part of the draft feature implementation.
+//  草稿页面视图，展示和管理用户草稿列表
+//  Created by tony
 //
 
 import SwiftUI

@@ -2,7 +2,8 @@
 //  MessagesViewModel.swift
 //  Smth
 //
-//  Manages message and notification state.
+//  消息视图模型，管理会话列表和通知消息的状态
+//  Created by tony
 //
 
 import Foundation
@@ -32,7 +33,7 @@ final class MessagesViewModel: ObservableObject {
         }
     }
     
-    init(repository: MessageRepositoryProtocol = MessageRepository()) {
+    init(repository: MessageRepositoryProtocol = AppContainer.shared.resolve(MessageRepositoryProtocol.self)) {
         self.repository = repository
     }
     

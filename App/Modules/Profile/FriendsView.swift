@@ -2,7 +2,8 @@
 //  FriendsView.swift
 //  Smth
 //
-//  Created as part of the friends feature implementation.
+//  好友页面视图，展示用户好友列表
+//  Created by tony
 //
 
 import SwiftUI

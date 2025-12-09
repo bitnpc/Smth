@@ -2,7 +2,8 @@
 //  AppContainer.swift
 //  Smth
 //
-//  Created as part of the 2025 refactor.
+//  依赖注入容器，管理应用中的所有依赖项和服务
+//  Created by tony
 //
 
 import Observation
@@ -16,9 +17,12 @@ final class AppContainer: DependencyContainer {
     static let shared = AppContainer()
 
     private lazy var apiService: APIService = DefaultAPIService()
-    private lazy var topicRepository: TopicRepositoryProtocol = TopicRepository()
-    private lazy var sectionRepository: SectionRepositoryProtocol = SectionRepository()
-    private lazy var userRepository: UserRepositoryProtocol = UserRepository()
+    private lazy var topicRepository: TopicRepositoryProtocol = TopicRepository(apiService: apiService)
+    private lazy var sectionRepository: SectionRepositoryProtocol = SectionRepository(apiService: apiService)
+    private lazy var userRepository: UserRepositoryProtocol = UserRepository(apiService: apiService)
+    private lazy var messageRepository: MessageRepositoryProtocol = MessageRepository(apiService: apiService)
+    private lazy var searchRepository: SearchRepositoryProtocol = SearchRepository(apiService: apiService)
+    private lazy var draftRepository: DraftRepositoryProtocol = DraftRepository(apiService: apiService)
 
     private init() {}
 
@@ -31,6 +35,12 @@ final class AppContainer: DependencyContainer {
             return sectionRepository as! T
         } else if type == UserRepositoryProtocol.self {
             return userRepository as! T
+        } else if type == MessageRepositoryProtocol.self {
+            return messageRepository as! T
+        } else if type == SearchRepositoryProtocol.self {
+            return searchRepository as! T
+        } else if type == DraftRepositoryProtocol.self {
+            return draftRepository as! T
         } else {
             fatalError("未注册的依赖：\(type)")
         }

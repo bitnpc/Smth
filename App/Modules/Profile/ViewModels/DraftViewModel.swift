@@ -2,7 +2,8 @@
 //  DraftViewModel.swift
 //  Smth
 //
-//  Loads drafts for the current user.
+//  草稿视图模型，管理用户草稿列表的加载和显示
+//  Created by tony
 //
 
 import Foundation
@@ -15,7 +16,7 @@ final class DraftViewModel: ObservableObject {
 
     private let repository: DraftRepositoryProtocol
 
-    init(repository: DraftRepositoryProtocol = DraftRepository()) {
+    init(repository: DraftRepositoryProtocol = AppContainer.shared.resolve(DraftRepositoryProtocol.self)) {
         self.repository = repository
     }
 

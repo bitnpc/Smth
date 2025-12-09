@@ -2,7 +2,8 @@
 //  SettingView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/30.
+//  设置页面视图，提供应用设置功能
+//  Created by tony
 //
 
 import SwiftUI

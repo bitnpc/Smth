@@ -2,7 +2,8 @@
 //  FansView.swift
 //  Smth
 //
-//  Created as part of the fans feature implementation.
+//  粉丝页面视图，展示用户粉丝列表
+//  Created by tony
 //
 
 import SwiftUI

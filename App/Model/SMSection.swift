@@ -2,7 +2,8 @@
 //  SMSection.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/28.
+//  版块分组数据模型，定义版块分组信息结构
+//  Created by tony
 //
 
 import Foundation

@@ -2,7 +2,8 @@
 //  FavBoardList.swift
 //  Smth
 //
-//  Created by 仝超 on 2025/11/13.
+//  收藏版块列表组件，展示用户收藏的版块
+//  Created by tony
 //
 
 import SwiftUI

@@ -2,7 +2,8 @@
 //  Profile.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/29.
+//  用户资料数据模型，定义用户个人信息结构
+//  Created by tony
 //
 
 import Foundation

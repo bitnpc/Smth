@@ -2,7 +2,8 @@
 //  SmthApp.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/24.
+//  应用程序入口，配置应用环境和依赖注入
+//  Created by tony
 //
 
 import SwiftUI

@@ -2,45 +2,36 @@
 //  SearchRepository.swift
 //  Smth
 //
-//  Handles search related network requests.
+//  搜索相关的数据仓库，负责文章搜索功能
+//  Created by tony
 //
 
 import Foundation
-import Alamofire
 
 protocol SearchRepositoryProtocol {
     func searchArticles(keyword: String, start: Int, count: Int, original: Bool, earliest: String?, boards: String?, status: Int) async throws -> SearchData
 }
 
 struct SearchRepository: SearchRepositoryProtocol {
+    private let apiService: APIService
+    
+    init(apiService: APIService) {
+        self.apiService = apiService
+    }
+    
     func searchArticles(keyword: String, start: Int, count: Int, original: Bool, earliest: String?, boards: String?, status: Int) async throws -> SearchData {
-        let timestamp = String(Int(Date().timeIntervalSince1970 * 1000))
-        var parameters: [String: String] = [
-            "t": timestamp,
-            "keyword": keyword,
-            "count": String(count),
-            "start": String(start),
-            "original": original ? "true" : "false",
-            "status": String(status)
-        ]
+        let endpoint = APIEndpoint.searchArticle(
+            keyword: keyword,
+            start: start,
+            count: count,
+            original: original,
+            earliest: earliest,
+            boards: boards,
+            status: status
+        ).toEndpoint()
         
-        if let earliest = earliest {
-            parameters["earliest"] = earliest
-        }
-        
-        if let boards = boards {
-            parameters["boards"] = boards
-        }
-        
-        do {
-            let response = try await AF.request(APIRouter.searchArticle(parameters: parameters))
-                .serializingDecodable(SearchResponse.self)
-                .value
-            
-            return response.data
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let response: SearchResponse = try await apiService.request(endpoint)
+        return response.data
     }
 }
 

@@ -2,7 +2,8 @@
 //  APIError.swift
 //  Smth
 //
-//  Created as part of the 2025 refactor.
+//  应用程序错误类型定义，统一管理网络、解码、业务等错误
+//  Created by tony
 //
 
 import Foundation

@@ -2,7 +2,8 @@
 //  FavoritesView.swift
 //  Smth
 //
-//  Created by 仝超 on 2025/11/12.
+//  收藏页面视图，展示收藏的版块和话题
+//  Created by tony
 //
 
 import SwiftUI
@@ -59,7 +60,7 @@ struct FavoritesView: View {
         .onAppear {
             handleLoginStateChange(isLoggedIn: loginState.isLoggedIn)
         }
-        .onChange(of: loginState.isLoggedIn) { oldValue, newValue in
+        .onChange(of: loginState.isLoggedIn) { _, newValue in
             handleLoginStateChange(isLoggedIn: newValue, forceReload: true)
         }
         .sheet(isPresented: $showLoginView) {
@@ -99,7 +100,7 @@ struct FavoritesView: View {
     }
 
     private var segmentedControl: some View {
-        return VStack() {
+        VStack() {
             Picker("收藏类型", selection: $selection) {
                 ForEach(FavoritesTab.allCases, id: \.self) { tab in
                     Text(tab.title)
@@ -120,30 +121,14 @@ struct FavoritesView: View {
     }
     
     private var loginPromptView: some View {
-        VStack(spacing: 18) {
-            Image(systemName: "lock.shield")
-                .font(.system(size: 42))
-                .foregroundStyle(AppTheme.accentColor(for: colorScheme))
-            VStack(spacing: 6) {
-                Text("登录后可查看收藏内容")
-                    .font(.system(.headline, design: .rounded))
-                Text("同步你的版面与主题收藏，随时掌握关注动态。")
-                    .font(.system(.subheadline, design: .rounded))
-                    .foregroundStyle(.secondary)
-            }
-            Button {
+        GuestPromptView(
+            icon: "star.fill",
+            title: "登录后可查看收藏内容",
+            subtitle: "同步你的版面与主题收藏，随时掌握关注动态。",
+            onLogin: {
                 showLoginView = true
-            } label: {
-                Text("立即登录")
-                    .font(.system(.headline, design: .rounded))
-                    .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent)
-        }
-        .padding(.vertical, 48)
-        .padding(.horizontal, 36)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-        .smthSurfaceBackground()
+        )
     }
     
     private func handleLoginStateChange(isLoggedIn: Bool, forceReload: Bool = false) {

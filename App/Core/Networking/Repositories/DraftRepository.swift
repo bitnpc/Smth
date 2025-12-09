@@ -2,36 +2,32 @@
 //  DraftRepository.swift
 //  Smth
 //
-//  Handles draft related network requests.
+//  草稿相关的数据仓库，负责获取用户草稿列表
+//  Created by tony
 //
 
 import Foundation
-import Alamofire
 
 protocol DraftRepositoryProtocol {
     func fetchDrafts(sort: String) async throws -> [Draft]
 }
 
 struct DraftRepository: DraftRepositoryProtocol {
+    private let apiService: APIService
+    
+    init(apiService: APIService) {
+        self.apiService = apiService
+    }
+    
     func fetchDrafts(sort: String = "asc") async throws -> [Draft] {
-        let timestamp = String(Int(Date().timeIntervalSince1970 * 1000))
-        let parameters = [
-            "t": timestamp,
-            "sort": sort
-        ]
-        do {
-            let response = try await AF.request(APIRouter.drafts(parameters: parameters))
-                .serializingDecodable(DraftResponse.self)
-                .value
-            
-            guard response.code == 1 else {
-                throw AppError.businessError(response.message)
-            }
-            
-            return response.data
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
+        let endpoint = APIEndpoint.drafts(sort: sort).toEndpoint()
+        let response: DraftResponse = try await apiService.request(endpoint)
+        
+        guard response.code == 1 else {
+            throw AppError.businessError(response.message)
         }
+        
+        return response.data
     }
 }
 

@@ -2,7 +2,8 @@
 //  BrowsingHistoryView.swift
 //  Smth
 //
-//  Created by GPT-5 Codex on 2025/11/13.
+//  浏览历史页面视图，展示用户浏览过的帖子历史
+//  Created by tony
 //
 
 import SwiftUI

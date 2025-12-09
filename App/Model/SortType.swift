@@ -2,7 +2,8 @@
 //  SortType.swift
 //  Smth
 //
-//  Defines sorting options for topic detail requests.
+//  排序类型枚举，定义话题详情的排序选项
+//  Created by tony
 //
 
 import Foundation

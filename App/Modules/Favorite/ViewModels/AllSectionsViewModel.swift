@@ -2,7 +2,8 @@
 //  AllSectionsViewModel.swift
 //  Smth
 //
-//  Loads the complete section hierarchy list.
+//  所有版块视图模型，管理完整版块层级列表的加载
+//  Created by tony
 //
 
 import Foundation

@@ -2,7 +2,8 @@
 //  FontSettings.swift
 //  Smth
 //
-//  Created by GPT-5 Codex on 2025/11/13.
+//  字体设置管理，提供字体大小和动态类型设置功能
+//  Created by tony
 //
 
 import SwiftUI

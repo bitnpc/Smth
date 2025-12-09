@@ -2,7 +2,8 @@
 //  ImageCache.swift
 //  Smth
 //
-//  Created as part of the 2025 refactor.
+//  图片缓存管理，提供图片的下载、缓存和内存管理功能
+//  Created by tony
 //
 
 import Foundation

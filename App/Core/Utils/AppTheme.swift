@@ -2,7 +2,8 @@
 //  AppTheme.swift
 //  Smth
 //
-//  Created by GPT-5 Codex on 2025/11/13.
+//  应用主题配置，定义颜色、间距、圆角等 UI 样式常量
+//  Created by tony
 //
 
 import SwiftUI
@@ -11,7 +12,7 @@ enum AppTheme {
     static let cardCornerRadius: CGFloat = 18
     static let smallCornerRadius: CGFloat = 12
     static let verticalSpacing: CGFloat = 16
-    static let compactSpacing: CGFloat = 12
+    static let compactSpacing: CGFloat = 8
 
     static func scaffoldBackground(for colorScheme: ColorScheme) -> LinearGradient {
         let lightColors = [

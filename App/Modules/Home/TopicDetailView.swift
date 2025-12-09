@@ -2,7 +2,8 @@
 //  TopicDetailView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/28.
+//  话题详情页面视图，展示话题的所有回复文章
+//  Created by tony
 //
 
 import SwiftUI
@@ -62,7 +63,7 @@ struct TopicDetailView: View {
     private func listView(with firstArticle: Article) -> some View {
         List {
             TopicContentRowView(article: firstArticle)
-                .listRowInsets(.init(top: AppTheme.verticalSpacing, leading: 0, bottom: AppTheme.compactSpacing, trailing: 0))
+                .listRowInsets(.init(top: 0, leading: 0, bottom: AppTheme.compactSpacing, trailing: 0))
                 .listRowBackground(Color.clear)
 
             ForEach(viewModel.articles.dropFirst(), id: \.id) { article in

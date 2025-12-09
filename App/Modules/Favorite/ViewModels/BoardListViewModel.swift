@@ -2,7 +2,8 @@
 //  BoardListViewModel.swift
 //  Smth
 //
-//  Provides boards within a section and groups them for navigation.
+//  版块列表视图模型，管理版块列表的加载和分组显示
+//  Created by tony
 //
 
 import Foundation

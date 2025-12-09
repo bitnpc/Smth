@@ -2,11 +2,11 @@
 //  UserRepository.swift
 //  Smth
 //
-//  Provides user related network operations.
+//  用户相关的数据仓库，负责获取用户资料、好友列表、粉丝列表等
+//  Created by tony
 //
 
 import Foundation
-import Alamofire
 
 protocol UserRepositoryProtocol {
     func fetchProfile() async throws -> Profile
@@ -15,51 +15,38 @@ protocol UserRepositoryProtocol {
 }
 
 struct UserRepository: UserRepositoryProtocol {
+    private let apiService: APIService
+    
+    init(apiService: APIService) {
+        self.apiService = apiService
+    }
+    
     func fetchProfile() async throws -> Profile {
-        do {
-            let response = try await AF.request(APIRouter.profile([:]))
-                .serializingDecodable(ProfileResponse.self)
-                .value
-            return response.data
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.profile.toEndpoint()
+        let response: ProfileResponse = try await apiService.request(endpoint)
+        return response.data
     }
     
     func fetchFriends(name: String) async throws -> FriendsData {
-        let timestamp = String(Int(Date().timeIntervalSince1970 * 1000))
-        let parameters = ["t": timestamp]
-        do {
-            let response = try await AF.request(APIRouter.friends(name: name, parameters: parameters))
-                .serializingDecodable(FriendsResponse.self)
-                .value
-            
-            guard response.code == 1 else {
-                throw AppError.businessError(response.message)
-            }
-            
-            return response.data
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
+        let endpoint = APIEndpoint.friends(name: name).toEndpoint()
+        let response: FriendsResponse = try await apiService.request(endpoint)
+        
+        guard response.code == 1 else {
+            throw AppError.businessError(response.message)
         }
+        
+        return response.data
     }
     
     func fetchFans(name: String) async throws -> FansData {
-        let timestamp = String(Int(Date().timeIntervalSince1970 * 1000))
-        let parameters = ["t": timestamp]
-        do {
-            let response = try await AF.request(APIRouter.fans(name: name, parameters: parameters))
-                .serializingDecodable(FansResponse.self)
-                .value
-            
-            guard response.code == 1 else {
-                throw AppError.businessError(response.message)
-            }
-            
-            return response.data
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
+        let endpoint = APIEndpoint.fans(name: name).toEndpoint()
+        let response: FansResponse = try await apiService.request(endpoint)
+        
+        guard response.code == 1 else {
+            throw AppError.businessError(response.message)
         }
+        
+        return response.data
     }
 }
 

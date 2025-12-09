@@ -2,11 +2,11 @@
 //  MessageRepository.swift
 //  Smth
 //
-//  Handles message and notification related network requests.
+//  消息相关的数据仓库，负责获取会话列表、通知消息、对话详情等
+//  Created by tony
 //
 
 import Foundation
-import Alamofire
 
 struct ConversationMessagesResult {
     let messages: [InboxMessage]
@@ -22,64 +22,38 @@ protocol MessageRepositoryProtocol {
 }
 
 struct MessageRepository: MessageRepositoryProtocol {
+    private let apiService: APIService
+    
+    init(apiService: APIService) {
+        self.apiService = apiService
+    }
+    
     func fetchConversations(page: Int) async throws -> InboxData {
-        let timestamp = String(Int(Date().timeIntervalSince1970 * 1000))
-        let parameters = [
-            "t": timestamp,
-            "page": String(page)
-        ]
-        do {
-            let response = try await AF.request(APIRouter.conversations(parameters: parameters))
-                .serializingDecodable(InboxResponse.self)
-                .value
-            
-            return response.data
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.conversations(page: page).toEndpoint()
+        let response: InboxResponse = try await apiService.request(endpoint)
+        return response.data
     }
     
     func fetchNotify(type: Int, page: Int) async throws -> [Notify] {
-        do {
-            let response = try await AF.request(APIRouter.notify(type: type, page: page, parameters: [:]))
-                .serializingDecodable(NotifyResponse.self)
-                .value
-            
-            return response.data.notifies
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.notify(type: type, page: page).toEndpoint()
+        let response: NotifyResponse = try await apiService.request(endpoint)
+        return response.data.notifies
     }
     
     func fetchConversationMessages(speakerId: String, page: Int) async throws -> ConversationMessagesResult {
-        do {
-            let response = try await AF.request(APIRouter.conversationMessages(speakerId: speakerId, page: page, parameters: [:]))
-                .serializingDecodable(ConversationMessagesResponse.self)
-                .value
-            
-            return ConversationMessagesResult(
-                messages: response.data.messages,
-                speaker: response.data.speaker,
-                account: response.data.account
-            )
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.conversationMessages(speakerId: speakerId, page: page).toEndpoint()
+        let response: ConversationMessagesResponse = try await apiService.request(endpoint)
+        
+        return ConversationMessagesResult(
+            messages: response.data.messages,
+            speaker: response.data.speaker,
+            account: response.data.account
+        )
     }
     
     func markConversationRead(speakerId: String) async throws {
-        let timestamp = String(Int(Date().timeIntervalSince1970 * 1000))
-        let parameters = [
-            "t": timestamp,
-            "speakId": speakerId
-        ]
-        do {
-            _ = try await AF.request(APIRouter.markConversationRead(speakerId: speakerId, parameters: parameters))
-                .serializingDecodable(MarkReadResponse.self)
-                .value
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.markConversationRead(speakerId: speakerId).toEndpoint()
+        _ = try await apiService.requestData(endpoint)
     }
 }
 

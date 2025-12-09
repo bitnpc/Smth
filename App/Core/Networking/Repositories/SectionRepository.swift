@@ -2,11 +2,11 @@
 //  SectionRepository.swift
 //  Smth
 //
-//  Handles section and board related network requests.
+//  版块相关的数据仓库，负责获取版块列表、收藏版块、收藏话题等
+//  Created by tony
 //
 
 import Foundation
-import Alamofire
 
 protocol SectionRepositoryProtocol {
     func fetchFavoriteBoards() async throws -> [FavBoard]
@@ -17,15 +17,16 @@ protocol SectionRepositoryProtocol {
 }
 
 struct SectionRepository: SectionRepositoryProtocol {
+    private let apiService: APIService
+    
+    init(apiService: APIService) {
+        self.apiService = apiService
+    }
+    
     func fetchFavoriteBoards() async throws -> [FavBoard] {
-        do {
-            let response = try await AF.request(APIRouter.favBoard([:]))
-                .serializingDecodable(FavBoardResponse.self)
-                .value
-            return response.data.favBoards
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.favoriteBoards.toEndpoint()
+        let response: FavBoardResponse = try await apiService.request(endpoint)
+        return response.data.favBoards
     }
     
     func fetchFavoriteTopics(sort: String, page: Int, pageSize: Int) async throws -> [Topic] {
@@ -34,42 +35,21 @@ struct SectionRepository: SectionRepositoryProtocol {
     }
     
     func fetchFavoriteTopicsWithInfo(sort: String, page: Int, pageSize: Int) async throws -> [FavTopic] {
-        do {
-            let response = try await AF.request(APIRouter.favTopic(sort: sort, page: page, pageSize: pageSize, parameters: [:]))
-                .serializingDecodable(FavTopicResponse.self)
-                .value
-            
-            return response.data.favTopic
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.favoriteTopics(sort: sort, page: page, pageSize: pageSize).toEndpoint()
+        let response: FavTopicResponse = try await apiService.request(endpoint)
+        return response.data.favTopic
     }
 
     func fetchAllSections() async throws -> [SMSection] {
-        do {
-            let response = try await AF.request(APIRouter.section([:]))
-                .serializingDecodable(SectionResponse.self)
-                .value
-            return response.data.sections
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.allSections.toEndpoint()
+        let response: SectionResponse = try await apiService.request(endpoint)
+        return response.data.sections
     }
 
     func fetchBoards(in sectionID: String) async throws -> [Board] {
-        let ts = String(Int(Date().timeIntervalSince1970 * 1000))
-        let parameters = [
-            "t": ts,
-            "id": sectionID
-        ]
-        do {
-            let response = try await AF.request(APIRouter.board(parameters))
-                .serializingDecodable(BoardResponse.self)
-                .value
-            return response.data.boards
-        } catch {
-            throw AppError.network(message: error.localizedDescription)
-        }
+        let endpoint = APIEndpoint.boards(sectionID: sectionID).toEndpoint()
+        let response: BoardResponse = try await apiService.request(endpoint)
+        return response.data.boards
     }
 }
 

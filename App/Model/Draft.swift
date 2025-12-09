@@ -2,7 +2,8 @@
 //  Draft.swift
 //  Smth
 //
-//  Created as part of the draft feature implementation.
+//  草稿数据模型，定义草稿预览和草稿响应结构
+//  Created by tony
 //
 
 import Foundation

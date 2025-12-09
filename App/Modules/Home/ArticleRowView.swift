@@ -2,7 +2,8 @@
 //  ArticleRowView.swift
 //  Smth
 //
-//  Created by Tony Clark on 2023/9/28.
+//  文章行视图组件，展示单条文章信息
+//  Created by tony
 //
 
 import SwiftUI

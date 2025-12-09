@@ -2,7 +2,8 @@
 //  ConversationDetailViewModel.swift
 //  Smth
 //
-//  Manages conversation detail (messages) state.
+//  会话详情视图模型，管理对话消息的加载和分页
+//  Created by tony
 //
 
 import Foundation
@@ -23,7 +24,7 @@ final class ConversationDetailViewModel: ObservableObject {
     
     init(
         speakerId: String,
-        repository: MessageRepositoryProtocol = MessageRepository()
+        repository: MessageRepositoryProtocol = AppContainer.shared.resolve(MessageRepositoryProtocol.self)
     ) {
         self.speakerId = speakerId
         self.repository = repository

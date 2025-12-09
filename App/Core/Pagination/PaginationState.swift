@@ -2,7 +2,8 @@
 //  PaginationState.swift
 //  Smth
 //
-//  Created for improved pagination handling.
+//  分页状态管理，处理列表数据的分页加载逻辑
+//  Created by tony
 //
 
 import Foundation

@@ -2,7 +2,8 @@
 //  Endpoint.swift
 //  Smth
 //
-//  Created as part of the 2025 refactor.
+//  网络请求端点结构定义，封装请求路径、方法、参数等信息
+//  Created by tony
 //
 
 import Foundation
