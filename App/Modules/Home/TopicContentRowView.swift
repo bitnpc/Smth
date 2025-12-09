@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TopicContentRowView: View {
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var layoutSettings: LayoutSettings
 
     let article: Article
 
@@ -50,7 +51,8 @@ struct TopicContentRowView: View {
                 .foregroundColor(.primary)
                 .lineSpacing(8)
 
-            if let attachments = article.attachments, !attachments.isEmpty {
+            if layoutSettings.showImages,
+               let attachments = article.attachments, !attachments.isEmpty {
                 ImageGroupView(attachments: attachments)
             }
         }

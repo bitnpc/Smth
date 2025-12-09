@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TopicRowView: View {
     @Environment(\.colorScheme) private var colorScheme
+    @EnvironmentObject private var layoutSettings: LayoutSettings
 
     let topic: Topic
     let isVisited: Bool
@@ -58,7 +59,8 @@ struct TopicRowView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                if let attachment = firstImageAttachment,
+                if layoutSettings.showImages,
+                   let attachment = firstImageAttachment,
                    let ks3Url = attachment.ks3Url,
                    let imageUrl = URL(string: ks3Url) {
                     CachedAsyncImage(url: imageUrl) { image in

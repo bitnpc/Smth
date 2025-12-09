@@ -11,12 +11,21 @@ import SwiftUI
 struct SettingView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var fontSettings: FontSettings
+    @EnvironmentObject private var layoutSettings: LayoutSettings
 
     var body: some View {
         List {
             Section {
-                Text("精简")
-                Text("图文")
+                Picker("页面布局", selection: $layoutSettings.selectedMode) {
+                    ForEach(LayoutMode.allCases) { mode in
+                        Text(mode.title).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .accessibilityIdentifier("layoutModePicker")
+                Text("当前模式：\(layoutSettings.selectedMode.title)")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             } header: {
                 Text("页面布局")
             }

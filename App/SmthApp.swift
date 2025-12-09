@@ -12,6 +12,7 @@ import SwiftUI
 struct SmthApp: App {
     @StateObject private var browsingHistoryStore = BrowsingHistoryStore()
     @StateObject private var fontSettings = FontSettings()
+    @StateObject private var layoutSettings = LayoutSettings()
 
     var body: some Scene {
         WindowGroup {
@@ -20,6 +21,7 @@ struct SmthApp: App {
                 .environmentObject(LoginState.shared)
                 .environmentObject(browsingHistoryStore)
                 .environmentObject(fontSettings)
+                .environmentObject(layoutSettings)
                 .dynamicTypeSize(fontSettings.dynamicTypeSize)
         }
     }
