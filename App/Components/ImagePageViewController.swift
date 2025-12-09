@@ -44,6 +44,10 @@ final class ImagePageViewController: UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 确保视图扩展到 safe area 之外
+        edgesForExtendedLayout = .all
+        
         view.backgroundColor = .black
         
         // 确保 UIPageViewController 的背景视图也是黑色
@@ -60,6 +64,10 @@ final class ImagePageViewController: UIPageViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // 确保视图扩展到 safe area 之外
+        edgesForExtendedLayout = .all
+        
         // 再次确保背景为黑色
         view.backgroundColor = .black
         for subview in view.subviews {
@@ -69,15 +77,27 @@ final class ImagePageViewController: UIPageViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // 确保所有子视图的背景都是黑色
+        view.backgroundColor = .black
+        for subview in view.subviews {
+            subview.backgroundColor = .black
+        }
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
     
     private func setupCloseButton() {
-        let closeButton = UIButton(type: .system)
+        let closeButton = UIButton(type: .custom)
         closeButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
         closeButton.tintColor = .white.withAlphaComponent(0.8)
         closeButton.backgroundColor = .clear
+        closeButton.layer.cornerRadius = 0
+        closeButton.layer.borderWidth = 0
+        closeButton.layer.borderColor = UIColor.clear.cgColor
         closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         self.closeButton = closeButton
         view.addSubview(closeButton)

@@ -60,6 +60,9 @@ final class ImageScrollViewController: UIViewController {
             lastScrollViewSize = currentSize
             updateImageViewSize(preserveZoom: false)
             hasInitialLayout = true
+        } else if imageView.image != nil && scrollView.contentSize.width > 0 {
+            // 即使尺寸没有改变，也要确保居中（修复图片靠上的问题）
+            centerImageView()
         }
     }
     
@@ -165,14 +168,19 @@ final class ImageScrollViewController: UIViewController {
         let scaledWidth = imageSize.width * scale
         let scaledHeight = imageSize.height * scale
         
-        // 保存当前的缩放比例和偏移
+        // 保存当前的缩放比例
         let currentZoomScale = scrollView.zoomScale
-        let currentOffset = scrollView.contentOffset
         
-        // 使用 frame 布局
+        // 设置 imageView 的 frame（这是基准尺寸）
         imageView.translatesAutoresizingMaskIntoConstraints = true
         imageView.frame = CGRect(x: 0, y: 0, width: scaledWidth, height: scaledHeight)
+        
+        // contentSize 应该等于 imageView.frame.size
+        // UIScrollView 在缩放时会自动管理显示，但 contentSize 保持不变
         scrollView.contentSize = CGSize(width: scaledWidth, height: scaledHeight)
+        
+        // 先重置 contentInset，避免影响 zoomScale 的设置
+        scrollView.contentInset = .zero
         
         if !preserveZoom {
             // 首次加载时重置缩放和偏移
@@ -182,31 +190,35 @@ final class ImageScrollViewController: UIViewController {
             // 保持缩放比例，但确保在有效范围内
             let adjustedZoomScale = max(scrollView.minimumZoomScale, min(scrollView.maximumZoomScale, currentZoomScale))
             scrollView.zoomScale = adjustedZoomScale
-            // 调整偏移以确保在有效范围内
-            let maxOffsetX = max(0, scrollView.contentSize.width - scrollView.bounds.width)
-            let maxOffsetY = max(0, scrollView.contentSize.height - scrollView.bounds.height)
-            scrollView.contentOffset = CGPoint(
-                x: min(maxOffsetX, max(0, currentOffset.x)),
-                y: min(maxOffsetY, max(0, currentOffset.y))
-            )
         }
         
-        // 居中显示（必须在设置 zoomScale 和 contentOffset 之后调用）
-        centerImageView()
+        // 居中显示（必须在设置 zoomScale 之后调用）
+        // 使用 DispatchQueue 确保布局更新完成后再居中
+        DispatchQueue.main.async { [weak self] in
+            self?.centerImageView()
+        }
     }
     
     private func centerImageView() {
         let scrollViewSize = scrollView.bounds.size
         let imageViewSize = imageView.frame.size
         
+        guard scrollViewSize.width > 0 && scrollViewSize.height > 0,
+              imageViewSize.width > 0 && imageViewSize.height > 0 else { return }
+        
         // 计算居中所需的 padding
-        // 注意：需要考虑当前的 zoomScale
-        let scaledWidth = imageViewSize.width * scrollView.zoomScale
-        let scaledHeight = imageViewSize.height * scrollView.zoomScale
+        // imageView.frame.size 是缩放前的尺寸（基准尺寸）
+        // 实际的显示尺寸 = imageView.frame.size * zoomScale = contentSize
+        // 但 contentSize 可能因为缩放而改变，所以我们使用 imageView.frame.size * zoomScale 来计算
+        let currentZoomScale = scrollView.zoomScale
+        let scaledWidth = imageViewSize.width * currentZoomScale
+        let scaledHeight = imageViewSize.height * currentZoomScale
         
         let horizontalPadding = max(0, (scrollViewSize.width - scaledWidth) / 2)
         let verticalPadding = max(0, (scrollViewSize.height - scaledHeight) / 2)
         
+        // 只有当图片尺寸小于 scrollView 时才需要 padding 来居中
+        // 如果图片已经大于 scrollView，则不添加 padding（此时应该可以滚动查看）
         scrollView.contentInset = UIEdgeInsets(
             top: verticalPadding,
             left: horizontalPadding,

@@ -23,6 +23,7 @@ struct ImageViewer: View {
             isPresented: $isPresented,
             sourceFrame: sourceFrame
         )
+        .ignoresSafeArea(.all)
         #else
         // macOS 或其他平台使用 SwiftUI 实现
         ImageViewerSwiftUI(
