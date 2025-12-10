@@ -46,6 +46,8 @@ jobs:
 
       - name: Run Fastlane CI lane
         env:
+          CI: true
+          GITHUB_ACTIONS: true
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
           FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
