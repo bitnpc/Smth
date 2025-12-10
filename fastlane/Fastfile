@@ -4,15 +4,19 @@ platform :ios do
   desc "运行 SwiftLint 代码规范检查"
   lane :lint do
     # 获取项目根目录（fastlane 目录的父目录）
-    project_root = File.dirname(File.dirname(__FILE__))
+    project_root = File.expand_path(File.dirname(File.dirname(__FILE__)))
     config_path = File.join(project_root, "swiftlint.yml")
+    
+    # 输出调试信息
+    UI.message("项目根目录: #{project_root}")
+    UI.message("配置文件路径: #{config_path}")
     
     # 验证配置文件是否存在
     unless File.exist?(config_path)
       UI.user_error!("SwiftLint 配置文件不存在: #{config_path}")
     end
     
-    sh("swiftlint --config #{config_path}")
+    sh("swiftlint --config \"#{config_path}\"")
   end
 
   desc "执行单元测试"

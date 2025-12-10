@@ -1,3 +1,6 @@
-project("Smth.xcodeproj")
+# Appfile 配置
+# 如果需要配置 app_identifier 或 apple_id，可以在这里添加
+# app_identifier("com.example.app")
+# apple_id("user@example.com")
 
 
