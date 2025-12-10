@@ -3,7 +3,8 @@ default_platform(:ios)
 platform :ios do
   desc "运行 SwiftLint 代码规范检查"
   lane :lint do
-    sh("swiftlint --config swiftlint.yml")
+    config_path = File.expand_path("../swiftlint.yml", __FILE__)
+    sh("swiftlint --config #{config_path}")
   end
 
   desc "执行单元测试"
