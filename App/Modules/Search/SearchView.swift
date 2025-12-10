@@ -289,12 +289,11 @@ struct SearchArticleRowView: View {
             for match in matches.reversed() where match.numberOfRanges > 1 {
                 let highlightRange = match.range(at: 1)
                 let highlightText = nsString.substring(with: highlightRange)
-                    
-                    // 在纯文本中找到对应的范围并高亮
-                    if let range = attributed.range(of: highlightText) {
-                        attributed[range].foregroundColor = AppTheme.accentColor(for: colorScheme)
-                        attributed[range].backgroundColor = AppTheme.accentColor(for: colorScheme).opacity(0.15)
-                    }
+                
+                // 在纯文本中找到对应的范围并高亮
+                if let range = attributed.range(of: highlightText) {
+                    attributed[range].foregroundColor = AppTheme.accentColor(for: colorScheme)
+                    attributed[range].backgroundColor = AppTheme.accentColor(for: colorScheme).opacity(0.15)
                 }
             }
         }
