@@ -1,215 +1,5 @@
 # Smth
 
-> A modern SwiftUI client for NewSMTH forum (iOS / iPadOS / macOS). Built with MVVM + Repository architecture, featuring dependency injection, pagination support, and seamless multi-platform compatibility.
-
-## 📱 Features
-
-### Core Features
-- ✅ **Topic Browsing** - Hot topics with pagination
-- ✅ **Board Navigation** - Hierarchical board/sub-board navigation
-- ✅ **Topic Details** - Complete topic content and replies
-- ✅ **User Login** - WebView-based authentication
-- ✅ **Favorites** - Favorite boards and topics management
-- ✅ **Messages** - Inbox, mentions, replies, and likes
-- ✅ **Profile** - User profile, topics, drafts, followers/following, browsing history
-- ✅ **Search** - Board and topic search
-
-### User Experience
-- 🎨 Modern UI with unified theme system and dark mode
-- 📱 Native experience on iOS, iPadOS, and macOS
-- 🔄 Responsive layout for different screen sizes
-- ⚡ Optimized loading states and error handling
-- 💾 Local caching for browsing history and drafts
-
-## 🏗️ Architecture
-
-Built with **MVVM + Repository** pattern:
-
-```
-View (SwiftUI) → ViewModel → Repository → APIService
-```
-
-### Key Components
-
-- **Core**: Authentication, Database, Dependency Injection, Networking, Utils
-- **Modules**: Home, Favorite, Message, Profile, Search (MVVM structure)
-- **Components**: Reusable UI components
-- **Model**: Data models and DTOs
-
-### Multi-Platform Support
-
-- **iOS**: TabView navigation
-- **iPadOS**: NavigationSplitView with sidebar
-- **macOS**: NavigationSplitView with sidebar and content area
-
-## 📸 Screenshots
-
-| Home | Favorites | Messages |
-|------|-----------|----------|
-| ![首页](./Snapshots/home.png) | ![收藏](./Snapshots/favorite.png) | ![消息](./Snapshots/message.png) |
-
-| Profile | Settings | Login |
-|---------|----------|-------|
-| ![个人中心](./Snapshots/profile.png) | ![设置](./Snapshots/setting.png) | ![登录](./Snapshots/login.png) |
-
-## 🎯 Implemented Features
-
-### Home Module
-- [x] Hot topics list with pagination
-- [x] Board selector
-- [x] Topic detail page
-- [x] Article replies display
-- [x] Image attachments
-- [x] Pull to refresh
-
-### Favorite Module
-- [x] Favorite boards and topics
-- [x] Board/topic switching
-- [x] Hierarchical board navigation
-
-### Message Module
-- [x] Inbox, mentions, replies, likes
-- [x] Conversation details
-- [x] Message pagination
-
-### Profile Module
-- [x] User login (WebView)
-- [x] Profile display
-- [x] My topics, drafts
-- [x] Followers/following lists
-- [x] Browsing history
-- [x] Settings
-
-### Search Module
-- [x] Board and topic search
-
-### Common Features
-- [x] Image caching
-- [x] Local storage (browsing history)
-- [x] Font size settings
-- [x] Dark mode support
-- [x] Error handling and retry
-
-## 🚧 Planned Features
-
-### Content Interaction
-- [ ] Page navigation (prev/next page)
-- [ ] Post new topics
-- [ ] Reply to topics and posts
-- [ ] Like/unlike functionality
-
-### Social Features
-- [ ] Follow/unfollow users
-- [ ] Blacklist management
-
-### Account Management
-- [ ] Change password
-- [ ] Bind phone number
-
-### Other Features
-- [ ] Edit/delete posts
-- [ ] Report content
-- [ ] Private messages
-- [ ] Push notifications
-
-## 🖥️ Platform Support
-
-| Platform | Min Version | Status |
-|----------|-------------|--------|
-| iOS | 18.0+ | ✅ Fully Supported |
-| iPadOS | 18.0+ | ✅ Fully Supported |
-| macOS | 15.0+ | ✅ Fully Supported |
-
-## 🚀 Quick Start
-
-### Requirements
-
-- Xcode 15.0+
-- Swift 5.9+
-- iOS 18.0+ / macOS 15.0+
-
-### Installation
-
-```bash
-# Clone the repository
-git clone <repository-url>
-cd Smth
-
-# Open in Xcode
-open Smth.xcodeproj
-
-# Build and run (Cmd + R)
-```
-
-Dependencies are managed via Swift Package Manager and will be automatically resolved.
-
-### Development
-
-```bash
-# Code linting
-swiftlint --config swiftlint.yml
-
-# Build
-xcodebuild -scheme Smth -project Smth.xcodeproj \
-  -destination 'platform=iOS Simulator,name=iPhone 16' build
-
-# Run tests
-xcodebuild test -scheme Smth -destination 'platform=iOS Simulator,name=iPhone 16'
-```
-
-## 📦 Dependencies
-
-- **SwiftSoup** (2.6.1) - HTML parsing
-- **Alamofire** (5.8.0) - HTTP networking
-
-## 🧪 Testing
-
-- ✅ ViewModel unit tests
-- ✅ Repository tests
-- ✅ Data model tests
-- ⏳ UI tests (pending)
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Code Style
-
-- Follow SwiftLint rules
-- Write clear commit messages
-- Add tests for new features
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Thanks to NewSMTH forum
-- Thanks to all contributors
-
-## 📮 Contact
-
-For questions or suggestions:
-
-- Open an Issue
-- Create a Pull Request
-- Email: [bitnpc@gmail.com](mailto:bitnpc@gmail.com)
-
----
-
-**Note**: This project is for educational purposes only. Please comply with NewSMTH forum's terms of use.
-
----
-
-# Smth
-
 > 基于 SwiftUI 打造的水木社区多端客户端（iOS / iPadOS / macOS）。采用 MVVM + Repository 架构，支持依赖注入、分页加载和多平台适配。
 
 ## 📱 功能亮点
@@ -218,6 +8,7 @@ For questions or suggestions:
 - ✅ **热门话题浏览** - 瀑布流展示，支持分页加载
 - ✅ **版面导航** - 层级式版面/子版面导航
 - ✅ **话题详情** - 完整的话题内容与楼层回复展示
+- ✅ **图片查看器** - 支持多图片滑动浏览、缩放、双击放大（iOS 基于 UIKit，macOS 基于 SwiftUI）
 - ✅ **用户登录** - 基于 WebView 的登录认证
 - ✅ **收藏管理** - 收藏版面与话题，支持分类查看
 - ✅ **消息中心** - 收件箱、@我的、回复我的、Like我的
@@ -243,7 +34,7 @@ View (SwiftUI) → ViewModel → Repository → APIService
 
 - **Core**: 认证、数据库、依赖注入、网络层、工具类
 - **Modules**: 首页、收藏、消息、个人中心、搜索（MVVM 结构）
-- **Components**: 可复用 UI 组件
+- **Components**: 可复用 UI 组件（包括图片查看器）
 - **Model**: 数据模型和 DTO
 
 ### 多平台适配
@@ -299,6 +90,7 @@ View (SwiftUI) → ViewModel → Repository → APIService
 
 ### 通用功能
 - [x] 图片缓存
+- [x] 图片查看器（支持多图滑动、缩放、双击放大）
 - [x] 浏览历史本地存储
 - [x] 字体大小设置
 - [x] 深色模式支持
@@ -420,3 +212,215 @@ xcodebuild test -scheme Smth -destination 'platform=iOS Simulator,name=iPhone 16
 ---
 
 **注意**: 本项目仅供学习交流使用，请遵守水木社区的使用条款。
+
+---
+
+# Smth
+
+> A modern SwiftUI client for NewSMTH forum (iOS / iPadOS / macOS). Built with MVVM + Repository architecture, featuring dependency injection, pagination support, and seamless multi-platform compatibility.
+
+## 📱 Features
+
+### Core Features
+- ✅ **Topic Browsing** - Hot topics with pagination
+- ✅ **Board Navigation** - Hierarchical board/sub-board navigation
+- ✅ **Topic Details** - Complete topic content and replies
+- ✅ **Image Viewer** - Multi-image browsing with swipe, zoom, and double-tap to zoom (UIKit on iOS, SwiftUI on macOS)
+- ✅ **User Login** - WebView-based authentication
+- ✅ **Favorites** - Favorite boards and topics management
+- ✅ **Messages** - Inbox, mentions, replies, and likes
+- ✅ **Profile** - User profile, topics, drafts, followers/following, browsing history
+- ✅ **Search** - Board and topic search
+
+### User Experience
+- 🎨 Modern UI with unified theme system and dark mode
+- 📱 Native experience on iOS, iPadOS, and macOS
+- 🔄 Responsive layout for different screen sizes
+- ⚡ Optimized loading states and error handling
+- 💾 Local caching for browsing history and drafts
+
+## 🏗️ Architecture
+
+Built with **MVVM + Repository** pattern:
+
+```
+View (SwiftUI) → ViewModel → Repository → APIService
+```
+
+### Key Components
+
+- **Core**: Authentication, Database, Dependency Injection, Networking, Utils
+- **Modules**: Home, Favorite, Message, Profile, Search (MVVM structure)
+- **Components**: Reusable UI components (including image viewer)
+- **Model**: Data models and DTOs
+
+### Multi-Platform Support
+
+- **iOS**: TabView navigation
+- **iPadOS**: NavigationSplitView with sidebar
+- **macOS**: NavigationSplitView with sidebar and content area
+
+## 📸 Screenshots
+
+| Home | Favorites | Messages |
+|------|-----------|----------|
+| ![首页](./Snapshots/home.png) | ![收藏](./Snapshots/favorite.png) | ![消息](./Snapshots/message.png) |
+
+| Profile | Settings | Login |
+|---------|----------|-------|
+| ![个人中心](./Snapshots/profile.png) | ![设置](./Snapshots/setting.png) | ![登录](./Snapshots/login.png) |
+
+## 🎯 Implemented Features
+
+### Home Module
+- [x] Hot topics list with pagination
+- [x] Board selector
+- [x] Topic detail page
+- [x] Article replies display
+- [x] Image attachments
+- [x] Pull to refresh
+
+### Favorite Module
+- [x] Favorite boards and topics
+- [x] Board/topic switching
+- [x] Hierarchical board navigation
+
+### Message Module
+- [x] Inbox, mentions, replies, likes
+- [x] Conversation details
+- [x] Message pagination
+
+### Profile Module
+- [x] User login (WebView)
+- [x] Profile display
+- [x] My topics, drafts
+- [x] Followers/following lists
+- [x] Browsing history
+- [x] Settings
+
+### Search Module
+- [x] Board and topic search
+
+### Common Features
+- [x] Image caching
+- [x] Image viewer (multi-image swipe, zoom, double-tap to zoom)
+- [x] Local storage (browsing history)
+- [x] Font size settings
+- [x] Dark mode support
+- [x] Error handling and retry
+
+## 🚧 Planned Features
+
+### Content Interaction
+- [ ] Page navigation (prev/next page)
+- [ ] Post new topics
+- [ ] Reply to topics and posts
+- [ ] Like/unlike functionality
+
+### Social Features
+- [ ] Follow/unfollow users
+- [ ] Blacklist management
+
+### Account Management
+- [ ] Change password
+- [ ] Bind phone number
+
+### Other Features
+- [ ] Edit/delete posts
+- [ ] Report content
+- [ ] Private messages
+- [ ] Push notifications
+
+## 🖥️ Platform Support
+
+| Platform | Min Version | Status |
+|----------|-------------|--------|
+| iOS | 18.0+ | ✅ Fully Supported |
+| iPadOS | 18.0+ | ✅ Fully Supported |
+| macOS | 15.0+ | ✅ Fully Supported |
+
+## 🚀 Quick Start
+
+### Requirements
+
+- Xcode 15.0+
+- Swift 5.9+
+- iOS 18.0+ / macOS 15.0+
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd Smth
+
+# Open in Xcode
+open Smth.xcodeproj
+
+# Build and run (Cmd + R)
+```
+
+Dependencies are managed via Swift Package Manager and will be automatically resolved.
+
+### Development
+
+```bash
+# Code linting
+swiftlint --config swiftlint.yml
+
+# Build
+xcodebuild -scheme Smth -project Smth.xcodeproj \
+  -destination 'platform=iOS Simulator,name=iPhone 16' build
+
+# Run tests
+xcodebuild test -scheme Smth -destination 'platform=iOS Simulator,name=iPhone 16'
+```
+
+## 📦 Dependencies
+
+- **SwiftSoup** (2.6.1) - HTML parsing
+- **Alamofire** (5.8.0) - HTTP networking
+
+## 🧪 Testing
+
+- ✅ ViewModel unit tests
+- ✅ Repository tests
+- ✅ Data model tests
+- ⏳ UI tests (pending)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Code Style
+
+- Follow SwiftLint rules
+- Write clear commit messages
+- Add tests for new features
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Thanks to NewSMTH forum
+- Thanks to all contributors
+
+## 📮 Contact
+
+For questions or suggestions:
+
+- Open an Issue
+- Create a Pull Request
+- Email: [bitnpc@gmail.com](mailto:bitnpc@gmail.com)
+
+---
+
+**Note**: This project is for educational purposes only. Please comply with NewSMTH forum's terms of use.
