@@ -8,12 +8,37 @@ platform :ios do
 
   desc "执行单元测试"
   lane :tests do
+    # 使用模拟器运行测试，不需要证书
+    # 获取可用的 iPhone 模拟器
+    destination = nil
+    begin
+      simulator_list = `xcrun simctl list devices available | grep -i 'iPhone' | head -1`.strip
+      
+      if simulator_list.nil? || simulator_list.empty?
+        UI.important("No iOS Simulator available, using macOS")
+        destination = "platform=macOS"
+      else
+        # 提取模拟器名称（格式：iPhone 15 Pro (XXXX-XXXX-XXXX-XXXX)）
+        match = simulator_list.match(/^\s*(.+?)\s*\(/)
+        simulator_name = match ? match[1].strip : "iPhone 15 Pro"
+        destination = "platform=iOS Simulator,name=#{simulator_name}"
+        UI.message("Using iOS Simulator: #{simulator_name}")
+      end
+    rescue => ex
+      UI.important("Error detecting simulator, using macOS: #{ex.message}")
+      destination = "platform=macOS"
+    end
+    
+    # 如果没有找到模拟器，使用 macOS
+    destination ||= "platform=macOS"
+    
     scan(
       project: "Smth.xcodeproj",
       scheme: "Smth",
       clean: true,
       code_coverage: false,
-      skip_package_dependencies_resolution: false
+      skip_package_dependencies_resolution: false,
+      destination: destination
     )
   end
 

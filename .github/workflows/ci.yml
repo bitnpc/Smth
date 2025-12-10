@@ -1,4 +1,4 @@
-name: iOS CI
+name: CI
 
 on:
   push:
@@ -26,6 +26,18 @@ jobs:
 
       - name: Install dependencies
         run: bundle install
+
+      - name: List available simulators
+        run: xcrun simctl list devices available
+
+      - name: Boot iOS Simulator
+        run: |
+          # 获取第一个可用的 iPhone 模拟器并启动
+          SIMULATOR=$(xcrun simctl list devices available | grep -i "iPhone" | head -1 | sed -E 's/.*\(([^)]+)\).*/\1/')
+          if [ -n "$SIMULATOR" ]; then
+            echo "Booting simulator: $SIMULATOR"
+            xcrun simctl boot "$SIMULATOR" || true
+          fi
 
       - name: Run Fastlane CI lane
         env:
