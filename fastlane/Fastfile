@@ -4,10 +4,16 @@ platform :ios do
   desc "运行 SwiftLint 代码规范检查"
   lane :lint do
     # 获取项目根目录（fastlane 目录的父目录）
-    project_root = File.expand_path(File.dirname(File.dirname(__FILE__)))
+    # __FILE__ 是 Fastfile 的路径，例如 /path/to/project/fastlane/Fastfile
+    # File.dirname(__FILE__) 得到 fastlane 目录
+    # 再往上一级就是项目根目录
+    fastlane_dir = File.dirname(__FILE__)
+    project_root = File.expand_path("..", fastlane_dir)
     config_path = File.join(project_root, "swiftlint.yml")
     
     # 输出调试信息
+    UI.message("Fastfile 路径: #{__FILE__}")
+    UI.message("fastlane 目录: #{fastlane_dir}")
     UI.message("项目根目录: #{project_root}")
     UI.message("配置文件路径: #{config_path}")
     
