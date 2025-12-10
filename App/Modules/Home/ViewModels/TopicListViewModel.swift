@@ -98,5 +98,3 @@ final class TopicListViewModel: ObservableObject {
         }
     }
 }
-
-

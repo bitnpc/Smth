@@ -15,4 +15,3 @@ struct Attachment: Codable, Hashable {
     let name: String
     let type: String
 }
-

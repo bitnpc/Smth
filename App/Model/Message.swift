@@ -259,4 +259,3 @@ struct MessageResponse: Codable {
         case data, messages, conversations, notifies
     }
 }
-

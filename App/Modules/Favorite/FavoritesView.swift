@@ -72,9 +72,9 @@ struct FavoritesView: View {
 #if os(iOS)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
+                Button {
                     showProfileView = true
-                }) {
+                } label: {
                     Image(systemName: "person.crop.circle")
                 }
             }
@@ -102,7 +102,7 @@ struct FavoritesView: View {
     }
 
     private var segmentedControl: some View {
-        VStack() {
+        VStack {
             Picker("收藏类型", selection: $selection) {
                 ForEach(FavoritesTab.allCases, id: \.self) { tab in
                     Text(tab.title)

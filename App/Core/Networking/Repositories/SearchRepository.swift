@@ -9,7 +9,15 @@
 import Foundation
 
 protocol SearchRepositoryProtocol {
-    func searchArticles(keyword: String, start: Int, count: Int, original: Bool, earliest: String?, boards: String?, status: Int) async throws -> SearchData
+    func searchArticles(
+        keyword: String,
+        start: Int,
+        count: Int,
+        original: Bool,
+        earliest: String?,
+        boards: String?,
+        status: Int
+    ) async throws -> SearchData
 }
 
 struct SearchRepository: SearchRepositoryProtocol {
@@ -19,7 +27,15 @@ struct SearchRepository: SearchRepositoryProtocol {
         self.apiService = apiService
     }
     
-    func searchArticles(keyword: String, start: Int, count: Int, original: Bool, earliest: String?, boards: String?, status: Int) async throws -> SearchData {
+    func searchArticles(
+        keyword: String,
+        start: Int,
+        count: Int,
+        original: Bool,
+        earliest: String?,
+        boards: String?,
+        status: Int
+    ) async throws -> SearchData {
         let endpoint = APIEndpoint.searchArticle(
             keyword: keyword,
             start: start,
@@ -34,4 +50,3 @@ struct SearchRepository: SearchRepositoryProtocol {
         return response.data
     }
 }
-

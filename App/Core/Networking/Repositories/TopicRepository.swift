@@ -136,5 +136,3 @@ struct StubTopicRepository: TopicRepositoryProtocol {
         try await topicDetail(topicID, page, sortType)
     }
 }
-
-

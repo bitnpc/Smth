@@ -33,8 +33,6 @@ struct PaginationState<Item: Identifiable & Hashable> {
     mutating func completeLoading(with newItems: [Item], pageSize: Int) {
         items.append(contentsOf: newItems)
         isLoadingPage = false
-        canLoadMorePages = newItems.count != 0
+        canLoadMorePages = !newItems.isEmpty
     }
 }
-
-

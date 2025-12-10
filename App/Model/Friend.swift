@@ -49,4 +49,3 @@ struct FansResponse: Codable {
     let message: String
     let kbsCode: Int
 }
-

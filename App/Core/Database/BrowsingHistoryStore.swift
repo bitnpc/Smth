@@ -116,5 +116,3 @@ final class BrowsingHistoryStore: ObservableObject, BrowsingHistoryStoreProtocol
             .appendingPathComponent("topic_history.json")
     }
 }
-
-

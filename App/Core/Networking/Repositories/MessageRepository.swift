@@ -64,9 +64,13 @@ struct StubMessageRepository: MessageRepositoryProtocol {
     var markRead: (_ speakerId: String) async throws -> Void
     
     init(
-        conversations: @escaping (_ page: Int) async throws -> InboxData = { _ in InboxData(conversations: [], lastMessages: [], pager: nil) },
+        conversations: @escaping (_ page: Int) async throws -> InboxData = { _ in
+            InboxData(conversations: [], lastMessages: [], pager: nil)
+        },
         notify: @escaping (_ type: Int, _ page: Int) async throws -> [Notify] = { _, _ in [] },
-        conversationMessages: @escaping (_ speakerId: String, _ page: Int) async throws -> ConversationMessagesResult = { _, _ in ConversationMessagesResult(messages: [], speaker: nil, account: nil) },
+        conversationMessages: @escaping (_ speakerId: String, _ page: Int) async throws -> ConversationMessagesResult = { _, _ in
+            ConversationMessagesResult(messages: [], speaker: nil, account: nil)
+        },
         markRead: @escaping (_ speakerId: String) async throws -> Void = { _ in }
     ) {
         self.conversations = conversations
@@ -91,4 +95,3 @@ struct StubMessageRepository: MessageRepositoryProtocol {
         try await markRead(speakerId)
     }
 }
-

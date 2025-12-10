@@ -13,5 +13,3 @@ public enum SortType: Int, Codable {
     case `default` = 1
     case latest = 2
 }
-
-

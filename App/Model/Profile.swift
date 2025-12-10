@@ -22,7 +22,6 @@ struct ProfileResponse: Codable, Hashable {
     let data: Profile
 }
 
-
 extension Profile {
     static let defaultProfile = Profile(newsmthScore: SMScore(total: 0), account: Account.defaultAccount, title: "用户")
 }

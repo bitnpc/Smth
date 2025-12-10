@@ -95,4 +95,3 @@ final class SearchViewModel: ObservableObject {
         currentStart = 0
     }
 }
-

@@ -243,4 +243,3 @@ enum APIEndpoint {
         }
     }
 }
-

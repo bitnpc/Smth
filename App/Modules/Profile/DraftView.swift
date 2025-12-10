@@ -117,4 +117,3 @@ struct DraftRowView: View {
         return formatter.string(from: date)
     }
 }
-

@@ -15,7 +15,7 @@ struct PublishView: View {
 
     var body: some View {
 //        NavigationStack {
-            VStack (alignment: .leading) {
+            VStack(alignment: .leading) {
                 TextField(text: $title) {
                     Text("输入标题").foregroundStyle(.gray)
                 }.padding()
@@ -37,7 +37,6 @@ struct PublishView: View {
                 })
             }
 //        }
-        
         
     }
 }

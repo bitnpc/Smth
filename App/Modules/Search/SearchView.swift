@@ -286,10 +286,9 @@ struct SearchArticleRowView: View {
             let nsString = htmlText as NSString
             let matches = regex.matches(in: htmlText, options: [], range: NSRange(location: 0, length: nsString.length))
             
-            for match in matches.reversed() {
-                if match.numberOfRanges > 1 {
-                    let highlightRange = match.range(at: 1)
-                    let highlightText = nsString.substring(with: highlightRange)
+            for match in matches.reversed() where match.numberOfRanges > 1 {
+                let highlightRange = match.range(at: 1)
+                let highlightText = nsString.substring(with: highlightRange)
                     
                     // 在纯文本中找到对应的范围并高亮
                     if let range = attributed.range(of: highlightText) {
@@ -307,4 +306,3 @@ struct SearchArticleRowView: View {
 #Preview {
     SearchView()
 }
-

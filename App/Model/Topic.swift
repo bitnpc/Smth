@@ -97,4 +97,3 @@ struct FavTopicResponse: Codable {
     let message: String
     let kbsCode: Int
 }
-

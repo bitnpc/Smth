@@ -47,5 +47,3 @@ final class TopicDetailViewModel: ObservableObject {
         isLoading = false
     }
 }
-
-

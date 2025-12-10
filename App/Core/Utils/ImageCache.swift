@@ -118,7 +118,10 @@ final class ImageCache {
     
     /// 清理过期缓存
     private func cleanExpiredCache() async {
-        guard let files = try? fileManager.contentsOfDirectory(at: diskCacheURL, includingPropertiesForKeys: [.contentModificationDateKey]) else {
+        guard let files = try? fileManager.contentsOfDirectory(
+            at: diskCacheURL,
+            includingPropertiesForKeys: [.contentModificationDateKey]
+        ) else {
             return
         }
         
@@ -237,4 +240,3 @@ final class ImageCache {
     }
     #endif
 }
-

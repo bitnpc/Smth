@@ -111,4 +111,3 @@ struct FriendRowView: View {
         .padding(.vertical, 8)
     }
 }
-

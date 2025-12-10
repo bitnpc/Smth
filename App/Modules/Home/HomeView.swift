@@ -70,9 +70,9 @@ struct HomeView: View {
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
+                Button {
                     showProfileView = true
-                }) {
+                } label: {
                     Image(systemName: "person.crop.circle")
                 }
             }

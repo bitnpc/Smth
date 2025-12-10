@@ -26,6 +26,7 @@ final class AppContainer: DependencyContainer {
 
     private init() {}
 
+    // swiftlint:disable force_cast
     func resolve<T>(_ type: T.Type) -> T {
         if type == APIService.self {
             return apiService as! T
@@ -45,6 +46,7 @@ final class AppContainer: DependencyContainer {
             fatalError("未注册的依赖：\(type)")
         }
     }
+    // swiftlint:enable force_cast
 }
 
 private struct DependencyKey: EnvironmentKey {
@@ -66,4 +68,3 @@ struct Injected<T> {
         container.resolve(T.self)
     }
 }
-

@@ -31,7 +31,7 @@ final class CachedImageLoader {
             }
             
             // 从网络加载
-            self.task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            self.task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
                 guard let data = data,
                       error == nil else {
                     DispatchQueue.main.async {
@@ -74,7 +74,7 @@ final class CachedImageLoader {
             }
             
             // 从网络加载
-            self.task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            self.task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
                 guard let data = data,
                       error == nil else {
                     DispatchQueue.main.async {
@@ -108,4 +108,3 @@ final class CachedImageLoader {
         task?.cancel()
     }
 }
-

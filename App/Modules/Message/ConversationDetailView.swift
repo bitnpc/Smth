@@ -64,7 +64,10 @@ struct ConversationDetailView: View {
         }
         .smthScaffoldBackground()
         .tint(AppTheme.accentColor(for: colorScheme))
-        .navigationTitle(viewModel.speaker?.nick ?? viewModel.speaker?.name ?? conversation.speaker?.nick ?? conversation.speaker?.name ?? "对话")
+        .navigationTitle(
+            viewModel.speaker?.nick ?? viewModel.speaker?.name
+            ?? conversation.speaker?.nick ?? conversation.speaker?.name ?? "对话"
+        )
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
@@ -201,4 +204,3 @@ struct MessageRowView: View {
         .frame(maxWidth: .infinity, alignment: isCurrentUser ? .trailing : .leading)
     }
 }
-

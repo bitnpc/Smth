@@ -59,4 +59,3 @@ extension AppError {
 
 @available(*, deprecated, message: "请使用 AppError 替代 APIError")
 typealias APIError = AppError
-

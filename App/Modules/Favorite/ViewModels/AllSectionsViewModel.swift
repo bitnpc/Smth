@@ -36,5 +36,3 @@ final class AllSectionsViewModel: ObservableObject {
         isLoading = false
     }
 }
-
-

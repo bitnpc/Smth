@@ -56,4 +56,3 @@ final class LayoutSettings: ObservableObject {
         selectedMode.showImages
     }
 }
-

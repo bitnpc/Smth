@@ -77,5 +77,3 @@ private struct HistoryRow: View {
         dateFormatter.localizedString(for: date, relativeTo: Date())
     }
 }
-
-

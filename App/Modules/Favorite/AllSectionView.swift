@@ -36,7 +36,7 @@ struct AllSectionView: View {
                 }
             }
         }
-        .onAppear() {
+        .onAppear {
             Task {
                 await viewModel.loadSectionsIfNeeded()
             }
@@ -45,4 +45,3 @@ struct AllSectionView: View {
         .navigationTitle("所有版面")
     }
 }
-

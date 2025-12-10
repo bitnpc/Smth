@@ -40,6 +40,3 @@ struct Endpoint {
         return request
     }
 }
-
-
-

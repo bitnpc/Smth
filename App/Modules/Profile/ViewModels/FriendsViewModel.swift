@@ -43,4 +43,3 @@ final class FriendsViewModel: ObservableObject {
         await loadFriends()
     }
 }
-

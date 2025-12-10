@@ -22,4 +22,23 @@ type_name:
 force_cast:
   severity: warning
 
+function_body_length:
+  warning: 175
+  error: 200
+
+function_parameter_count:
+  warning: 7
+  error: 10
+
+type_body_length:
+  warning: 410
+  error: 500
+
+file_length:
+  warning: 600
+  error: 700
+
+cyclomatic_complexity:
+  warning: 20
+  error: 25
 

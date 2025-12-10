@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000206">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: Switch to ios lint lane" time="8.7e-05">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: swiftlint --config &quot;/Users/tony/Documents/Smth/swiftlint.yml&quot;" time="0.227182">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: Switch to ios tests lane" time="0.000107">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: scan" time="46.134127">
+        
+          <failure message="/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/actions/actions_helper.rb:67:in `execute_action'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/runner.rb:255:in `block in execute_action'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/runner.rb:229:in `chdir'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/runner.rb:229:in `execute_action'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/runner.rb:157:in `trigger_action_by_name'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing'&#10;Fastfile:54:in `block (2 levels) in parsing_binding'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/lane.rb:41:in `call'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/runner.rb:204:in `try_switch_to_lane'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/runner.rb:146:in `trigger_action_by_name'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing'&#10;Fastfile:67:in `block (2 levels) in parsing_binding'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/lane.rb:41:in `call'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/runner.rb:49:in `block in execute'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/runner.rb:45:in `chdir'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/runner.rb:45:in `execute'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/lane_manager.rb:46:in `cruise_lane'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/command_line_handler.rb:34:in `handle'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/commands_generator.rb:110:in `block (2 levels) in run'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/commander-4.6.0/lib/commander/command.rb:187:in `call'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/commander-4.6.0/lib/commander/command.rb:157:in `run'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/commander-4.6.0/lib/commander/runner.rb:444:in `run_active_command'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in `run!'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/commander-4.6.0/lib/commander/delegates.rb:18:in `run!'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/commands_generator.rb:363:in `run'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/commands_generator.rb:43:in `start'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/fastlane/lib/fastlane/cli_tools_distributor.rb:123:in `take_off'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/gems/fastlane-2.222.0/bin/fastlane:23:in `&lt;top (required)&gt;'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/bin/fastlane:23:in `load'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/bin/fastlane:23:in `&lt;main&gt;'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/bin/ruby_executable_hooks:22:in `eval'&#10;/Users/tony/.rvm/gems/ruby-2.7.2@tony/bin/ruby_executable_hooks:22:in `&lt;main&gt;'&#10;&#10;[31mxcodebuild -showBuildSettings timed out after 4 retries with a base timeout of 3. You can override the base timeout value with the environment variable FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT, and the number of retries with the environment variable FASTLANE_XCODEBUILD_SETTINGS_RETRIES [0m" />
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

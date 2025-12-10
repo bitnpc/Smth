@@ -61,4 +61,3 @@ struct GuestPromptView: View {
         .smthSurfaceBackground()
     }
 }
-

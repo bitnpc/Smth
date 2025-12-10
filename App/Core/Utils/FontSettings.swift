@@ -62,5 +62,3 @@ final class FontSettings: ObservableObject {
         selectedOption.dynamicTypeSize
     }
 }
-
-

@@ -44,4 +44,3 @@ struct StubDraftRepository: DraftRepositoryProtocol {
         try await fetchDrafts(sort)
     }
 }
-

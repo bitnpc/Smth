@@ -43,5 +43,3 @@ final class LoginState: ObservableObject {
         UserDefaults.standard.synchronize()
     }
 }
-
-

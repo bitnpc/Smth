@@ -148,9 +148,9 @@ struct MessagesView: View {
 #if os(iOS)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
+                Button {
                     showProfileView = true
-                }) {
+                } label: {
                     Image(systemName: "person.crop.circle")
                 }
             }
@@ -166,7 +166,7 @@ struct MessagesView: View {
     }
 
     private var header: some View {
-        VStack() {
+        VStack {
             Picker("消息类型", selection: $selection) {
                 ForEach(MessageCategory.allCases, id: \.self) { tab in
                     Text(tab.title)

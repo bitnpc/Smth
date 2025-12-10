@@ -127,4 +127,3 @@ struct SearchResponse: Codable {
     let message: String
     let kbsCode: Int
 }
-

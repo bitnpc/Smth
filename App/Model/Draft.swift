@@ -63,4 +63,3 @@ struct DraftResponse: Codable {
     let message: String
     let kbsCode: Int
 }
-

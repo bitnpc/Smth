@@ -32,7 +32,7 @@ struct MyTopicView: View {
                 }
             }
         }
-        .onAppear() {
+        .onAppear {
             Task {
                 await viewModel.loadArticlesIfNeeded()
             }

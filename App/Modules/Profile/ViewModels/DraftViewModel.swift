@@ -40,4 +40,3 @@ final class DraftViewModel: ObservableObject {
         await loadDrafts()
     }
 }
-

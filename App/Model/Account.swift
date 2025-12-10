@@ -63,7 +63,25 @@ struct Account: Codable, Hashable {
         type = try? container.decodeIfPresent(Int.self, forKey: .type)
     }
     
-    init(id: String, avatarUrl: String, nick: String, name: String, levelTitle: String, birthday: String? = nil, gender: Int, loginTime: TimeInterval, avatar: String? = nil, createTime: TimeInterval? = nil, isBlack: Bool? = nil, isFans: Bool? = nil, k3sUrl: String? = nil, level: Int? = nil, score: Int? = nil, suicide: Bool? = nil, type: Int? = nil) {
+    init(
+        id: String,
+        avatarUrl: String,
+        nick: String,
+        name: String,
+        levelTitle: String,
+        birthday: String? = nil,
+        gender: Int,
+        loginTime: TimeInterval,
+        avatar: String? = nil,
+        createTime: TimeInterval? = nil,
+        isBlack: Bool? = nil,
+        isFans: Bool? = nil,
+        k3sUrl: String? = nil,
+        level: Int? = nil,
+        score: Int? = nil,
+        suicide: Bool? = nil,
+        type: Int? = nil
+    ) {
         self.id = id
         self.avatarUrl = avatarUrl
         self.nick = nick

@@ -45,5 +45,3 @@ final class ProfileViewModel: ObservableObject {
         hasLoaded = false
     }
 }
-
-

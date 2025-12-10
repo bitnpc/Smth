@@ -43,7 +43,17 @@ struct Article: Codable, Hashable {
         board = try? container.decodeIfPresent(Board.self, forKey: .board)
     }
     
-    init(id: String, subject: String, body: String, postTime: TimeInterval, account: Account?, accountId: String?, topicId: String, attachments: [Attachment]? = nil, board: Board? = nil) {
+    init(
+        id: String,
+        subject: String,
+        body: String,
+        postTime: TimeInterval,
+        account: Account?,
+        accountId: String?,
+        topicId: String,
+        attachments: [Attachment]? = nil,
+        board: Board? = nil
+    ) {
         self.id = id
         self.subject = subject
         self.body = body
@@ -63,14 +73,14 @@ struct Article: Codable, Hashable {
             for node in elements {
                 let line = try node.text()
                 quote += line
-                if line.count != 0 {
+                if !line.isEmpty {
                     quote += "\n"
                 }
             }
             if quote.isEmpty == false {
                 quote.removeLast()
             }
-        }catch {
+        } catch {
         }
         return quote
     }
@@ -83,21 +93,21 @@ struct Article: Codable, Hashable {
             for node in elements {
                 let line = try node.text()
                 resut += line
-                if line.count != 0 {
+                if !line.isEmpty {
                     resut += "\n"
                 }
             }
             if resut.isEmpty == false {
                 resut.removeLast()
             }
-        }catch {
+        } catch {
         
         }
         return resut
     }
     
     var postTimeString: String {
-        let date = Date(timeIntervalSince1970:postTime / 1000)
+        let date = Date(timeIntervalSince1970: postTime / 1000)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         return dateFormatter.string(from: date)
@@ -128,7 +138,6 @@ struct Article: Codable, Hashable {
         return content.isEmpty ? body : content
     }
 }
-
 struct ArticleCollection: Codable {
     let articles: [Article]
 }
@@ -137,7 +146,7 @@ struct ArticleResponse: Codable {
     let data: ArticleCollection
 }
 
-//extension Article {
+// extension Article {
 //    init(from decoder: Decoder) throws {
 //        let container = try decoder.container(keyedBy: CodingKeys.self)
 //
@@ -160,7 +169,7 @@ struct ArticleResponse: Codable {
 //                    }
 //                } else {
 //                    // 解码无效 attachment
-////                    _ = try? attachmentsArray.decode(AnyCodable.self)
+////                     _ = try? attachmentsArray.decode(AnyCodable.self)
 //                }
 //            }
 //            self.attachments = validAttachments
@@ -183,7 +192,6 @@ struct ArticleResponse: Codable {
 //    // 自定义方法来检查是否有效的 attachment
 //    private static func isValid(_ attachment: Attachment) -> Bool {
 //        // 根据您的条件来判断有效性
-//        return !attachment.name.isEmpty
-//    }
-//}
-
+//         return !attachment.name.isEmpty
+//     }
+// }

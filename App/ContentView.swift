@@ -266,7 +266,7 @@ struct ContentView: View {
                 selection: .favorites,
                 children: [
                     SidebarNode(id: "favorites.boards", title: "收藏版块", iconName: "square.grid.2x2", selection: .favoriteBoards),
-                    SidebarNode(id: "favorites.topics", title: "收藏话题", iconName: "bookmark", selection: .favoriteTopics),
+                    SidebarNode(id: "favorites.topics", title: "收藏话题", iconName: "bookmark", selection: .favoriteTopics)
                 ]
             ),
             SidebarNode(
@@ -432,7 +432,7 @@ private struct SidebarNode: Identifiable {
     let title: String
     let iconName: String
     let selection: SidebarSelection
-    var children: [SidebarNode]? = nil
+    var children: [SidebarNode]?
 }
 
 private enum FavoritesDisplayMode {

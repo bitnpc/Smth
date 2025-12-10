@@ -57,8 +57,20 @@ struct StubUserRepository: UserRepositoryProtocol {
 
     init(
         profile: @escaping () async throws -> Profile = { Profile.defaultProfile },
-        friends: @escaping (_ name: String) async throws -> FriendsData = { _ in FriendsData(pager: FriendPager(total: 1, size: 50, page: 0, items: 0), account: Account.defaultAccount, friends: []) },
-        fans: @escaping (_ name: String) async throws -> FansData = { _ in FansData(pager: FriendPager(total: 1, size: 50, page: 0, items: 0), account: Account.defaultAccount, fans: []) }
+        friends: @escaping (_ name: String) async throws -> FriendsData = { _ in
+            FriendsData(
+                pager: FriendPager(total: 1, size: 50, page: 0, items: 0),
+                account: Account.defaultAccount,
+                friends: []
+            )
+        },
+        fans: @escaping (_ name: String) async throws -> FansData = { _ in
+            FansData(
+                pager: FriendPager(total: 1, size: 50, page: 0, items: 0),
+                account: Account.defaultAccount,
+                fans: []
+            )
+        }
     ) {
         self.profile = profile
         self.friends = friends
@@ -77,5 +89,3 @@ struct StubUserRepository: UserRepositoryProtocol {
         try await fans(name)
     }
 }
-
-

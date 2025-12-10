@@ -94,5 +94,3 @@ struct StubSectionRepository: SectionRepositoryProtocol {
         try await boards(sectionID)
     }
 }
-
-

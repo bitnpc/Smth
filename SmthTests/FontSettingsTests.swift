@@ -29,5 +29,3 @@ final class FontSettingsTests: XCTestCase {
         XCTAssertEqual(settings.selectedOption, .large)
     }
 }
-
-

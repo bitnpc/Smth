@@ -51,10 +51,8 @@ final class ImagePageViewController: UIPageViewController {
         view.backgroundColor = .black
         
         // 确保 UIPageViewController 的背景视图也是黑色
-        for subview in view.subviews {
-            if subview is UIScrollView {
-                subview.backgroundColor = .black
-            }
+        for subview in view.subviews where subview is UIScrollView {
+            subview.backgroundColor = .black
         }
         
         setupCloseButton()
@@ -136,7 +134,10 @@ final class ImagePageViewController: UIPageViewController {
 
 // MARK: - UIPageViewControllerDataSource
 extension ImagePageViewController: UIPageViewControllerDataSource {
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerBefore viewController: UIViewController
+    ) -> UIViewController? {
         guard let vc = viewController as? ImageScrollViewController,
               let index = imageViewControllers.firstIndex(of: vc),
               index > 0 else {
@@ -145,7 +146,10 @@ extension ImagePageViewController: UIPageViewControllerDataSource {
         return imageViewControllers[index - 1]
     }
     
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerAfter viewController: UIViewController
+    ) -> UIViewController? {
         guard let vc = viewController as? ImageScrollViewController,
               let index = imageViewControllers.firstIndex(of: vc),
               index < imageViewControllers.count - 1 else {
@@ -157,7 +161,12 @@ extension ImagePageViewController: UIPageViewControllerDataSource {
 
 // MARK: - UIPageViewControllerDelegate
 extension ImagePageViewController: UIPageViewControllerDelegate {
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        didFinishAnimating finished: Bool,
+        previousViewControllers: [UIViewController],
+        transitionCompleted completed: Bool
+    ) {
         if completed,
            let currentVC = pageViewController.viewControllers?.first as? ImageScrollViewController,
            let index = imageViewControllers.firstIndex(of: currentVC) {

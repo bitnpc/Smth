@@ -31,7 +31,7 @@ struct BoardListView: View {
                         if board.type == 0 {
                             Text(board.title)
                             Text(board.name).font(.footnote).foregroundColor(.gray)
-                        }else {
+                        } else {
                             Text(board.title)
                             Text("目录").font(.footnote).foregroundColor(.blue).backgroundStyle(.blue)
                         }
@@ -39,7 +39,7 @@ struct BoardListView: View {
                 }
             }
         }
-        .onAppear() {
+        .onAppear {
             Task {
                 await viewModel.loadBoardsIfNeeded()
             }
@@ -47,9 +47,9 @@ struct BoardListView: View {
         .listStyle(.plain)
         .navigationTitle(section.name)
         .navigationDestination(for: Board.self) { board in
-            if (board.type == 0) {
+            if board.type == 0 {
                 TopicListView(board: board)
-            }else {
+            } else {
                 let subBoardArray = viewModel.subBoards(for: board)
                 SubBoardListView(boardName: board.title, boards: subBoardArray)
             }

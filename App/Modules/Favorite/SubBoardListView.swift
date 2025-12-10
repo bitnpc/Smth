@@ -21,7 +21,7 @@ struct SubBoardListView: View {
                         if board.type == 0 {
                             Text(board.title)
                             Text(board.name).font(.footnote).foregroundColor(.gray)
-                        }else {
+                        } else {
                             Text(board.title)
                             Text("目录").font(.footnote).foregroundColor(.blue).backgroundStyle(.blue)
                         }
@@ -33,4 +33,3 @@ struct SubBoardListView: View {
         .navigationTitle(boardName)
     }
 }
-

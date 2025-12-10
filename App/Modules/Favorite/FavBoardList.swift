@@ -144,4 +144,3 @@ struct FavBoardList: View {
         }
     }
 }
-

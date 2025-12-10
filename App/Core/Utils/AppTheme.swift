@@ -115,5 +115,3 @@ extension View {
         modifier(SurfaceBackgroundModifier(subdued: subdued))
     }
 }
-
-
