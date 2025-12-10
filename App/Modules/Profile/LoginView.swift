@@ -153,7 +153,6 @@ private struct LoginWebView: UIViewRepresentable {
             DispatchQueue.main.async {
                 self.parent.isLoading = false
             }
-            checkLoginStatus(webView: webView)
         }
         
         func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
@@ -170,31 +169,37 @@ private struct LoginWebView: UIViewRepresentable {
             }
         }
         
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+            checkLoginStatus(webView: webView)
+            return .allow
+        }
+        
         private func checkLoginStatus(webView: WKWebView) {
             Task {
-                do {
-                    let cookies = try await WKWebsiteDataStore.default().httpCookieStore.allCookies()
-                    var isLoggedIn = false
-                    
-                    for cookie in cookies {
-                        HTTPCookieStorage.shared.setCookie(cookie)
-                        if cookie.name == "kbs-key" {
-                            isLoggedIn = true
-                        }
+                let cookies = await WKWebsiteDataStore.default().httpCookieStore.allCookies()
+                var isLoggedIn = false
+                
+                for cookie in cookies {
+                    HTTPCookieStorage.shared.setCookie(cookie)
+                    if cookie.name == "kbs-key" {
+                        isLoggedIn = true
                     }
-                    
-                    await MainActor.run {
-                        if isLoggedIn {
-                            LoginState.shared.markLoggedIn()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                self.parent.onComplete()
-                            }
-                        } else {
-                            LoginState.shared.markLoggedOut()
-                        }
+                }
+
+                await MainActor.run {
+                    if LoginState.shared.isLoggedIn {
+                        return
                     }
-                } catch {
-                    print("Error checking login status: \(error.localizedDescription)")
+                    if isLoggedIn {
+                        LoginState.shared.markLoggedIn()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self.parent.onComplete()
+                            print("LoginWebView: logged in. hide")
+                        }
+                    } else {
+                        LoginState.shared.markLoggedOut()
+                        print("LoginWebView: logged out.")
+                    }
                 }
             }
         }
