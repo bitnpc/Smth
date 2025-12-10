@@ -31,25 +31,61 @@ platform :ios do
     # 获取可用的 iPhone 模拟器
     destination = nil
     begin
-      simulator_list = `xcrun simctl list devices available | grep -i 'iPhone' | head -1`.strip
+      # 列出所有可用的模拟器
+      available_devices = `xcrun simctl list devices available --json`.strip
       
-      if simulator_list.nil? || simulator_list.empty?
-        UI.important("No iOS Simulator available, using macOS")
-        destination = "platform=macOS"
+      if available_devices.empty?
+        UI.important("No simulator list available, using generic iOS Simulator")
+        destination = "platform=iOS Simulator"
       else
-        # 提取模拟器名称（格式：iPhone 15 Pro (XXXX-XXXX-XXXX-XXXX)）
-        match = simulator_list.match(/^\s*(.+?)\s*\(/)
-        simulator_name = match ? match[1].strip : "iPhone 15 Pro"
-        destination = "platform=iOS Simulator,name=#{simulator_name}"
-        UI.message("Using iOS Simulator: #{simulator_name}")
+        # 尝试解析 JSON 并找到第一个 iPhone 模拟器
+        require 'json'
+        devices_json = JSON.parse(available_devices)
+        
+        # 查找第一个可用的 iPhone 模拟器
+        simulator_udid = nil
+        simulator_name = nil
+        
+        devices_json["devices"].each do |runtime, devices|
+          next unless runtime.include?("iOS")
+          
+          devices.each do |device|
+            if device["name"].include?("iPhone") && device["isAvailable"] == true
+              simulator_udid = device["udid"]
+              simulator_name = device["name"]
+              break
+            end
+          end
+          break if simulator_udid
+        end
+        
+        if simulator_udid && simulator_name
+          # 启动模拟器
+          UI.message("Booting simulator: #{simulator_name} (#{simulator_udid})")
+          `xcrun simctl boot "#{simulator_udid}" 2>&1`
+          
+          # 等待模拟器启动
+          sleep(5)
+          
+          destination = "platform=iOS Simulator,id=#{simulator_udid}"
+          UI.message("Using iOS Simulator: #{simulator_name} (#{simulator_udid})")
+        else
+          UI.important("No available iPhone simulator found, using generic iOS Simulator")
+          destination = "platform=iOS Simulator"
+        end
       end
     rescue => ex
-      UI.important("Error detecting simulator, using macOS: #{ex.message}")
-      destination = "platform=macOS"
+      UI.important("Error detecting simulator: #{ex.message}")
+      UI.important("Using generic iOS Simulator destination")
+      destination = "platform=iOS Simulator"
     end
     
-    # 如果没有找到模拟器，使用 macOS
-    destination ||= "platform=macOS"
+    # 如果没有找到模拟器，使用通用 iOS Simulator
+    destination ||= "platform=iOS Simulator"
+    
+    # 设置更长的超时时间
+    ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "60"
+    ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "3"
     
     scan(
       project: "Smth.xcodeproj",
