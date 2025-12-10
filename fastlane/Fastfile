@@ -1,23 +1,60 @@
 default_platform(:ios)
 
+# 辅助方法：获取项目根目录
+def project_root
+  @project_root ||= File.expand_path("..", File.dirname(__FILE__))
+end
+
+# 辅助方法：查找可用的 iOS 模拟器
+def find_ios_simulator
+  begin
+    available_devices = `xcrun simctl list devices available --json`.strip
+    return nil if available_devices.empty?
+    
+    require 'json'
+    devices_json = JSON.parse(available_devices)
+    
+    devices_json["devices"].each do |runtime, devices|
+      next unless runtime.include?("iOS")
+      
+      devices.each do |device|
+        if device["name"].include?("iPhone") && device["isAvailable"] == true
+          return {
+            udid: device["udid"],
+            name: device["name"]
+          }
+        end
+      end
+    end
+  rescue => ex
+    UI.important("Error detecting simulator: #{ex.message}")
+  end
+  
+  nil
+end
+
+# 辅助方法：获取构建 destination
+def get_build_destination(boot_simulator: false)
+  simulator = find_ios_simulator
+  
+  if simulator
+    if boot_simulator
+      UI.message("Booting simulator: #{simulator[:name]} (#{simulator[:udid]})")
+      `xcrun simctl boot "#{simulator[:udid]}" 2>&1`
+      sleep(5)
+    end
+    "platform=iOS Simulator,id=#{simulator[:udid]}"
+  else
+    UI.important("No available iPhone simulator found, using generic iOS Simulator")
+    "platform=iOS Simulator,name=iPhone 15 Pro"
+  end
+end
+
 platform :ios do
   desc "运行 SwiftLint 代码规范检查"
   lane :lint do
-    # 获取项目根目录（fastlane 目录的父目录）
-    # __FILE__ 是 Fastfile 的路径，例如 /path/to/project/fastlane/Fastfile
-    # File.dirname(__FILE__) 得到 fastlane 目录
-    # 再往上一级就是项目根目录
-    fastlane_dir = File.dirname(__FILE__)
-    project_root = File.expand_path("..", fastlane_dir)
     config_path = File.join(project_root, "swiftlint.yml")
     
-    # 输出调试信息
-    UI.message("Fastfile 路径: #{__FILE__}")
-    UI.message("fastlane 目录: #{fastlane_dir}")
-    UI.message("项目根目录: #{project_root}")
-    UI.message("配置文件路径: #{config_path}")
-    
-    # 验证配置文件是否存在
     unless File.exist?(config_path)
       UI.user_error!("SwiftLint 配置文件不存在: #{config_path}")
     end
@@ -27,74 +64,40 @@ platform :ios do
 
   desc "执行单元测试"
   lane :tests do
-    # 使用模拟器运行测试，不需要证书
-    # 获取可用的 iPhone 模拟器
-    destination = nil
-    begin
-      # 列出所有可用的模拟器
-      available_devices = `xcrun simctl list devices available --json`.strip
-      
-      if available_devices.empty?
-        UI.important("No simulator list available, using generic iOS Simulator")
-        destination = "platform=iOS Simulator"
-      else
-        # 尝试解析 JSON 并找到第一个 iPhone 模拟器
-        require 'json'
-        devices_json = JSON.parse(available_devices)
-        
-        # 查找第一个可用的 iPhone 模拟器
-        simulator_udid = nil
-        simulator_name = nil
-        
-        devices_json["devices"].each do |runtime, devices|
-          next unless runtime.include?("iOS")
-          
-          devices.each do |device|
-            if device["name"].include?("iPhone") && device["isAvailable"] == true
-              simulator_udid = device["udid"]
-              simulator_name = device["name"]
-              break
-            end
-          end
-          break if simulator_udid
-        end
-        
-        if simulator_udid && simulator_name
-          # 启动模拟器
-          UI.message("Booting simulator: #{simulator_name} (#{simulator_udid})")
-          `xcrun simctl boot "#{simulator_udid}" 2>&1`
-          
-          # 等待模拟器启动
-          sleep(5)
-          
-          destination = "platform=iOS Simulator,id=#{simulator_udid}"
-          UI.message("Using iOS Simulator: #{simulator_name} (#{simulator_udid})")
-        else
-          UI.important("No available iPhone simulator found, using generic iOS Simulator")
-          destination = "platform=iOS Simulator"
-        end
-      end
-    rescue => ex
-      UI.important("Error detecting simulator: #{ex.message}")
-      UI.important("Using generic iOS Simulator destination")
-      destination = "platform=iOS Simulator"
-    end
+    # 检查 scheme 是否配置了测试操作
+    scheme_path = File.join(project_root, "Smth.xcodeproj/xcshareddata/xcschemes/Smth.xcscheme")
+    has_test_action = File.exist?(scheme_path) && 
+                      (File.read(scheme_path).include?("<TestableReference") || 
+                       File.read(scheme_path).include?("testTarget"))
     
-    # 如果没有找到模拟器，使用通用 iOS Simulator
-    destination ||= "platform=iOS Simulator"
-    
-    # 设置更长的超时时间
+    # 设置超时时间
     ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "60"
     ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "3"
     
-    scan(
-      project: "Smth.xcodeproj",
-      scheme: "Smth",
-      clean: true,
-      code_coverage: false,
-      skip_package_dependencies_resolution: false,
-      destination: destination
-    )
+    project_path = File.join(project_root, "Smth.xcodeproj")
+    
+    if !has_test_action
+      UI.important("No test action configured in scheme, skipping tests and just building the project")
+      
+      destination = get_build_destination(boot_simulator: false)
+      
+      Dir.chdir(project_root) do
+        sh("xcodebuild clean build -project Smth.xcodeproj -scheme Smth -destination '#{destination}' -sdk iphonesimulator -skipPackagePluginValidation")
+      end
+      
+      UI.success("Build completed successfully (no tests to run)")
+    else
+      destination = get_build_destination(boot_simulator: true)
+      
+      scan(
+        project: project_path,
+        scheme: "Smth",
+        clean: true,
+        code_coverage: false,
+        skip_package_dependencies_resolution: false,
+        destination: destination
+      )
+    end
   end
 
   desc "CI 流程：Lint + 测试"

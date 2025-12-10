@@ -11,6 +11,8 @@ on:
 jobs:
   build-and-test:
     runs-on: macos-14
+    timeout-minutes: 30
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,28 +28,21 @@ jobs:
           ruby-version: 3.2
           bundler-cache: true
 
+      - name: Cache Swift Package Manager
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData
+            .build
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
+
       - name: Install SwiftLint
         run: brew install swiftlint
 
-      - name: Verify Xcode version
-        run: xcodebuild -version
-
       - name: Install dependencies
         run: bundle install
-
-      - name: List available simulators
-        run: xcrun simctl list devices available
-
-      - name: Boot iOS Simulator
-        run: |
-          # 获取第一个可用的 iPhone 模拟器并启动
-          SIMULATOR_UDID=$(xcrun simctl list devices available --json | grep -A 5 '"iPhone' | grep '"udid"' | head -1 | cut -d'"' -f4)
-          if [ -n "$SIMULATOR_UDID" ]; then
-            echo "Booting simulator: $SIMULATOR_UDID"
-            xcrun simctl boot "$SIMULATOR_UDID" || true
-            # 等待模拟器完全启动
-            sleep 10
-          fi
 
       - name: Run Fastlane CI lane
         env:
