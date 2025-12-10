@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 
 final class ImagePageViewController: UIPageViewController {
     private let images: [String]
@@ -59,30 +58,39 @@ final class ImagePageViewController: UIPageViewController {
         
         setupCloseButton()
         setupPageIndicator()
-        setupConstraints()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // 确保视图扩展到 safe area 之外
-        edgesForExtendedLayout = .all
-        
-        // 再次确保背景为黑色
-        view.backgroundColor = .black
-        for subview in view.subviews {
-            if subview is UIScrollView {
-                subview.backgroundColor = .black
-            }
-        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        // 确保所有子视图的背景都是黑色
-        view.backgroundColor = .black
-        for subview in view.subviews {
-            subview.backgroundColor = .black
+        
+        // 使用 frame 布局设置 closeButton 和 pageControl
+        updateLayout()
+    }
+    
+    private func updateLayout() {
+        let safeAreaInsets = view.safeAreaInsets
+        let safeAreaFrame = view.bounds.inset(by: safeAreaInsets)
+        
+        // 关闭按钮布局
+        if let closeButton = closeButton {
+            closeButton.translatesAutoresizingMaskIntoConstraints = false
+            let buttonSize: CGFloat = 44
+            closeButton.frame = CGRect(
+                x: safeAreaFrame.maxX - buttonSize - 16,
+                y: safeAreaFrame.minY + 16,
+                width: buttonSize,
+                height: buttonSize
+            )
+        }
+        
+        // 页码指示器布局
+        if let pageControl = pageControl {
+            pageControl.translatesAutoresizingMaskIntoConstraints = false
+            pageControl.sizeToFit()
+            pageControl.center = CGPoint(
+                x: view.bounds.midX,
+                y: safeAreaFrame.maxY - 40 - pageControl.bounds.height / 2
+            )
         }
     }
     
@@ -101,25 +109,6 @@ final class ImagePageViewController: UIPageViewController {
         closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         self.closeButton = closeButton
         view.addSubview(closeButton)
-    }
-    
-    private func setupConstraints() {
-        guard let closeButton = closeButton else { return }
-        
-        // 关闭按钮布局
-        closeButton.snp.makeConstraints { make in
-            make.width.height.equalTo(44)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-16)
-        }
-        
-        // 页码指示器布局
-        if let pageControl = pageControl {
-            pageControl.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-40)
-            }
-        }
     }
     
     @objc private func closeTapped() {

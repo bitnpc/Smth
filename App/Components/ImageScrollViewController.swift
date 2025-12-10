@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 
 final class ImageScrollViewController: UIViewController {
     private let imageUrl: String
@@ -35,12 +34,14 @@ final class ImageScrollViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScrollView()
-        setupConstraints()
         loadImage()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        // 设置 scrollView 的 frame
+        scrollView.frame = view.bounds
         
         let currentSize = scrollView.bounds.size
         
@@ -79,6 +80,7 @@ final class ImageScrollViewController: UIViewController {
         scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.backgroundColor = .black
         scrollView.bouncesZoom = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         // 创建 ImageView
         imageView = UIImageView()
@@ -101,26 +103,19 @@ final class ImageScrollViewController: UIViewController {
         view.addSubview(scrollView)
     }
     
-    private func setupConstraints() {
-        // ScrollView 全屏布局，不留 safe area 间隙
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-    
     private func loadImage() {
         guard let url = URL(string: imageUrl) else { return }
         
         // 显示加载指示器
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.color = .white
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         self.activityIndicator = activityIndicator
         view.addSubview(activityIndicator)
         
-        // 使用 SnapKit 布局加载指示器
-        activityIndicator.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
+        // 使用 frame 布局加载指示器
+        activityIndicator.sizeToFit()
+        activityIndicator.center = CGPoint(x: view.bounds.midX, y: view.bounds.midY)
         
         activityIndicator.startAnimating()
         
@@ -128,6 +123,14 @@ final class ImageScrollViewController: UIViewController {
         imageLoader = CachedImageLoader()
         imageLoader?.loadImage(from: url) { [weak self] image in
             DispatchQueue.main.async {
+                // 更新 activityIndicator 的位置（可能在 viewDidLayoutSubviews 中尺寸改变）
+                if let activityIndicator = self?.activityIndicator {
+                    activityIndicator.center = CGPoint(
+                        x: self?.view.bounds.midX ?? 0,
+                        y: self?.view.bounds.midY ?? 0
+                    )
+                }
+                
                 self?.activityIndicator?.stopAnimating()
                 self?.activityIndicator?.removeFromSuperview()
                 self?.activityIndicator = nil
