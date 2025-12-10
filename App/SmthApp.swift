@@ -24,5 +24,9 @@ struct SmthApp: App {
                 .environmentObject(layoutSettings)
                 .dynamicTypeSize(fontSettings.dynamicTypeSize)
         }
+        #if os(macOS)
+        .defaultSize(width: 1200, height: 800)
+        .windowResizability(.contentSize)
+        #endif
     }
 }

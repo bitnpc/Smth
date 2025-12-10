@@ -7,14 +7,22 @@
 //
 
 import Foundation
+#if os(iOS)
 import UIKit
+#elseif os(macOS)
+import AppKit
+#endif
 
 /// 图片缓存管理器，使用 NSCache 和磁盘缓存
 /// NSCache 是线程安全的，可以在任何线程使用
 final class ImageCache {
     static let shared = ImageCache()
     
+    #if os(iOS)
     private let memoryCache = NSCache<NSString, UIImage>()
+    #elseif os(macOS)
+    private let memoryCache = NSCache<NSString, NSImage>()
+    #endif
     private let diskCacheURL: URL
     private let fileManager = FileManager.default
     private let maxMemoryCacheSize = 50 * 1024 * 1024 // 50MB
@@ -40,6 +48,7 @@ final class ImageCache {
     }
     
     /// 从缓存中获取图片
+    #if os(iOS)
     func image(for url: URL) async -> UIImage? {
         let key = cacheKey(for: url)
         
@@ -57,8 +66,28 @@ final class ImageCache {
         
         return nil
     }
+    #elseif os(macOS)
+    func image(for url: URL) async -> NSImage? {
+        let key = cacheKey(for: url)
+        
+        // 先检查内存缓存
+        if let cachedImage = memoryCache.object(forKey: key as NSString) {
+            return cachedImage
+        }
+        
+        // 检查磁盘缓存
+        if let diskImage = await loadFromDisk(key: key) {
+            // 将磁盘缓存加载到内存缓存
+            memoryCache.setObject(diskImage, forKey: key as NSString, cost: imageCost(diskImage))
+            return diskImage
+        }
+        
+        return nil
+    }
+    #endif
     
     /// 将图片保存到缓存
+    #if os(iOS)
     func setImage(_ image: UIImage, for url: URL) async {
         let key = cacheKey(for: url)
         
@@ -68,6 +97,17 @@ final class ImageCache {
         // 保存到磁盘缓存
         await saveToDisk(image: image, key: key)
     }
+    #elseif os(macOS)
+    func setImage(_ image: NSImage, for url: URL) async {
+        let key = cacheKey(for: url)
+        
+        // 保存到内存缓存
+        memoryCache.setObject(image, forKey: key as NSString, cost: imageCost(image))
+        
+        // 保存到磁盘缓存
+        await saveToDisk(image: image, key: key)
+    }
+    #endif
     
     /// 清除所有缓存
     func clearCache() async {
@@ -135,10 +175,17 @@ final class ImageCache {
         return url.absoluteString
     }
     
+    #if os(iOS)
     private func imageCost(_ image: UIImage) -> Int {
         guard let cgImage = image.cgImage else { return 0 }
         return cgImage.width * cgImage.height * 4 // 假设 RGBA，每像素4字节
     }
+    #elseif os(macOS)
+    private func imageCost(_ image: NSImage) -> Int {
+        guard let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else { return 0 }
+        return cgImage.width * cgImage.height * 4 // 假设 RGBA，每像素4字节
+    }
+    #endif
     
     private func diskCachePath(for key: String) -> URL {
         // 使用 URL 的哈希值作为文件名，避免特殊字符问题
@@ -146,6 +193,7 @@ final class ImageCache {
         return diskCacheURL.appendingPathComponent(fileName)
     }
     
+    #if os(iOS)
     private func loadFromDisk(key: String) async -> UIImage? {
         return await Task.detached {
             let filePath = self.diskCachePath(for: key)
@@ -164,5 +212,29 @@ final class ImageCache {
             try? data.write(to: filePath)
         }.value
     }
+    #elseif os(macOS)
+    private func loadFromDisk(key: String) async -> NSImage? {
+        return await Task.detached {
+            let filePath = self.diskCachePath(for: key)
+            guard let data = try? Data(contentsOf: filePath),
+                  let image = NSImage(data: data) else {
+                return nil
+            }
+            return image
+        }.value
+    }
+    
+    private func saveToDisk(image: NSImage, key: String) async {
+        await Task.detached {
+            guard let tiffData = image.tiffRepresentation,
+                  let bitmapImage = NSBitmapImageRep(data: tiffData),
+                  let data = bitmapImage.representation(using: .jpeg, properties: [.compressionFactor: 0.8]) else {
+                return
+            }
+            let filePath = self.diskCachePath(for: key)
+            try? data.write(to: filePath)
+        }.value
+    }
+    #endif
 }
 

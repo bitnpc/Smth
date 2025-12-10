@@ -16,10 +16,19 @@ struct MessagesView: View {
     @State private var showProfileView = false
     @StateObject private var viewModel = MessagesViewModel()
     @State private var showLoginView = false
-
+    
+    #if os(macOS)
+    private let onMessageSelected: ((MessagePreview) -> Void)?
+    
+    init(initialCategory: MessageCategory = .inbox, onMessageSelected: ((MessagePreview) -> Void)? = nil) {
+        _selection = State(initialValue: initialCategory)
+        self.onMessageSelected = onMessageSelected
+    }
+    #else
     init(initialCategory: MessageCategory = .inbox) {
         _selection = State(initialValue: initialCategory)
     }
+    #endif
 
     var body: some View {
         Group {
@@ -32,6 +41,44 @@ struct MessagesView: View {
                             } else {
                                 ForEach(Array(viewModel.currentItems.enumerated()), id: \.element) { index, item in
                                     Group {
+                                        #if os(macOS)
+                                        if let onMessageSelected = onMessageSelected {
+                                            // macOS 上使用按钮 + 回调
+                                            if let conversation = item as? Conversation {
+                                                Button {
+                                                    onMessageSelected(createMessagePreview(from: conversation))
+                                                } label: {
+                                                    messageCard(for: item, category: selection)
+                                                }
+                                                .buttonStyle(.plain)
+                                            } else if let notify = item as? Notify {
+                                                Button {
+                                                    onMessageSelected(createMessagePreview(from: notify))
+                                                } label: {
+                                                    messageCard(for: item, category: selection)
+                                                }
+                                                .buttonStyle(.plain)
+                                            } else {
+                                                messageCard(for: item, category: selection)
+                                            }
+                                        } else {
+                                            // 如果没有回调，使用 NavigationLink
+                                            if let conversation = item as? Conversation {
+                                                NavigationLink(value: conversation) {
+                                                    messageCard(for: item, category: selection)
+                                                }
+                                                .buttonStyle(.plain)
+                                            } else if let notify = item as? Notify {
+                                                NavigationLink(value: notify) {
+                                                    messageCard(for: item, category: selection)
+                                                }
+                                                .buttonStyle(.plain)
+                                            } else {
+                                                messageCard(for: item, category: selection)
+                                            }
+                                        }
+                                        #else
+                                        // iOS 上使用 NavigationLink
                                         if let conversation = item as? Conversation {
                                             NavigationLink(value: conversation) {
                                                 messageCard(for: item, category: selection)
@@ -45,6 +92,7 @@ struct MessagesView: View {
                                         } else {
                                             messageCard(for: item, category: selection)
                                         }
+                                        #endif
                                     }
                                     .onAppear {
                                         // 当滚动到倒数第5个时加载下一页
@@ -367,6 +415,47 @@ struct MessagesView: View {
             viewModel.reset()
         }
     }
+    
+    #if os(macOS)
+    private func createMessagePreview(from conversation: Conversation) -> MessagePreview {
+        let lastMessage = viewModel.getLastMessage(for: conversation.id)
+        let title = conversation.speaker?.name ?? conversation.speaker?.nick ?? "未知用户"
+        let body = lastMessage?.subject ?? ""
+        let timestamp = Date(timeIntervalSince1970: conversation.lastTime)
+        return MessagePreview(
+            title: title,
+            body: body,
+            category: .inbox,
+            timestamp: timestamp
+        )
+    }
+    
+    private func createMessagePreview(from notify: Notify) -> MessagePreview {
+        let title = notify.subject
+        let body: String
+        if let cause = notify.cause {
+            body = cause.plainTextContent
+        } else if let target = notify.target {
+            body = target.plainTextContent
+        } else {
+            body = ""
+        }
+        let category: MessageCategory
+        switch notify.type {
+        case 1: category = .mention
+        case 2: category = .reply
+        case 3: category = .like
+        default: category = .inbox
+        }
+        let timestamp = Date(timeIntervalSince1970: notify.createTime)
+        return MessagePreview(
+            title: title,
+            body: body,
+            category: category,
+            timestamp: timestamp
+        )
+    }
+    #endif
 }
 
 #Preview {
@@ -408,9 +497,17 @@ enum MessageCategory: CaseIterable, Hashable {
 }
 
 struct MessagePreview: Identifiable, Hashable {
-    let id = UUID()
+    let id: UUID
     let title: String
     let body: String
     let category: MessageCategory
     let timestamp: Date
+    
+    init(title: String, body: String, category: MessageCategory, timestamp: Date) {
+        self.id = UUID()
+        self.title = title
+        self.body = body
+        self.category = category
+        self.timestamp = timestamp
+    }
 }

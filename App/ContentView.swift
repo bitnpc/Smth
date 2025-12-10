@@ -118,10 +118,13 @@ struct ContentView: View {
     private var macSidebarLayout: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             macSidebar
+                .frame(minWidth: 240, idealWidth: 280, maxWidth: 350)
         } content: {
             macContentStack
+                .frame(minWidth: 300, idealWidth: 380, maxWidth: 500)
         } detail: {
             macDetailPlaceholder
+                .frame(minWidth: 500, idealWidth: 600, maxWidth: 800)
         }
         .onAppear {
             initializeSidebarIfNeeded()
@@ -130,8 +133,11 @@ struct ContentView: View {
         .onChange(of: loginState.isLoggedIn) { _, newValue in
             handleLoginStateChange(isLoggedIn: newValue, forceReload: true)
         }
-        .onChange(of: sidebarSelection) { _, _ in
-            resetDetailSelection()
+        .onChange(of: sidebarSelection) { oldValue, newValue in
+            // 只有当选择真正改变时才重置详情
+            if oldValue != newValue {
+                resetDetailSelection()
+            }
         }
     }
 
@@ -144,11 +150,11 @@ struct ContentView: View {
                         .tag(node.selection)
                         .font(.system(.body, design: .rounded))
                         .padding(.vertical, 4)
+                        .padding(.leading, 8)
                 }
             }
             .listStyle(.sidebar)
             .scrollContentBackground(.hidden)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             Divider()
                 .padding(.horizontal, 12)
@@ -157,7 +163,6 @@ struct ContentView: View {
                 .padding(.horizontal, 12)
                 .padding(.vertical, 10)
         }
-        .frame(minWidth: 260, maxHeight: .infinity)
     }
 
     private var macContentStack: some View {
@@ -179,6 +184,7 @@ struct ContentView: View {
     private var macDetailView: some View {
         if let topic = detailTopic {
             TopicDetailView(topicID: topic.id)
+                .id(topic.id) // 强制在 topic 改变时重新创建视图
         } else if let board = detailBoard {
             TopicListView(board: board, onTopicSelected: showTopicDetail)
         } else if let message = detailMessage {
@@ -319,9 +325,9 @@ struct ContentView: View {
                 onTopicSelected: showTopicDetail
             )
         case .messages:
-            MessagesView(onMessageSelected: showMessageDetail)
+            MessagesView()
         case let .message(category):
-            MessagesView(initialCategory: category, onMessageSelected: showMessageDetail)
+            MessagesView(initialCategory: category)
         case .profile:
             ProfileView()
         }
@@ -338,7 +344,7 @@ struct ContentView: View {
             Task {
                 if forceReload {
                     await favoritesViewModel.loadFavoriteBoards()
-                    await favoritesViewModel.loadFavoriteTopics()
+                    await favoritesViewModel.loadInitialFavoriteTopics()
                     await profileViewModel.loadProfile()
                 } else {
                     await favoritesViewModel.loadFavoritesIfNeeded()

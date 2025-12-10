@@ -6,6 +6,7 @@
 //  Created by tony
 //
 
+#if os(iOS)
 import UIKit
 
 final class ImagePageViewController: UIPageViewController {
@@ -172,4 +173,4 @@ private extension Array {
         return indices.contains(index) ? self[index] : nil
     }
 }
-
+#endif

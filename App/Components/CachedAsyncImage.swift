@@ -7,6 +7,11 @@
 //
 
 import SwiftUI
+#if os(iOS)
+import UIKit
+#elseif os(macOS)
+import AppKit
+#endif
 
 /// 带缓存的异步图片加载组件
 struct CachedAsyncImage<Content: View, Placeholder: View>: View {
@@ -14,7 +19,11 @@ struct CachedAsyncImage<Content: View, Placeholder: View>: View {
     @ViewBuilder let content: (Image) -> Content
     @ViewBuilder let placeholder: () -> Placeholder
     
+    #if os(iOS)
     @State private var image: UIImage?
+    #elseif os(macOS)
+    @State private var image: NSImage?
+    #endif
     @State private var isLoading = true
     @State private var hasError = false
     
@@ -31,7 +40,11 @@ struct CachedAsyncImage<Content: View, Placeholder: View>: View {
     var body: some View {
         Group {
             if let image = image {
+                #if os(iOS)
                 content(Image(uiImage: image))
+                #elseif os(macOS)
+                content(Image(nsImage: image))
+                #endif
             } else {
                 placeholder()
             }
@@ -61,6 +74,7 @@ struct CachedAsyncImage<Content: View, Placeholder: View>: View {
         hasError = false
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
+            #if os(iOS)
             if let loadedImage = UIImage(data: data) {
                 // 保存到缓存
                 await ImageCache.shared.setImage(loadedImage, for: url)
@@ -69,6 +83,16 @@ struct CachedAsyncImage<Content: View, Placeholder: View>: View {
             } else {
                 hasError = true
             }
+            #elseif os(macOS)
+            if let loadedImage = NSImage(data: data) {
+                // 保存到缓存
+                await ImageCache.shared.setImage(loadedImage, for: url)
+                image = loadedImage
+                hasError = false
+            } else {
+                hasError = true
+            }
+            #endif
         } catch {
             // 加载失败
             hasError = true
@@ -109,7 +133,11 @@ struct CachedAsyncImagePhase<Content: View>: View {
         
         // 先尝试从缓存加载
         if let cachedImage = await ImageCache.shared.image(for: url) {
+            #if os(iOS)
             phase = .success(Image(uiImage: cachedImage))
+            #elseif os(macOS)
+            phase = .success(Image(nsImage: cachedImage))
+            #endif
             return
         }
         
@@ -117,6 +145,7 @@ struct CachedAsyncImagePhase<Content: View>: View {
         phase = .empty
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
+            #if os(iOS)
             if let loadedImage = UIImage(data: data) {
                 // 保存到缓存
                 await ImageCache.shared.setImage(loadedImage, for: url)
@@ -124,6 +153,15 @@ struct CachedAsyncImagePhase<Content: View>: View {
             } else {
                 phase = .failure(URLError(.cannotDecodeContentData))
             }
+            #elseif os(macOS)
+            if let loadedImage = NSImage(data: data) {
+                // 保存到缓存
+                await ImageCache.shared.setImage(loadedImage, for: url)
+                phase = .success(Image(nsImage: loadedImage))
+            } else {
+                phase = .failure(URLError(.cannotDecodeContentData))
+            }
+            #endif
         } catch {
             phase = .failure(error)
         }

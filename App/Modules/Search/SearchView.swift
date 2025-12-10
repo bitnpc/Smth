@@ -36,7 +36,9 @@ struct SearchView: View {
         .smthScaffoldBackground()
         .tint(AppTheme.accentColor(for: colorScheme))
         .navigationTitle("搜索")
+        #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
+        #endif
         .navigationDestination(for: String.self) { topicId in
             TopicDetailView(topicID: topicId)
         }

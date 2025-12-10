@@ -40,6 +40,7 @@ struct ImageGroupView: View {
                 }
             }
         }
+        #if os(iOS)
         .fullScreenCover(item: $selectedImageIndex) { imageIndex in
             ImageViewer(
                 images: imageUrls,
@@ -51,6 +52,20 @@ struct ImageGroupView: View {
                 sourceFrame: $sourceFrame
             )
         }
+        #elseif os(macOS)
+        .sheet(item: $selectedImageIndex) { imageIndex in
+            ImageViewer(
+                images: imageUrls,
+                initialIndex: imageIndex.id,
+                isPresented: Binding(
+                    get: { selectedImageIndex != nil },
+                    set: { if !$0 { selectedImageIndex = nil } }
+                ),
+                sourceFrame: $sourceFrame
+            )
+            .frame(minWidth: 800, minHeight: 600)
+        }
+        #endif
     }
     
     @ViewBuilder

@@ -6,6 +6,7 @@
 //  Created by tony
 //
 
+#if os(iOS)
 import UIKit
 
 final class ImageScrollViewController: UIViewController {
@@ -269,4 +270,4 @@ extension ImageScrollViewController: UIScrollViewDelegate {
         centerImageView()
     }
 }
-
+#endif
