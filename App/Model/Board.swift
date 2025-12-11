@@ -59,7 +59,7 @@ struct Board: Codable, Hashable {
 }
 
 extension Board {
-    static func defaultBoard() -> [Board] {
+    static func defaultChannelBoard() -> [Board] {
         return [
             Board(id: "1", title: "热帖", isFavorite: 0, groupId: "1", type: 0, name: "热门"),
             Board(id: "0", title: "十大", isFavorite: 0, groupId: "2", type: 0, name: "十大"),

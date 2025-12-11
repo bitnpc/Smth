@@ -13,6 +13,7 @@ enum APIEndpoint {
     // MARK: - 话题相关
     case hotTopics(page: Int, pageSize: Int)
     case topTopics
+    case channelTopic(channelID: String, page: Int, pageSize: Int)
     case topicList(boardID: String, page: Int, pageSize: Int)
     case topicDetail(topicID: String, page: Int, sortType: SortType)
     case myTopics(page: Int)
@@ -27,6 +28,7 @@ enum APIEndpoint {
     case profile
     case friends(name: String)
     case fans(name: String)
+    case navigation
     
     // MARK: - 消息相关
     case conversations(page: Int)
@@ -65,6 +67,18 @@ enum APIEndpoint {
                     URLQueryItem(name: "t", value: timestamp),
                     URLQueryItem(name: "page", value: "1"),
                     URLQueryItem(name: "size", value: "20")
+                ]
+            )
+            
+        case let .channelTopic(boardID, page, pageSize):
+            return Endpoint(
+                path: "wap/api/channel/loadTopics",
+                method: .get,
+                queryItems: [
+                    URLQueryItem(name: "t", value: timestamp),
+                    URLQueryItem(name: "channel", value: boardID),
+                    URLQueryItem(name: "page", value: String(page)),
+                    URLQueryItem(name: "size", value: String(pageSize))
                 ]
             )
             
@@ -160,6 +174,15 @@ enum APIEndpoint {
         case let .fans(name):
             return Endpoint(
                 path: "wap/api/account/fans/\(name)",
+                method: .get,
+                queryItems: [
+                    URLQueryItem(name: "t", value: timestamp)
+                ]
+            )
+            
+        case .navigation:
+            return Endpoint(
+                path: "wap/api/profile/navigation",
                 method: .get,
                 queryItems: [
                     URLQueryItem(name: "t", value: timestamp)

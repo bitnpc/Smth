@@ -13,11 +13,11 @@ struct HomeView: View {
     @EnvironmentObject private var browsingHistory: BrowsingHistoryStore
     @Environment(\.colorScheme) private var colorScheme
 
-    private let boards: [Board] = Board.defaultBoard()
-
+    @StateObject private var navigationViewModel = HomeNavigationViewModel()
+    @StateObject private var viewModel = NaviTopicListViewModel()
     @State private var selectedIndex: Int = 0
     @State private var showProfileView = false
-    @StateObject private var viewModel = TopicListViewModel(boardID: Board.defaultBoard().first!.id)
+    @State private var hasInitializedFirstNavigation = false
 
     var body: some View {
         ScrollView {
@@ -37,8 +37,8 @@ struct HomeView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 } header: {
-                    BoardSelector(
-                        boards: boards,
+                    NavigationSelector(
+                        navigations: navigationViewModel.navigations,
                         selectedIndex: $selectedIndex
                     )
                 }
@@ -58,7 +58,24 @@ struct HomeView: View {
         .toolbarTitleDisplayMode(.inlineLarge)
         .onAppear {
             Task {
-                await viewModel.loadInitialIfNeeded()
+                await navigationViewModel.loadNavigationsIfNeeded()
+            }
+        }
+        .onChange(of: navigationViewModel.navigations) { _, newNavigations in
+            // 当导航数据首次加载完成时，初始化第一个导航项
+            if !newNavigations.isEmpty && !hasInitializedFirstNavigation {
+                hasInitializedFirstNavigation = true
+                let firstNavigation = newNavigations[0]
+                Task {
+                    await viewModel.switchNavigation(to: firstNavigation)
+                }
+            }
+        }
+        .onChange(of: selectedIndex) { _, newIndex in
+            guard navigationViewModel.navigations.indices.contains(newIndex) else { return }
+            let selectedNavigation = navigationViewModel.navigations[newIndex]
+            Task {
+                await viewModel.switchNavigation(to: selectedNavigation)
             }
         }
 #if os(iOS)
@@ -87,9 +104,6 @@ struct HomeView: View {
 #endif
     }
 
-    private var currentBoard: Board {
-        boards[boards.indices.contains(selectedIndex) ? selectedIndex : boards.startIndex]
-    }
 }
 
 private enum SearchDestination: Hashable {

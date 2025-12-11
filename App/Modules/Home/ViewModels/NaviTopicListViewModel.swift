@@ -1,15 +1,14 @@
 //
-//  TopicListViewModel.swift
+//  NaviTopicListViewModel.swift
 //  Smth
 //
-//  话题列表视图模型，管理版块话题列表的分页加载和刷新
-//  Created by tony
+//  Created by tony on 2025/12/11.
 //
 
 import Foundation
 
 @MainActor
-final class TopicListViewModel: ObservableObject {
+final class NaviTopicListViewModel: ObservableObject {
     @Published private(set) var topics: [Topic] = []
     @Published private(set) var isLoadingPage = false
     @Published private(set) var isRefreshing = false
@@ -18,16 +17,22 @@ final class TopicListViewModel: ObservableObject {
     private let repository: TopicRepositoryProtocol
     private let pageSize: Int
     private var paginationState = PaginationState<Topic>()
-    private let boardID: String
+    private var navigation: Navigation?
 
     init(
         repository: TopicRepositoryProtocol = AppContainer.shared.resolve(TopicRepositoryProtocol.self),
-        boardID: String,
+        navigation: Navigation? = nil,
         pageSize: Int = 20
     ) {
         self.repository = repository
-        self.boardID = boardID
+        self.navigation = navigation
         self.pageSize = pageSize
+    }
+    
+    func switchNavigation(to newNavigation: Navigation) async {
+        guard newNavigation.id != navigation?.id else { return }
+        navigation = newNavigation
+        await loadInitialPage()
     }
 
     func loadInitialIfNeeded() async {
@@ -80,8 +85,31 @@ final class TopicListViewModel: ObservableObject {
     private func loadPage() async {
         let originalState = paginationState
         guard let nextPage = paginationState.startLoadingNextPage() else { return }
+        guard let navigation = navigation else {
+            errorMessage = "未选择导航项"
+            return
+        }
+        
         do {
-            let newItems = try await repository.fetchTopics(in: boardID, page: nextPage, pageSize: pageSize)
+            let newItems: [Topic]
+            switch navigation.type {
+            case "top":
+                newItems = try await repository.fetchTopTopics()
+            case "global":
+                // 热帖：使用全局热帖接口
+                newItems = try await repository.fetchHotTopics(page: nextPage, pageSize: pageSize)
+            case "channel":
+                // 频道：使用频道接口，使用 navigation.value 作为 channelID
+                newItems = try await repository.fetchChannelTopics(channelID: navigation.value, page: nextPage, pageSize: pageSize)
+            case "album":
+                // 图览：暂时不支持，返回空数组
+                // TODO: 实现图览功能
+                newItems = []
+                errorMessage = "图览功能暂未实现"
+            default:
+                newItems = []
+                errorMessage = "不支持的导航类型：\(navigation.type)"
+            }
             paginationState.completeLoading(with: newItems, pageSize: pageSize)
             topics = paginationState.items
         } catch {
@@ -91,3 +119,4 @@ final class TopicListViewModel: ObservableObject {
         }
     }
 }
+

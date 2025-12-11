@@ -1,5 +1,5 @@
 //
-//  BoardSelector.swift
+//  NavigationSelector.swift
 //  Smth
 //
 //  版块选择器组件，提供版块选择功能
@@ -8,26 +8,26 @@
 
 import SwiftUI
 
-struct BoardSelector: View {
+struct NavigationSelector: View {
     @Environment(\.colorScheme) private var colorScheme
 
-    let boards: [Board]
+    let navigations: [Navigation]
     @Binding var selectedIndex: Int
 
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: AppTheme.compactSpacing) {
-                    ForEach(Array(boards.enumerated()), id: \.element.id) { index, board in
+                    ForEach(Array(navigations.enumerated()), id: \.element.id) { index, navigation in
                         Button {
                             withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                                 selectedIndex = index
                             }
                         } label: {
-                            selectorChip(for: board.title, isSelected: index == selectedIndex)
+                            selectorChip(for: navigation.name, isSelected: index == selectedIndex)
                         }
                         .buttonStyle(.plain)
-                        .id(board.id)
+                        .id(navigation.id)
                     }
                 }
                 .padding(.horizontal, AppTheme.verticalSpacing)
@@ -47,10 +47,10 @@ struct BoardSelector: View {
             .padding(.horizontal, AppTheme.verticalSpacing)
             .padding(.top, AppTheme.verticalSpacing)
             .onChange(of: selectedIndex, { _, newValue in
-                guard boards.indices.contains(newValue) else { return }
-                let board = boards[newValue]
+                guard navigations.indices.contains(newValue) else { return }
+                let navigation = navigations[newValue]
                 withAnimation(.easeInOut(duration: 0.2)) {
-                    proxy.scrollTo(board.id, anchor: .center)
+                    proxy.scrollTo(navigation.id, anchor: .center)
                 }
             })
         }

@@ -11,6 +11,7 @@ import Foundation
 protocol TopicRepositoryProtocol {
     func fetchHotTopics(page: Int, pageSize: Int) async throws -> [Topic]
     func fetchTopTopics() async throws -> [Topic]
+    func fetchChannelTopics(channelID: String, page: Int, pageSize: Int) async throws -> [Topic]
     func fetchTopics(in boardID: String, page: Int, pageSize: Int) async throws -> [Topic]
     func fetchMyTopics(page: Int) async throws -> [Article]
     func fetchTopicDetail(topicID: String, page: Int, sortType: SortType) async throws -> TopicDetail
@@ -31,6 +32,12 @@ struct TopicRepository: TopicRepositoryProtocol {
     
     func fetchTopTopics() async throws -> [Topic] {
         let endpoint = APIEndpoint.topTopics.toEndpoint()
+        let response: TopicResponse = try await apiService.request(endpoint)
+        return response.data.topics
+    }
+    
+    func fetchChannelTopics(channelID: String, page: Int, pageSize: Int) async throws -> [Topic] {
+        let endpoint = APIEndpoint.channelTopic(channelID: channelID, page: page, pageSize: pageSize).toEndpoint()
         let response: TopicResponse = try await apiService.request(endpoint)
         return response.data.topics
     }
@@ -84,6 +91,7 @@ struct StubTopicRepository: TopicRepositoryProtocol {
     
     var hotTopics: (_ page: Int, _ size: Int) async throws -> [Topic]
     var topTopics: () async throws -> [Topic]
+    var channelTopics: (_ channelID: String, _ page: Int, _ size: Int) async throws -> [Topic]
     var boardTopics: (_ boardID: String, _ page: Int, _ size: Int) async throws -> [Topic]
     var myTopics: (_ page: Int) async throws -> [Article]
     var topicDetail: (_ topicID: String, _ page: Int, _ sortType: SortType) async throws -> TopicDetail
@@ -91,6 +99,7 @@ struct StubTopicRepository: TopicRepositoryProtocol {
     init(
         hotTopics: @escaping (_ page: Int, _ size: Int) async throws -> [Topic] = { _, _ in [] },
         topTopics: @escaping () async throws -> [Topic] = { [] },
+        channelTopics: @escaping (_ channelID: String, _ page: Int, _ size: Int) async throws -> [Topic] = { _, _, _ in [] },
         boardTopics: @escaping (_ boardID: String, _ page: Int, _ size: Int) async throws -> [Topic] = { _, _, _ in [] },
         myTopics: @escaping (_ page: Int) async throws -> [Article] = { _ in [] },
         topicDetail: @escaping (_ topicID: String, _ page: Int, _ sortType: SortType) async throws -> TopicDetail = { _, _, _ in
@@ -111,6 +120,7 @@ struct StubTopicRepository: TopicRepositoryProtocol {
     ) {
         self.hotTopics = hotTopics
         self.topTopics = topTopics
+        self.channelTopics = channelTopics
         self.boardTopics = boardTopics
         self.myTopics = myTopics
         self.topicDetail = topicDetail
@@ -122,6 +132,10 @@ struct StubTopicRepository: TopicRepositoryProtocol {
     
     func fetchTopTopics() async throws -> [Topic] {
         try await topTopics()
+    }
+    
+    func fetchChannelTopics(channelID: String, page: Int, pageSize: Int) async throws -> [Topic] {
+        try await channelTopics(channelID, page, pageSize)
     }
 
     func fetchTopics(in boardID: String, page: Int, pageSize: Int) async throws -> [Topic] {
