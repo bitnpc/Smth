@@ -18,6 +18,17 @@ struct HomeView: View {
     @State private var selectedIndex: Int = 0
     @State private var showProfileView = false
     @State private var hasInitializedFirstNavigation = false
+    
+    private var currentNavigationType: String? {
+        guard navigationViewModel.navigations.indices.contains(selectedIndex) else {
+            return nil
+        }
+        return navigationViewModel.navigations[selectedIndex].type
+    }
+    
+    private var isAlbumView: Bool {
+        currentNavigationType == "album"
+    }
 
     var body: some View {
         ScrollView {
@@ -25,16 +36,23 @@ struct HomeView: View {
                 Section {
                     ForEach(viewModel.topics) { topic in
                         NavigationLink(value: topic) {
-                            TopicRowView(
-                                topic: topic,
-                                isVisited: browsingHistory.visitedTopicIDs.contains(topic.id)
-                            )
-                            .onAppear {
-                                viewModel.loadNextPageIfNeeded(currentItem: topic)
+                            if isAlbumView {
+                                AlbumTopicRowView(
+                                    topic: topic,
+                                    isVisited: browsingHistory.visitedTopicIDs.contains(topic.id)
+                                )
+                            } else {
+                                TopicRowView(
+                                    topic: topic,
+                                    isVisited: browsingHistory.visitedTopicIDs.contains(topic.id)
+                                )
                             }
                         }
                         .buttonStyle(.plain)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .onAppear {
+                            viewModel.loadNextPageIfNeeded(currentItem: topic)
+                        }
                     }
                 } header: {
                     NavigationSelector(
