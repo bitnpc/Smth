@@ -14,10 +14,10 @@ final class HomeNavigationViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var errorMessage: String?
     
-    private let repository: UserRepositoryProtocol
+    private let repository: TopicRepositoryProtocol
     private var hasLoaded = false
     
-    init(repository: UserRepositoryProtocol = AppContainer.shared.resolve(UserRepositoryProtocol.self)) {
+    init(repository: TopicRepositoryProtocol = AppContainer.shared.resolve(TopicRepositoryProtocol.self)) {
         self.repository = repository
     }
     
@@ -47,4 +47,3 @@ final class HomeNavigationViewModel: ObservableObject {
         hasLoaded = false
     }
 }
-

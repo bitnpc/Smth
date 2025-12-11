@@ -102,10 +102,8 @@ final class NaviTopicListViewModel: ObservableObject {
                 // 频道：使用频道接口，使用 navigation.value 作为 channelID
                 newItems = try await repository.fetchChannelTopics(channelID: navigation.value, page: nextPage, pageSize: pageSize)
             case "album":
-                // 图览：暂时不支持，返回空数组
-                // TODO: 实现图览功能
-                newItems = []
-                errorMessage = "图览功能暂未实现"
+                // 图览：使用图览接口
+                newItems = try await repository.fetchAlbumTopics(page: nextPage, pageSize: pageSize)
             default:
                 newItems = []
                 errorMessage = "不支持的导航类型：\(navigation.type)"

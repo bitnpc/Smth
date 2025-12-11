@@ -17,6 +17,7 @@ enum APIEndpoint {
     case topicList(boardID: String, page: Int, pageSize: Int)
     case topicDetail(topicID: String, page: Int, sortType: SortType)
     case myTopics(page: Int)
+    case albumTopics(page: Int, pageSize: Int)
     
     // MARK: - 版块相关
     case allSections
@@ -113,6 +114,17 @@ enum APIEndpoint {
                     URLQueryItem(name: "type", value: "0"),
                     URLQueryItem(name: "page", value: String(page)),
                     URLQueryItem(name: "sort", value: "DESC")
+                ]
+            )
+            
+        case let .albumTopics(page, pageSize):
+            return Endpoint(
+                path: "wap/api/album/load/global",
+                method: .get,
+                queryItems: [
+                    URLQueryItem(name: "t", value: timestamp),
+                    URLQueryItem(name: "page", value: String(page)),
+                    URLQueryItem(name: "size", value: String(pageSize))
                 ]
             )
             
