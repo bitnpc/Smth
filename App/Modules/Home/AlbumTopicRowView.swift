@@ -112,4 +112,3 @@ struct AlbumTopicRowView: View {
         .accessibilityLabel("\(topic.subject)")
     }
 }
-
