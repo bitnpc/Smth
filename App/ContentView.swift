@@ -14,12 +14,12 @@ struct ContentView: View {
     @EnvironmentObject private var loginState: LoginState
     @State private var selection: RootDestination? = .home
     #if os(macOS)
-    private let homeBoards = Board.defaultBoard()
-    @State private var sidebarSelection: SidebarSelection? = Board.defaultBoard().first.map { SidebarSelection.board($0) } ?? .home
+    @State private var sidebarSelection: SidebarSelection? = .home
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var searchText = ""
     @StateObject private var favoritesViewModel = FavoritesViewModel()
     @StateObject private var profileViewModel = ProfileViewModel()
+    @StateObject private var macHomeNavigationViewModel = HomeNavigationViewModel()
     @State private var detailTopic: Topic?
     @State private var detailBoard: Board?
     @State private var detailMessage: MessagePreview?
@@ -129,6 +129,9 @@ struct ContentView: View {
         .onAppear {
             initializeSidebarIfNeeded()
             handleLoginStateChange(isLoggedIn: loginState.isLoggedIn)
+            Task {
+                await macHomeNavigationViewModel.loadNavigationsIfNeeded()
+            }
         }
         .onChange(of: loginState.isLoggedIn) { _, newValue in
             handleLoginStateChange(isLoggedIn: newValue, forceReload: true)
@@ -145,12 +148,18 @@ struct ContentView: View {
         VStack(spacing: 0) {
             sidebarSearchBar
             List(selection: $sidebarSelection) {
-                OutlineGroup(sidebarNodes, children: \.children) { node in
-                    Label(node.title, systemImage: node.iconName)
-                        .tag(node.selection)
-                        .font(.system(.body, design: .rounded))
-                        .padding(.vertical, 4)
-                        .padding(.leading, 8)
+                ForEach(sidebarNodes) { node in
+                    if let children = node.children, !children.isEmpty {
+                        Section {
+                            ForEach(children) { child in
+                                sidebarRow(for: child, isChild: true)
+                            }
+                        } header: {
+                            sidebarRow(for: node, isChild: false)
+                        }
+                    } else {
+                        sidebarRow(for: node, isChild: false)
+                    }
                 }
             }
             .listStyle(.sidebar)
@@ -243,6 +252,15 @@ struct ContentView: View {
         .buttonStyle(.plain)
     }
 
+    @ViewBuilder
+    private func sidebarRow(for node: SidebarNode, isChild: Bool) -> some View {
+        Label(node.title, systemImage: node.iconName)
+            .tag(node.selection)
+            .font(.system(.body, design: .rounded))
+            .padding(.vertical, 4)
+            .padding(.leading, isChild ? 16 : 8)
+    }
+
     private var sidebarNodes: [SidebarNode] {
         [
             SidebarNode(
@@ -250,12 +268,12 @@ struct ContentView: View {
                 title: "首页",
                 iconName: "house",
                 selection: .home,
-                children: filteredHomeBoards.map { board in
+                children: filteredNavigations.map { navigation in
                     SidebarNode(
-                        id: "home.board.\(board.id)",
-                        title: board.title,
-                        iconName: "text.justify.leading",
-                        selection: .board(board)
+                        id: "home.navigation.\(navigation.id)",
+                        title: navigation.name,
+                        iconName: navigationIconName(for: navigation),
+                        selection: .homeNavigation(navigation)
                     )
                 }
             ),
@@ -286,13 +304,28 @@ struct ContentView: View {
         ]
     }
 
-    private var filteredHomeBoards: [Board] {
+    private var filteredNavigations: [Navigation] {
+        let navigations = macHomeNavigationViewModel.navigations
         guard searchText.isEmpty == false else {
-            return homeBoards
+            return navigations
         }
-        return homeBoards.filter { board in
-            board.title.localizedCaseInsensitiveContains(searchText) ||
-            board.name.localizedCaseInsensitiveContains(searchText)
+        return navigations.filter { navigation in
+            navigation.name.localizedCaseInsensitiveContains(searchText)
+        }
+    }
+
+    private func navigationIconName(for navigation: Navigation) -> String {
+        switch navigation.type {
+        case "top":
+            return "flame"
+        case "global":
+            return "globe"
+        case "channel":
+            return "square.grid.2x2"
+        case "album":
+            return "photo.on.rectangle"
+        default:
+            return "list.bullet"
         }
     }
 
@@ -301,8 +334,9 @@ struct ContentView: View {
         switch selection {
         case .home:
             HomeView()
-        case let .board(board):
-            TopicListView(board: board, onTopicSelected: showTopicDetail)
+        case let .homeNavigation(navigation):
+            NavigationTopicColumnView(navigation: navigation, onTopicSelected: showTopicDetail)
+                .id(navigation.id)
         case .favorites:
             FavoritesColumnView(
                 viewModel: favoritesViewModel,
@@ -335,7 +369,7 @@ struct ContentView: View {
 
     private func initializeSidebarIfNeeded() {
         if sidebarSelection == nil {
-            sidebarSelection = homeBoards.first.map { SidebarSelection.board($0) } ?? .home
+            sidebarSelection = .home
         }
     }
 
@@ -408,7 +442,7 @@ private enum RootDestination: String, CaseIterable, Hashable, Identifiable {
         case .mine: return "person.circle"
         }
     }
-    
+
     /// iOS 平台显示的 tab 列表（不包含"我的"）
     static var iOSCases: [RootDestination] {
         [.home, .favorites, .messages]
@@ -418,13 +452,63 @@ private enum RootDestination: String, CaseIterable, Hashable, Identifiable {
 #if os(macOS)
 private enum SidebarSelection: Hashable {
     case home
-    case board(Board)
+    case homeNavigation(Navigation)
     case favorites
     case favoriteBoards
     case favoriteTopics
     case messages
     case message(MessageCategory)
     case profile
+}
+
+private struct NavigationTopicColumnView: View {
+    @EnvironmentObject private var browsingHistory: BrowsingHistoryStore
+    @Environment(\.colorScheme) private var colorScheme
+
+    let navigation: Navigation
+    let onTopicSelected: ((Topic) -> Void)?
+
+    @StateObject private var viewModel = NaviTopicListViewModel()
+
+    private var isAlbumView: Bool {
+        navigation.type == "album"
+    }
+
+    var body: some View {
+        ScrollView {
+            LazyVStack(spacing: AppTheme.compactSpacing) {
+                ForEach(viewModel.topics) { topic in
+                    Button {
+                        onTopicSelected?(topic)
+                    } label: {
+                        if isAlbumView {
+                            AlbumTopicRowView(
+                                topic: topic,
+                                isVisited: browsingHistory.visitedTopicIDs.contains(topic.id)
+                            )
+                        } else {
+                            TopicRowView(
+                                topic: topic,
+                                isVisited: browsingHistory.visitedTopicIDs.contains(topic.id)
+                            )
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .onAppear {
+                        viewModel.loadNextPageIfNeeded(currentItem: topic)
+                    }
+                }
+            }
+            .padding(.top, AppTheme.verticalSpacing)
+            .padding(.horizontal, AppTheme.verticalSpacing)
+        }
+        .smthScaffoldBackground()
+        .tint(AppTheme.accentColor(for: colorScheme))
+        .task {
+            await viewModel.switchNavigation(to: navigation)
+        }
+    }
 }
 
 private struct SidebarNode: Identifiable {
