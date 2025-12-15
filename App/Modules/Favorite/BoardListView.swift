@@ -22,7 +22,7 @@ struct BoardListView: View {
             _viewModel = StateObject(wrappedValue: BoardListViewModel(sectionID: section.id))
         }
     }
-    
+
     var body: some View {
         List {
             ForEach(viewModel.filteredBoards, id: \.id) { board in

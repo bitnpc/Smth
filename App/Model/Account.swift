@@ -18,7 +18,7 @@ struct Account: Codable, Hashable {
     let birthday: String?
     let gender: Int
     let loginTime: TimeInterval
-    
+
     // 可选字段，用于兼容不同 API 返回的数据
     let avatar: String?
     let createTime: TimeInterval?
@@ -29,12 +29,12 @@ struct Account: Codable, Hashable {
     let score: Int?
     let suicide: Bool?
     let type: Int?
-    
+
     enum CodingKeys: String, CodingKey {
         case id, avatar, avatarUrl, nick, name, levelTitle, birthday, gender, loginTime
         case createTime, isBlack, isFans, k3sUrl, level, score, suicide, type
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
@@ -62,7 +62,7 @@ struct Account: Codable, Hashable {
         suicide = try? container.decodeIfPresent(Bool.self, forKey: .suicide)
         type = try? container.decodeIfPresent(Int.self, forKey: .type)
     }
-    
+
     init(
         id: String,
         avatarUrl: String,
@@ -106,7 +106,7 @@ extension Account {
     var isLoggedIn: Bool {
         return LoginState.shared.isLoggedIn
     }
-    
+
     static func logout() {
         LoginState.shared.markLoggedOut()
         HTTPCookieStorage.shared.removeCookies(since: NSDate.distantPast)

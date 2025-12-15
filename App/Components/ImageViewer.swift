@@ -14,7 +14,7 @@ struct ImageViewer: View {
     let initialIndex: Int
     @Binding var isPresented: Bool
     @Binding var sourceFrame: CGRect?
-    
+
     var body: some View {
         #if os(iOS)
         ImageViewerUIKit(
@@ -43,7 +43,7 @@ private struct ImageViewerUIKit: UIViewControllerRepresentable {
     let initialIndex: Int
     @Binding var isPresented: Bool
     let sourceFrame: CGRect?
-    
+
     func makeUIViewController(context: Context) -> ImagePageViewController {
         let controller = ImagePageViewController(
             images: images,
@@ -54,7 +54,7 @@ private struct ImageViewerUIKit: UIViewControllerRepresentable {
         )
         return controller
     }
-    
+
     func updateUIViewController(_ uiViewController: ImagePageViewController, context: Context) {
         // 如果需要更新，可以在这里处理
     }
@@ -68,10 +68,10 @@ private struct ImageViewerSwiftUI: View {
     let initialIndex: Int
     @Binding var isPresented: Bool
     let sourceFrame: CGRect?
-    
+
     @State private var currentIndex: Int
     @State private var scale: CGFloat = 1.0
-    
+
     init(images: [String], initialIndex: Int, isPresented: Binding<Bool>, sourceFrame: CGRect?) {
         self.images = images
         self.initialIndex = initialIndex
@@ -79,12 +79,12 @@ private struct ImageViewerSwiftUI: View {
         self.sourceFrame = sourceFrame
         self._currentIndex = State(initialValue: initialIndex)
     }
-    
+
     var body: some View {
         ZStack {
             Color.black
                 .ignoresSafeArea()
-            
+
             if !images.isEmpty && currentIndex < images.count {
                 ZStack {
                     // 图片视图
@@ -128,7 +128,7 @@ private struct ImageViewerSwiftUI: View {
                             }
                         }
                     }
-                    
+
                     // 上一张按钮
                     if images.count > 1 && currentIndex > 0 {
                         HStack {
@@ -153,7 +153,7 @@ private struct ImageViewerSwiftUI: View {
                         }
                         .padding(.leading, 20)
                     }
-                    
+
                     // 下一张按钮
                     if images.count > 1 && currentIndex < images.count - 1 {
                         HStack {
@@ -179,7 +179,7 @@ private struct ImageViewerSwiftUI: View {
                         .padding(.trailing, 20)
                     }
                 }
-                
+
                 VStack {
                     HStack {
                         Spacer()

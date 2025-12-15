@@ -16,7 +16,7 @@ struct Message: Codable, Hashable, Identifiable {
     let account: Account?
     let topicId: String?
     let board: Board?
-    
+
     var dateString: String {
         guard let timestamp = timestamp else { return "" }
         let date = Date(timeIntervalSince1970: timestamp / 1000)
@@ -38,14 +38,14 @@ struct InboxMessage: Codable, Hashable, Identifiable {
     let type: Int
     let status: Int
     let sendTime: TimeInterval
-    
+
     var dateString: String {
         let date = Date(timeIntervalSince1970: sendTime / 1000)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         return dateFormatter.string(from: date)
     }
-    
+
     // 从 body 中提取消息内容（去掉邮件头）
     var content: String {
         // body 包含邮件头，提取实际内容
@@ -76,19 +76,19 @@ struct Conversation: Codable, Hashable, Identifiable {
     let status: Int
     let speaker: Account?
     let account: Account?
-    
+
     var dateString: String {
         let date = Date(timeIntervalSince1970: lastTime / 1000)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         return dateFormatter.string(from: date)
     }
-    
+
     // 获取对话标题（优先使用对方的昵称）
     var title: String? {
         speaker?.nick ?? speaker?.name
     }
-    
+
     // 未读数量
     var unreadCount: Int {
         unread
@@ -99,15 +99,15 @@ struct MessageCollection: Codable {
     let messages: [Message]?
     let conversations: [Conversation]?
     let notifies: [Message]?
-    
+
     enum CodingKeys: String, CodingKey {
         case messages, conversations, notifies
         case data
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         // 尝试从 data 字段解析
         if let dataContainer = try? container.nestedContainer(keyedBy: CodingKeys.self, forKey: .data) {
             messages = try? dataContainer.decodeIfPresent([Message].self, forKey: .messages)
@@ -120,7 +120,7 @@ struct MessageCollection: Codable {
             notifies = try? container.decodeIfPresent([Message].self, forKey: .notifies)
         }
     }
-    
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(messages, forKey: .messages)
@@ -171,24 +171,24 @@ struct Notify: Codable, Hashable, Identifiable {
     let account: Account?
     let accountId: String
     let status: Int
-    
+
     var dateString: String {
         let date = Date(timeIntervalSince1970: createTime / 1000)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         return dateFormatter.string(from: date)
     }
-    
+
     // 获取操作者名称
     var actorName: String {
         transactor?.nick ?? transactor?.name ?? transactorName
     }
-    
+
     // 获取版面信息
     var board: Board? {
         cause?.board ?? target?.board
     }
-    
+
     // 获取话题ID
     var topicId: String? {
         cause?.topicId ?? target?.topicId
@@ -236,10 +236,10 @@ struct MessageResponse: Codable {
     let messages: [Message]?
     let conversations: [Conversation]?
     let notifies: [Message]?
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         // 尝试解析 data 字段
         if let data = try? container.decodeIfPresent(MessageCollection.self, forKey: .data) {
             self.data = data
@@ -254,7 +254,7 @@ struct MessageResponse: Codable {
             self.notifies = try? container.decodeIfPresent([Message].self, forKey: .notifies)
         }
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case data, messages, conversations, notifies
     }

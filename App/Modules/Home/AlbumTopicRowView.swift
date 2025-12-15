@@ -10,15 +10,15 @@ import SwiftUI
 
 struct AlbumTopicRowView: View {
     @Environment(\.colorScheme) private var colorScheme
-    
+
     let topic: Topic
     let isVisited: Bool
-    
+
     init(topic: Topic, isVisited: Bool = false) {
         self.topic = topic
         self.isVisited = isVisited
     }
-    
+
     private var firstImageAttachment: Attachment? {
         guard let attachments = topic.article?.attachments,
               !attachments.isEmpty else {
@@ -35,7 +35,7 @@ struct AlbumTopicRowView: View {
                    type.contains("webp")
         } ?? attachments.first
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             // 图片部分 - 占据大部分空间
@@ -72,7 +72,7 @@ struct AlbumTopicRowView: View {
                         }
                     )
             }
-            
+
             // 标题部分 - 在底部
             VStack(alignment: .leading, spacing: 8) {
                 Text(topic.subject)

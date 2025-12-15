@@ -12,12 +12,12 @@ struct FavTopicList: View {
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject private var viewModel: FavoritesViewModel
     private let onTopicSelected: ((Topic) -> Void)?
-    
+
     init(viewModel: FavoritesViewModel, onTopicSelected: ((Topic) -> Void)? = nil) {
         self.viewModel = viewModel
         self.onTopicSelected = onTopicSelected
     }
-    
+
     var body: some View {
         VStack(spacing: AppTheme.verticalSpacing) {
             if viewModel.favTopics.isEmpty {
@@ -56,7 +56,7 @@ struct FavTopicList: View {
                             }
                         }
                     }
-                    
+
                     if viewModel.isLoadingPage {
                         ProgressView()
                             .padding()
@@ -99,12 +99,12 @@ struct FavTopicRowView: View {
     @Environment(\.colorScheme) private var colorScheme
     let topic: Topic
     let hasNewReply: Bool
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .top, spacing: 12) {
                 TopicRowView(topic: topic)
-                
+
                 if hasNewReply {
                     VStack(spacing: 4) {
                         Circle()

@@ -16,29 +16,29 @@ final class SearchViewModel: ObservableObject {
     @Published private(set) var errorMessage: String?
     @Published private(set) var total: Int = 0
     @Published private(set) var hasMore: Bool = false
-    
+
     private let repository: SearchRepositoryProtocol
     private var currentKeyword: String = ""
     private var currentStart: Int = 0
     private let pageSize = 20
-    
+
     init(repository: SearchRepositoryProtocol = AppContainer.shared.resolve(SearchRepositoryProtocol.self)) {
         self.repository = repository
     }
-    
+
     func search(keyword: String, original: Bool = true, earliest: String? = nil, boards: String? = nil, status: Int = 0) async {
         guard !keyword.trimmingCharacters(in: .whitespaces).isEmpty else { return }
-        
+
         currentKeyword = keyword
         currentStart = 0
         isLoading = true
         errorMessage = nil
         articles = []
-        
+
         defer {
             isLoading = false
         }
-        
+
         do {
             let result = try await repository.searchArticles(
                 keyword: keyword,
@@ -49,7 +49,7 @@ final class SearchViewModel: ObservableObject {
                 boards: boards,
                 status: status
             )
-            
+
             articles = result.articles
             total = result.total
             currentStart = result.start + result.articles.count
@@ -58,13 +58,13 @@ final class SearchViewModel: ObservableObject {
             errorMessage = error.localizedDescription
         }
     }
-    
+
     func loadMore(original: Bool = true, earliest: String? = nil, boards: String? = nil, status: Int = 0) async {
         guard !isLoadingMore && hasMore && !currentKeyword.isEmpty else { return }
-        
+
         isLoadingMore = true
         defer { isLoadingMore = false }
-        
+
         do {
             let result = try await repository.searchArticles(
                 keyword: currentKeyword,
@@ -75,7 +75,7 @@ final class SearchViewModel: ObservableObject {
                 boards: boards,
                 status: status
             )
-            
+
             articles.append(contentsOf: result.articles)
             currentStart = result.start + result.articles.count
             hasMore = currentStart < total
@@ -83,7 +83,7 @@ final class SearchViewModel: ObservableObject {
             errorMessage = error.localizedDescription
         }
     }
-    
+
     func reset() {
         articles = []
         isLoading = false

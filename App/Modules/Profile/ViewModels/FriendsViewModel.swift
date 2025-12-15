@@ -38,7 +38,7 @@ final class FriendsViewModel: ObservableObject {
         }
         isLoading = false
     }
-    
+
     func refresh() async {
         await loadFriends()
     }

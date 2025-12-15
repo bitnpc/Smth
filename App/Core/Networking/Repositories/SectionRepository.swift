@@ -18,22 +18,22 @@ protocol SectionRepositoryProtocol {
 
 struct SectionRepository: SectionRepositoryProtocol {
     private let apiService: APIService
-    
+
     init(apiService: APIService) {
         self.apiService = apiService
     }
-    
+
     func fetchFavoriteBoards() async throws -> [FavBoard] {
         let endpoint = APIEndpoint.favoriteBoards.toEndpoint()
         let response: FavBoardResponse = try await apiService.request(endpoint)
         return response.data.favBoards
     }
-    
+
     func fetchFavoriteTopics(sort: String, page: Int, pageSize: Int) async throws -> [Topic] {
         let favTopics = try await fetchFavoriteTopicsWithInfo(sort: sort, page: page, pageSize: pageSize)
         return favTopics.map { $0.topic }
     }
-    
+
     func fetchFavoriteTopicsWithInfo(sort: String, page: Int, pageSize: Int) async throws -> [FavTopic] {
         let endpoint = APIEndpoint.favoriteTopics(sort: sort, page: page, pageSize: pageSize).toEndpoint()
         let response: FavTopicResponse = try await apiService.request(endpoint)
@@ -62,8 +62,10 @@ struct StubSectionRepository: SectionRepositoryProtocol {
 
     init(
         favBoards: @escaping () async throws -> [FavBoard] = { [] },
-        favTopics: @escaping (_ sort: String, _ page: Int, _ pageSize: Int) async throws -> [Topic] = { _, _, _ in [] },
-        favTopicsWithInfo: @escaping (_ sort: String, _ page: Int, _ pageSize: Int) async throws -> [FavTopic] = { _, _, _ in [] },
+        favTopics: @escaping (_ sort: String, _ page: Int, _ pageSize: Int)
+            async throws -> [Topic] = { _, _, _ in [] },
+        favTopicsWithInfo: @escaping (_ sort: String, _ page: Int, _ pageSize: Int)
+            async throws -> [FavTopic] = { _, _, _ in [] },
         sections: @escaping () async throws -> [SMSection] = { [] },
         boards: @escaping (_ sectionID: String) async throws -> [Board] = { _ in [] }
     ) {
@@ -77,11 +79,11 @@ struct StubSectionRepository: SectionRepositoryProtocol {
     func fetchFavoriteBoards() async throws -> [FavBoard] {
         try await favBoards()
     }
-    
+
     func fetchFavoriteTopics(sort: String, page: Int, pageSize: Int) async throws -> [Topic] {
         try await favTopics(sort, page, pageSize)
     }
-    
+
     func fetchFavoriteTopicsWithInfo(sort: String, page: Int, pageSize: Int) async throws -> [FavTopic] {
         try await favTopicsWithInfo(sort, page, pageSize)
     }

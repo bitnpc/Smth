@@ -18,35 +18,43 @@ enum APIEndpoint {
     case topicDetail(topicID: String, page: Int, sortType: SortType)
     case myTopics(page: Int)
     case albumTopics(page: Int, pageSize: Int)
-    
+
     // MARK: - 版块相关
     case allSections
     case boards(sectionID: String)
     case favoriteBoards
     case favoriteTopics(sort: String, page: Int, pageSize: Int)
-    
+
     // MARK: - 用户相关
     case profile
     case friends(name: String)
     case fans(name: String)
     case navigation
-    
+
     // MARK: - 消息相关
     case conversations(page: Int)
     case notify(type: Int, page: Int)
     case conversationMessages(speakerId: String, page: Int)
     case markConversationRead(speakerId: String)
-    
+
     // MARK: - 搜索相关
-    case searchArticle(keyword: String, start: Int, count: Int, original: Bool, earliest: String?, boards: String?, status: Int)
-    
+    case searchArticle(
+        keyword: String,
+        start: Int,
+        count: Int,
+        original: Bool,
+        earliest: String?,
+        boards: String?,
+        status: Int
+    )
+
     // MARK: - 草稿相关
     case drafts(sort: String)
-    
+
     /// 转换为 Endpoint 结构
     func toEndpoint() -> Endpoint {
         let timestamp = String(Int(Date().timeIntervalSince1970 * 1000))
-        
+
         switch self {
         // MARK: - 话题相关
         case let .hotTopics(page, pageSize):
@@ -106,7 +114,7 @@ enum APIEndpoint {
                 status: status,
                 timestamp: timestamp
             )
-            
+
         // MARK: - 草稿相关
         case let .drafts(sort):
             return buildDraftsEndpoint(sort: sort, timestamp: timestamp)

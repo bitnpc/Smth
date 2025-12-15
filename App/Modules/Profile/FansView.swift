@@ -11,15 +11,15 @@ import SwiftUI
 struct FansView: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var loginState: LoginState
-    
+
     let userName: String
     @StateObject private var viewModel: FansViewModel
-    
+
     init(userName: String) {
         self.userName = userName
         _viewModel = StateObject(wrappedValue: FansViewModel(userName: userName))
     }
-    
+
     var body: some View {
         List {
             ForEach(viewModel.fans, id: \.id) { fan in

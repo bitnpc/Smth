@@ -23,7 +23,7 @@ struct TopicDetailView: View {
             _viewModel = StateObject(wrappedValue: TopicDetailViewModel(topicID: topicID))
         }
     }
-    
+
     var body: some View {
         Group {
             if viewModel.isLoading {

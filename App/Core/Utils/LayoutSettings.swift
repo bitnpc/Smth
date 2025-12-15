@@ -11,16 +11,16 @@ import SwiftUI
 enum LayoutMode: String, CaseIterable, Identifiable {
     case compact  // 精简模式
     case imageText  // 图文模式
-    
+
     var id: String { rawValue }
-    
+
     var title: String {
         switch self {
         case .compact: return "精简"
         case .imageText: return "图文"
         }
     }
-    
+
     var showImages: Bool {
         switch self {
         case .compact: return false
@@ -38,10 +38,10 @@ final class LayoutSettings: ObservableObject {
             }
         }
     }
-    
+
     private let storage: UserDefaults
     private let storageKey = "app.layout.mode"
-    
+
     init(storage: UserDefaults = .standard) {
         self.storage = storage
         if let rawValue = storage.string(forKey: storageKey),
@@ -51,7 +51,7 @@ final class LayoutSettings: ObservableObject {
             selectedMode = .imageText  // 默认图文模式
         }
     }
-    
+
     var showImages: Bool {
         selectedMode.showImages
     }

@@ -9,7 +9,7 @@
 import Foundation
 
 struct Like: Codable, Hashable {
-    
+
     let id: String
     let body: String
     let score: Int

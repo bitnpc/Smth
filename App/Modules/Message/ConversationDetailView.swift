@@ -10,20 +10,20 @@ import SwiftUI
 
 struct ConversationDetailView: View {
     @Environment(\.colorScheme) private var colorScheme
-    
+
     let conversation: Conversation
     @StateObject private var viewModel: ConversationDetailViewModel
-    
+
     // 当前用户的 ID
     private var currentUserId: String {
         viewModel.currentUser?.id ?? conversation.accountId
     }
-    
+
     // 对方用户的 ID
     private var speakerId: String {
         viewModel.speaker?.id ?? conversation.speakerId
     }
-    
+
     @MainActor
     init(conversation: Conversation, viewModel: ConversationDetailViewModel? = nil) {
         self.conversation = conversation
@@ -35,7 +35,7 @@ struct ConversationDetailView: View {
             ))
         }
     }
-    
+
     var body: some View {
         Group {
             if viewModel.isLoading {
@@ -77,7 +77,7 @@ struct ConversationDetailView: View {
             }
         }
     }
-    
+
     private var messagesListView: some View {
         GeometryReader { geometry in
             ScrollView {
@@ -99,7 +99,7 @@ struct ConversationDetailView: View {
                                 }
                             }
                     }
-                    
+
                     if viewModel.isLoadingPage {
                         ProgressView()
                             .padding()
@@ -115,13 +115,13 @@ struct ConversationDetailView: View {
 // 消息行视图
 struct MessageRowView: View {
     @Environment(\.colorScheme) private var colorScheme
-    
+
     let message: InboxMessage
     let isCurrentUser: Bool
     let currentUserAvatarUrl: String?
     let speakerAvatarUrl: String?
     let maxBubbleWidth: CGFloat
-    
+
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
             if !isCurrentUser {
@@ -149,7 +149,7 @@ struct MessageRowView: View {
                         .stroke(AppTheme.borderColor(for: colorScheme).opacity(0.2), lineWidth: 0.5)
                 )
             }
-            
+
             VStack(alignment: isCurrentUser ? .trailing : .leading, spacing: 6) {
                 // 消息内容气泡
                 Text(message.content)
@@ -166,7 +166,7 @@ struct MessageRowView: View {
                             .stroke(isCurrentUser ? Color.clear : AppTheme.borderColor(for: colorScheme).opacity(0.3), lineWidth: 0.5)
                     )
                     .shadow(color: Color.black.opacity(isCurrentUser ? 0.1 : 0.05), radius: 2, x: 0, y: 1)
-                
+
                 // 时间
                 Text(message.dateString)
                     .font(.system(.caption2, design: .rounded))
@@ -174,7 +174,7 @@ struct MessageRowView: View {
                     .padding(.horizontal, 8)
             }
             .frame(maxWidth: maxBubbleWidth, alignment: isCurrentUser ? .trailing : .leading)
-            
+
             if isCurrentUser {
                 // 当前用户消息：头像在右边
                 CachedAsyncImagePhase(url: URL(string: currentUserAvatarUrl ?? "")) { phase in

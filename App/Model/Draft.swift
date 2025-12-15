@@ -31,11 +31,11 @@ struct Draft: Codable, Hashable, Identifiable {
     let account: Account
     let board: Board
     let previews: [DraftPreview]?
-    
+
     enum CodingKeys: String, CodingKey {
         case id, subject, updateTime, body, token, accountId, createTime, replyId, boardId, renderType, account, board, previews
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)

@@ -16,36 +16,36 @@ protocol UserRepositoryProtocol {
 
 struct UserRepository: UserRepositoryProtocol {
     private let apiService: APIService
-    
+
     init(apiService: APIService) {
         self.apiService = apiService
     }
-    
+
     func fetchProfile() async throws -> Profile {
         let endpoint = APIEndpoint.profile.toEndpoint()
         let response: ProfileResponse = try await apiService.request(endpoint)
         return response.data
     }
-    
+
     func fetchFriends(name: String) async throws -> FriendsData {
         let endpoint = APIEndpoint.friends(name: name).toEndpoint()
         let response: FriendsResponse = try await apiService.request(endpoint)
-        
+
         guard response.code == 1 else {
             throw AppError.businessError(response.message)
         }
-        
+
         return response.data
     }
-    
+
     func fetchFans(name: String) async throws -> FansData {
         let endpoint = APIEndpoint.fans(name: name).toEndpoint()
         let response: FansResponse = try await apiService.request(endpoint)
-        
+
         guard response.code == 1 else {
             throw AppError.businessError(response.message)
         }
-        
+
         return response.data
     }
 }
@@ -80,11 +80,11 @@ struct StubUserRepository: UserRepositoryProtocol {
     func fetchProfile() async throws -> Profile {
         try await profile()
     }
-    
+
     func fetchFriends(name: String) async throws -> FriendsData {
         try await friends(name)
     }
-    
+
     func fetchFans(name: String) async throws -> FansData {
         try await fans(name)
     }

@@ -13,12 +13,12 @@ struct SearchView: View {
     @StateObject private var viewModel = SearchViewModel()
     @State private var searchText = ""
     @FocusState private var isSearchFieldFocused: Bool
-    
+
     var body: some View {
         VStack(spacing: 0) {
             // 搜索栏
             searchBar
-            
+
             // 搜索结果
             if viewModel.isLoading && viewModel.articles.isEmpty {
                 ProgressView()
@@ -43,20 +43,20 @@ struct SearchView: View {
             TopicDetailView(topicID: topicId)
         }
     }
-    
+
     private var searchBar: some View {
         HStack(spacing: 12) {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(.secondary)
-                
+
                 TextField("搜索文章", text: $searchText)
                     .focused($isSearchFieldFocused)
                     .onSubmit {
                         performSearch()
                     }
                     .submitLabel(.search)
-                
+
                 if !searchText.isEmpty {
                     Button {
                         searchText = ""
@@ -77,7 +77,7 @@ struct SearchView: View {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .stroke(AppTheme.borderColor(for: colorScheme), lineWidth: 1)
             )
-            
+
             Button {
                 performSearch()
             } label: {
@@ -97,7 +97,7 @@ struct SearchView: View {
         .padding(.vertical, 12)
         .background(AppTheme.subduedSurface(for: colorScheme))
     }
-    
+
     private var resultsList: some View {
         ScrollView {
             LazyVStack(spacing: AppTheme.verticalSpacing) {
@@ -112,7 +112,7 @@ struct SearchView: View {
                     .padding(.horizontal, AppTheme.verticalSpacing)
                     .padding(.top, 8)
                 }
-                
+
                 // 文章列表
                 ForEach(Array(viewModel.articles.enumerated()), id: \.element.id) { index, article in
                     NavigationLink(value: article.topicId) {
@@ -128,7 +128,7 @@ struct SearchView: View {
                         }
                     }
                 }
-                
+
                 // 加载更多指示器
                 if viewModel.isLoadingMore {
                     ProgressView()
@@ -149,7 +149,7 @@ struct SearchView: View {
             .padding(.vertical, AppTheme.verticalSpacing)
         }
     }
-    
+
     private var placeholderView: some View {
         VStack(spacing: 20) {
             Image(systemName: "magnifyingglass")
@@ -161,7 +161,7 @@ struct SearchView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
     private var emptyState: some View {
         VStack(spacing: 20) {
             Image(systemName: "doc.text.magnifyingglass")
@@ -175,7 +175,7 @@ struct SearchView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
     private func errorView(_ message: String) -> some View {
         VStack(spacing: 16) {
             Text(message)
@@ -189,7 +189,7 @@ struct SearchView: View {
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
     private func performSearch() {
         guard !searchText.trimmingCharacters(in: .whitespaces).isEmpty else { return }
         isSearchFieldFocused = false
@@ -202,16 +202,16 @@ struct SearchView: View {
 // 搜索文章行视图
 struct SearchArticleRowView: View {
     @Environment(\.colorScheme) private var colorScheme
-    
+
     let article: SearchArticle
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             // 标题（包含高亮）
             highlightText(article.subject)
                 .font(.system(.headline, design: .rounded).weight(.semibold))
                 .lineLimit(2)
-            
+
             // 用户信息和版面
             HStack(spacing: 12) {
                 // 用户头像
@@ -233,16 +233,16 @@ struct SearchArticleRowView: View {
                 }
                 .frame(width: 20, height: 20)
                 .clipShape(Circle())
-                
+
                 // 用户名
                 if let account = article.account {
                     Text(account.nick ?? account.name)
                         .font(.system(.caption, design: .rounded))
                         .foregroundStyle(.secondary)
                 }
-                
+
                 Spacer()
-                
+
                 // 版面信息
                 if let board = article.board {
                     Text(board.name)
@@ -256,13 +256,13 @@ struct SearchArticleRowView: View {
                         )
                 }
             }
-            
+
             // 时间和回复数
             HStack(spacing: 8) {
                 Text(article.postTimeString)
                     .font(.system(.caption2, design: .rounded))
                     .foregroundStyle(.tertiary)
-                
+
                 if let topic = article.topic, topic.availables > 0 {
                     Text("\(topic.availables) 回复")
                         .font(.system(.caption2, design: .rounded))
@@ -274,22 +274,22 @@ struct SearchArticleRowView: View {
         .padding(.horizontal, AppTheme.verticalSpacing)
         .smthSurfaceBackground()
     }
-    
+
     // 高亮文本显示
     private func highlightText(_ htmlText: String) -> Text {
         let plainText = htmlText.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
         var attributed = AttributedString(plainText)
-        
+
         // 提取高亮关键词（从<span class="highlight">标签中）
         let pattern = "<span class=\"highlight\">([^<]+)</span>"
         if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
             let nsString = htmlText as NSString
             let matches = regex.matches(in: htmlText, options: [], range: NSRange(location: 0, length: nsString.length))
-            
+
             for match in matches.reversed() where match.numberOfRanges > 1 {
                 let highlightRange = match.range(at: 1)
                 let highlightText = nsString.substring(with: highlightRange)
-                
+
                 // 在纯文本中找到对应的范围并高亮
                 if let range = attributed.range(of: highlightText) {
                     attributed[range].foregroundColor = AppTheme.accentColor(for: colorScheme)
@@ -297,7 +297,7 @@ struct SearchArticleRowView: View {
                 }
             }
         }
-        
+
         return Text(attributed)
     }
 }

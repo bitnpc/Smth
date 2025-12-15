@@ -18,12 +18,12 @@ struct FavBoardList: View {
 
     @ObservedObject private var viewModel: FavoritesViewModel
     private let onBoardSelected: ((FavBoardItem) -> Void)?
-    
+
     init(viewModel: FavoritesViewModel, onBoardSelected: ((FavBoardItem) -> Void)? = nil) {
         self.viewModel = viewModel
         self.onBoardSelected = onBoardSelected
     }
-    
+
     var body: some View {
         VStack(spacing: AppTheme.verticalSpacing) {
             if viewModel.favBoards.isEmpty {
@@ -107,7 +107,7 @@ struct FavBoardList: View {
                 .stroke(AppTheme.borderColor(for: colorScheme), lineWidth: 1)
         )
     }
-    
+
     @ViewBuilder
     private func emptyView() -> some View {
         if let errorMessage = viewModel.errorMessage {

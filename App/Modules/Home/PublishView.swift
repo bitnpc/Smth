@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct PublishView: View {
-    
+
     @State private var title = ""
     @State private var content = "输入内容"
 
@@ -37,7 +37,7 @@ struct PublishView: View {
                 })
             }
 //        }
-        
+
     }
 }
 

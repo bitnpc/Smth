@@ -24,7 +24,7 @@ struct SearchArticle: Codable, Hashable, Identifiable {
     let size: Int
     let score: Int
     let status: Int
-    
+
     // 可选字段
     let groupId: String?
     let renderType: Int?
@@ -37,14 +37,14 @@ struct SearchArticle: Codable, Hashable, Identifiable {
     let isPublic: Bool?
     let country: String?
     let city: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case id, subject, body, postTime, account, accountId, topicId, boardId, board, topic
         case topicOrder, size, score, status, groupId, renderType, replyId, editTime
         case forbiddenLike, forbiddenReply, forbiddenShare, fav, country, city
         case isPublic = "public"
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
@@ -61,7 +61,7 @@ struct SearchArticle: Codable, Hashable, Identifiable {
         size = try container.decode(Int.self, forKey: .size)
         score = try container.decode(Int.self, forKey: .score)
         status = try container.decode(Int.self, forKey: .status)
-        
+
         // 可选字段
         groupId = try? container.decodeIfPresent(String.self, forKey: .groupId)
         renderType = try? container.decodeIfPresent(Int.self, forKey: .renderType)
@@ -75,19 +75,19 @@ struct SearchArticle: Codable, Hashable, Identifiable {
         country = try? container.decodeIfPresent(String.self, forKey: .country)
         city = try? container.decodeIfPresent(String.self, forKey: .city)
     }
-    
+
     // 提取纯文本标题（去掉HTML标签）
     var plainSubject: String {
         subject.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
     }
-    
+
     // 提取高亮后的标题（转换为AttributedString）
     var attributedSubject: AttributedString {
         var attributed = AttributedString(plainSubject)
         // 这里可以添加高亮逻辑，暂时返回纯文本
         return attributed
     }
-    
+
     var postTimeString: String {
         let date = Date(timeIntervalSince1970: postTime / 1000)
         let dateFormatter = DateFormatter()

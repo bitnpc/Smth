@@ -121,7 +121,7 @@ struct FavoritesView: View {
             )
         }
     }
-    
+
     private var loginPromptView: some View {
         GuestPromptView(
             icon: "star.fill",
@@ -132,7 +132,7 @@ struct FavoritesView: View {
             }
         )
     }
-    
+
     private func handleLoginStateChange(isLoggedIn: Bool, forceReload: Bool = false) {
         if isLoggedIn {
             Task {

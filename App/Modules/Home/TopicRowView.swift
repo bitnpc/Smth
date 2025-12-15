@@ -32,15 +32,15 @@ struct TopicRowView: View {
         // 查找第一个图片类型的附件
         return attachments.first { attachment in
             let type = attachment.type.lowercased()
-            return type.contains("image") || 
-                   type.contains("jpg") || 
-                   type.contains("jpeg") || 
-                   type.contains("png") || 
-                   type.contains("gif") || 
+            return type.contains("image") ||
+                   type.contains("jpg") ||
+                   type.contains("jpeg") ||
+                   type.contains("png") ||
+                   type.contains("gif") ||
                    type.contains("webp")
         } ?? attachments.first
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             HStack(alignment: .top, spacing: 12) {
@@ -49,7 +49,7 @@ struct TopicRowView: View {
                         .font(.headline)
                         .foregroundColor(.primary)
                         .lineLimit(2)
-                    
+
                     if let article = topic.article {
                         Text(article.body)
                             .font(.callout)
@@ -58,7 +58,7 @@ struct TopicRowView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 if layoutSettings.showImages,
                    let attachment = firstImageAttachment,
                    let ks3Url = attachment.ks3Url,

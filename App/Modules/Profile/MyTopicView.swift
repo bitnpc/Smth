@@ -11,7 +11,7 @@ import SwiftUI
 struct MyTopicView: View {
 
     @StateObject private var viewModel = MyTopicsViewModel()
-    
+
     var body: some View {
         List {
             ForEach(viewModel.articles, id: \.id) { article in

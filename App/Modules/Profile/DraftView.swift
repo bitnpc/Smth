@@ -11,7 +11,7 @@ import SwiftUI
 struct DraftView: View {
     @Environment(\.colorScheme) private var colorScheme
     @StateObject private var viewModel = DraftViewModel()
-    
+
     var body: some View {
         List {
             ForEach(viewModel.drafts, id: \.id) { draft in
@@ -45,9 +45,9 @@ struct DraftView: View {
 
 struct DraftRowView: View {
     @Environment(\.colorScheme) private var colorScheme
-    
+
     let draft: Draft
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top, spacing: 12) {
@@ -56,30 +56,30 @@ struct DraftRowView: View {
                         .font(.system(.headline, design: .rounded).weight(.semibold))
                         .foregroundColor(.primary)
                         .lineLimit(2)
-                    
+
                     if !draft.body.isEmpty {
                         Text(draft.body)
                             .font(.system(.subheadline, design: .rounded))
                             .foregroundStyle(.secondary)
                             .lineLimit(3)
                     }
-                    
+
                     HStack(spacing: 12) {
                         Label(draft.board.title, systemImage: "square.grid.2x2")
                             .font(.system(.caption, design: .rounded))
                             .foregroundStyle(.secondary)
-                        
+
                         Spacer()
-                        
+
                         Text(formatDate(draft.updateTime))
                             .font(.system(.caption, design: .rounded))
                             .foregroundStyle(.tertiary)
                     }
                 }
-                
+
                 Spacer()
             }
-            
+
             if let previews = draft.previews, !previews.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
@@ -107,7 +107,7 @@ struct DraftRowView: View {
         }
         .padding(.vertical, 12)
     }
-    
+
     private func formatDate(_ timestamp: TimeInterval) -> String {
         let date = Date(timeIntervalSince1970: timestamp)
         let formatter = DateFormatter()

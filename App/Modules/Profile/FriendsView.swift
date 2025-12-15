@@ -11,15 +11,15 @@ import SwiftUI
 struct FriendsView: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject private var loginState: LoginState
-    
+
     let userName: String
     @StateObject private var viewModel: FriendsViewModel
-    
+
     init(userName: String) {
         self.userName = userName
         _viewModel = StateObject(wrappedValue: FriendsViewModel(userName: userName))
     }
-    
+
     var body: some View {
         List {
             ForEach(viewModel.friends, id: \.id) { friend in
@@ -58,9 +58,9 @@ struct FriendsView: View {
 
 struct FriendRowView: View {
     @Environment(\.colorScheme) private var colorScheme
-    
+
     let account: Account
-    
+
     var body: some View {
         HStack(spacing: 16) {
             CachedAsyncImage(url: URL(string: account.avatarUrl)) { image in
@@ -79,33 +79,33 @@ struct FriendRowView: View {
                 Circle()
                     .stroke(AppTheme.borderColor(for: colorScheme), lineWidth: 1)
             )
-            
+
             VStack(alignment: .leading, spacing: 6) {
                 Text(account.name)
                     .font(.system(.body, design: .rounded).weight(.semibold))
                     .foregroundColor(.primary)
-                
+
                 HStack(spacing: 8) {
                     if !account.nick.isEmpty && account.nick != account.name {
                         Text("昵称：\(account.nick)")
                             .font(.system(.subheadline, design: .rounded))
                             .foregroundStyle(.secondary)
                     }
-                    
+
                     if let level = account.level {
                         Label("Lv.\(level)", systemImage: "star.fill")
                             .font(.system(.caption, design: .rounded))
                             .foregroundStyle(AppTheme.accentColor(for: colorScheme))
                     }
                 }
-                
+
                 if !account.levelTitle.isEmpty {
                     Text(account.levelTitle)
                         .font(.system(.caption, design: .rounded))
                         .foregroundStyle(.tertiary)
                 }
             }
-            
+
             Spacer()
         }
         .padding(.vertical, 8)

@@ -9,7 +9,7 @@
 import Foundation
 
 struct SMSection: Codable, Hashable {
-    
+
     let id: String
     let cover: String
     let name: String

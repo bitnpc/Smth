@@ -38,7 +38,7 @@ final class FansViewModel: ObservableObject {
         }
         isLoading = false
     }
-    
+
     func refresh() async {
         await loadFans()
     }

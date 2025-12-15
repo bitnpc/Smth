@@ -10,26 +10,26 @@ import Foundation
 import SwiftSoup
 
 struct Article: Codable, Hashable {
-    
+
     let id: String
     let subject: String
     let body: String
-    
+
     let postTime: TimeInterval
-    
+
     let account: Account?
     let accountId: String?
-    
+
 //    let likes: [Like]?
     let topicId: String
-    
+
     var attachments: [Attachment]?
     let board: Board? // 可选，在某些场景下可能没有
-    
+
     enum CodingKeys: String, CodingKey {
         case id, subject, body, postTime, account, accountId, topicId, attachments, board
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
@@ -42,7 +42,7 @@ struct Article: Codable, Hashable {
         attachments = try? container.decodeIfPresent([Attachment].self, forKey: .attachments)
         board = try? container.decodeIfPresent(Board.self, forKey: .board)
     }
-    
+
     init(
         id: String,
         subject: String,
@@ -64,7 +64,7 @@ struct Article: Codable, Hashable {
         self.attachments = attachments
         self.board = board
     }
-    
+
     var quoteContent: String {
         var quote = ""
         do {
@@ -84,7 +84,7 @@ struct Article: Codable, Hashable {
         }
         return quote
     }
-    
+
     var content: String {
         var resut = ""
         do {
@@ -101,24 +101,24 @@ struct Article: Codable, Hashable {
                 resut.removeLast()
             }
         } catch {
-        
+
         }
         return resut
     }
-    
+
     var postTimeString: String {
         let date = Date(timeIntervalSince1970: postTime / 1000)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         return dateFormatter.string(from: date)
     }
-    
+
     // 从纯文本 body 中提取内容（去掉邮件头）
     var plainTextContent: String {
         let lines = body.components(separatedBy: "\n")
         var contentLines: [String] = []
         var foundEmptyLine = false
-        
+
         for line in lines {
             if foundEmptyLine {
                 // 跳过引用内容（以 : 开头的行通常是引用）
@@ -132,7 +132,7 @@ struct Article: Codable, Hashable {
                 foundEmptyLine = true
             }
         }
-        
+
         let content = contentLines.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines)
         // 如果提取的内容为空，返回 body（可能是 HTML 格式）
         return content.isEmpty ? body : content
@@ -158,7 +158,7 @@ struct ArticleResponse: Codable {
 //            mypostTime = try container.decode(TimeInterval.self, forKey: .postTime)
 //            myaccount = try container.decode(Account.self, forKey: .account)
 //            mytopicId = try container.decode(String.self, forKey: .topicId)
-//            
+//
 //            var attachmentsArray = try container.nestedUnkeyedContainer(forKey: .attachments)
 //            var validAttachments: [Attachment] = []
 //            while !attachmentsArray.isAtEnd {
@@ -188,7 +188,7 @@ struct ArticleResponse: Codable {
 //        self.account = myaccount
 //        self.topicId = mytopicId
 //    }
-//    
+//
 //    // 自定义方法来检查是否有效的 attachment
 //    private static func isValid(_ attachment: Attachment) -> Bool {
 //        // 根据您的条件来判断有效性

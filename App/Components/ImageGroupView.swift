@@ -14,16 +14,16 @@ private struct ImageIndex: Identifiable {
 
 struct ImageGroupView: View {
     let attachments: [Attachment]
-    
+
     @State private var selectedImageIndex: ImageIndex?
     @State private var sourceFrame: CGRect?
-    
+
     var body: some View {
         let images = attachments.filter { attachment in
             !attachment.id.isEmpty
         }
         let imageUrls = images.map { $0.ks3Url ?? $0.cdnUrl }
-        
+
         return VStack(alignment: .leading) {
             ForEach(0..<(images.count + 2) / 3, id: \.self) { groupIndex in
                 HStack {
@@ -67,7 +67,7 @@ struct ImageGroupView: View {
         }
         #endif
     }
-    
+
     @ViewBuilder
     private func imageItem(url: String, index: Int, totalImages: [String]) -> some View {
         GeometryReader { geometry in

@@ -17,59 +17,59 @@ final class ImagePageViewController: UIPageViewController {
     private var currentIndex: Int = 0
     private var closeButton: UIButton?
     private var pageControl: UIPageControl?
-    
+
     init(images: [String], initialIndex: Int, onDismiss: @escaping () -> Void) {
         self.images = images
         self.initialIndex = initialIndex
         self.onDismiss = onDismiss
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        
+
         dataSource = self
         delegate = self
-        
+
         // 创建所有图片视图控制器
         imageViewControllers = images.enumerated().map { index, imageUrl in
             ImageScrollViewController(imageUrl: imageUrl, index: index, onDismiss: onDismiss)
         }
-        
+
         currentIndex = initialIndex
         if let initialVC = imageViewControllers[safe: initialIndex] {
             setViewControllers([initialVC], direction: .forward, animated: false)
         }
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // 确保视图扩展到 safe area 之外
         edgesForExtendedLayout = .all
-        
+
         view.backgroundColor = .black
-        
+
         // 确保 UIPageViewController 的背景视图也是黑色
         for subview in view.subviews where subview is UIScrollView {
             subview.backgroundColor = .black
         }
-        
+
         setupCloseButton()
         setupPageIndicator()
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+
         // 使用 frame 布局设置 closeButton 和 pageControl
         updateLayout()
     }
-    
+
     private func updateLayout() {
         let safeAreaInsets = view.safeAreaInsets
         let safeAreaFrame = view.bounds.inset(by: safeAreaInsets)
-        
+
         // 关闭按钮布局
         if let closeButton = closeButton {
             closeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -81,7 +81,7 @@ final class ImagePageViewController: UIPageViewController {
                 height: buttonSize
             )
         }
-        
+
         // 页码指示器布局
         if let pageControl = pageControl {
             pageControl.translatesAutoresizingMaskIntoConstraints = false
@@ -92,11 +92,11 @@ final class ImagePageViewController: UIPageViewController {
             )
         }
     }
-    
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    
+
     private func setupCloseButton() {
         let closeButton = UIButton(type: .custom)
         closeButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
@@ -109,24 +109,24 @@ final class ImagePageViewController: UIPageViewController {
         self.closeButton = closeButton
         view.addSubview(closeButton)
     }
-    
+
     @objc private func closeTapped() {
         onDismiss()
     }
-    
+
     private func setupPageIndicator() {
         guard images.count > 1 else { return }
-        
+
         let pageControl = UIPageControl()
         pageControl.numberOfPages = images.count
         pageControl.currentPage = currentIndex
         pageControl.currentPageIndicatorTintColor = .white
         pageControl.pageIndicatorTintColor = .white.withAlphaComponent(0.4)
         self.pageControl = pageControl
-        
+
         view.addSubview(pageControl)
     }
-    
+
     private func updatePageIndicator() {
         pageControl?.currentPage = currentIndex
     }
@@ -145,7 +145,7 @@ extension ImagePageViewController: UIPageViewControllerDataSource {
         }
         return imageViewControllers[index - 1]
     }
-    
+
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController

@@ -35,7 +35,7 @@ final class DraftViewModel: ObservableObject {
         }
         isLoading = false
     }
-    
+
     func refresh() async {
         await loadDrafts()
     }

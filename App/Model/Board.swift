@@ -15,7 +15,7 @@ struct Board: Codable, Hashable {
     let groupId: String
     let type: Int
     let name: String
-    
+
     // 可选字段，用于兼容不同 API 返回的数据
     let accessScore: Int?
     let readOnly: Bool?
@@ -23,12 +23,12 @@ struct Board: Codable, Hashable {
     let todayPostCount: Int?
     let forbiddenReply: Bool?
     let status: Int?
-    
+
     enum CodingKeys: String, CodingKey {
         case id, title, isFavorite, groupId, type, name
         case accessScore, readOnly, sectionId, todayPostCount, forbiddenReply, status
     }
-    
+
     init(
         id: String,
         title: String,

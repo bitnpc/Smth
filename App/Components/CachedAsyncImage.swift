@@ -18,7 +18,7 @@ struct CachedAsyncImage<Content: View, Placeholder: View>: View {
     let url: URL?
     @ViewBuilder let content: (Image) -> Content
     @ViewBuilder let placeholder: () -> Placeholder
-    
+
     #if os(iOS)
     @State private var image: UIImage?
     #elseif os(macOS)
@@ -26,7 +26,7 @@ struct CachedAsyncImage<Content: View, Placeholder: View>: View {
     #endif
     @State private var isLoading = true
     @State private var hasError = false
-    
+
     init(
         url: URL?,
         @ViewBuilder content: @escaping (Image) -> Content,
@@ -36,7 +36,7 @@ struct CachedAsyncImage<Content: View, Placeholder: View>: View {
         self.content = content
         self.placeholder = placeholder
     }
-    
+
     var body: some View {
         Group {
             if let image = image {
@@ -53,14 +53,14 @@ struct CachedAsyncImage<Content: View, Placeholder: View>: View {
             await loadImage()
         }
     }
-    
+
     private func loadImage() async {
         guard let url = url else {
             isLoading = false
             hasError = true
             return
         }
-        
+
         // 先尝试从缓存加载
         if let cachedImage = await ImageCache.shared.image(for: url) {
             image = cachedImage
@@ -68,7 +68,7 @@ struct CachedAsyncImage<Content: View, Placeholder: View>: View {
             hasError = false
             return
         }
-        
+
         // 从网络加载
         isLoading = true
         hasError = false
@@ -107,9 +107,9 @@ struct CachedAsyncImage<Content: View, Placeholder: View>: View {
 struct CachedAsyncImagePhase<Content: View>: View {
     let url: URL?
     @ViewBuilder let content: (AsyncImagePhase) -> Content
-    
+
     @State private var phase: AsyncImagePhase = .empty
-    
+
     init(
         url: URL?,
         @ViewBuilder content: @escaping (AsyncImagePhase) -> Content
@@ -117,20 +117,20 @@ struct CachedAsyncImagePhase<Content: View>: View {
         self.url = url
         self.content = content
     }
-    
+
     var body: some View {
         content(phase)
             .task {
                 await loadImage()
             }
     }
-    
+
     private func loadImage() async {
         guard let url = url else {
             phase = .failure(URLError(.badURL))
             return
         }
-        
+
         // 先尝试从缓存加载
         if let cachedImage = await ImageCache.shared.image(for: url) {
             #if os(iOS)
@@ -140,7 +140,7 @@ struct CachedAsyncImagePhase<Content: View>: View {
             #endif
             return
         }
-        
+
         // 从网络加载
         phase = .empty
         do {

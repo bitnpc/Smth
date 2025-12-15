@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct ProfileDetail: View {
-    
+
     let account: Account
-    
+
     var body: some View {
         List {
             Text("头像")

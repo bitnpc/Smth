@@ -28,7 +28,7 @@ final class NaviTopicListViewModel: ObservableObject {
         self.navigation = navigation
         self.pageSize = pageSize
     }
-    
+
     func switchNavigation(to newNavigation: Navigation) async {
         guard newNavigation.id != navigation?.id else { return }
         navigation = newNavigation
@@ -89,7 +89,7 @@ final class NaviTopicListViewModel: ObservableObject {
             errorMessage = "未选择导航项"
             return
         }
-        
+
         do {
             let newItems: [Topic]
             switch navigation.type {
@@ -100,7 +100,11 @@ final class NaviTopicListViewModel: ObservableObject {
                 newItems = try await repository.fetchHotTopics(page: nextPage, pageSize: pageSize)
             case "channel":
                 // 频道：使用频道接口，使用 navigation.value 作为 channelID
-                newItems = try await repository.fetchChannelTopics(channelID: navigation.value, page: nextPage, pageSize: pageSize)
+                newItems = try await repository.fetchChannelTopics(
+                    channelID: navigation.value,
+                    page: nextPage,
+                    pageSize: pageSize
+                )
             case "album":
                 // 图览：使用图览接口
                 newItems = try await repository.fetchAlbumTopics(page: nextPage, pageSize: pageSize)

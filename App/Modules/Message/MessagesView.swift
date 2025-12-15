@@ -16,10 +16,10 @@ struct MessagesView: View {
     @State private var showProfileView = false
     @StateObject private var viewModel = MessagesViewModel()
     @State private var showLoginView = false
-    
+
     #if os(macOS)
     private let onMessageSelected: ((MessagePreview) -> Void)?
-    
+
     init(initialCategory: MessageCategory = .inbox, onMessageSelected: ((MessagePreview) -> Void)? = nil) {
         _selection = State(initialValue: initialCategory)
         self.onMessageSelected = onMessageSelected
@@ -103,7 +103,7 @@ struct MessagesView: View {
                                         }
                                     }
                                 }
-                                
+
                                 if viewModel.isLoadingPage {
                                     ProgressView()
                                         .padding()
@@ -255,9 +255,9 @@ struct MessagesView: View {
                     HStack(spacing: 8) {
                         Text(conversation.speaker?.name ?? conversation.speaker?.nick ?? "未知用户")
                             .font(.system(.headline, design: .rounded))
-                        
+
                         Spacer()
-                        
+
                         // 显示消息数量
                         if conversation.items > 0 {
                             Text("\(conversation.items)条")
@@ -271,7 +271,7 @@ struct MessagesView: View {
                                 )
                         }
                     }
-                    
+
                     // 显示最后一条消息的 subject
                     if let lastMessage = viewModel.getLastMessage(for: conversation.id) {
                         Text(lastMessage.subject)
@@ -279,7 +279,7 @@ struct MessagesView: View {
                             .foregroundStyle(.secondary)
                             .lineLimit(2)
                     }
-                    
+
                     // 显示未读数量
                     if conversation.unread > 0 {
                         HStack(spacing: 4) {
@@ -291,7 +291,7 @@ struct MessagesView: View {
                                 .foregroundStyle(AppTheme.accentColor(for: colorScheme))
                         }
                     }
-                    
+
                     // 显示最后时间
                     Text(conversation.dateString)
                         .font(.system(.caption, design: .rounded))
@@ -302,9 +302,9 @@ struct MessagesView: View {
                         Text(notify.actorName)
                             .font(.system(.headline, design: .rounded))
                             .foregroundColor(.primary)
-                        
+
                         Spacer()
-                        
+
                         // 显示版面信息
                         if let boardName = notify.board?.name {
                             Text(boardName)
@@ -318,13 +318,13 @@ struct MessagesView: View {
                                 )
                         }
                     }
-                    
+
                     // 显示主题
                     Text(notify.subject)
                         .font(.system(.subheadline, design: .rounded).weight(.medium))
                         .foregroundColor(.primary)
                         .lineLimit(2)
-                    
+
                     // 显示回复内容预览
                     if let cause = notify.cause {
                         let previewText = cause.plainTextContent
@@ -345,7 +345,7 @@ struct MessagesView: View {
                                 .padding(.top, 2)
                         }
                     }
-                    
+
                     // 显示时间
                     HStack(spacing: 4) {
                         Image(systemName: "clock")
@@ -366,7 +366,7 @@ struct MessagesView: View {
         .padding(.horizontal, AppTheme.verticalSpacing)
         .smthSurfaceBackground()
     }
-    
+
     private var emptyState: some View {
         VStack(spacing: 10) {
             if let errorMessage = viewModel.errorMessage {
@@ -390,7 +390,7 @@ struct MessagesView: View {
         .padding(.horizontal, 28)
         .smthSurfaceBackground(subdued: true)
     }
-    
+
     private var loginPromptView: some View {
         GuestPromptView(
             icon: "envelope.fill",
@@ -401,7 +401,7 @@ struct MessagesView: View {
             }
         )
     }
-    
+
     private func handleLoginStateChange(isLoggedIn: Bool, forceReload: Bool = false) {
         if isLoggedIn {
             Task {
@@ -415,7 +415,7 @@ struct MessagesView: View {
             viewModel.reset()
         }
     }
-    
+
     #if os(macOS)
     private func createMessagePreview(from conversation: Conversation) -> MessagePreview {
         let lastMessage = viewModel.getLastMessage(for: conversation.id)
@@ -429,7 +429,7 @@ struct MessagesView: View {
             timestamp: timestamp
         )
     }
-    
+
     private func createMessagePreview(from notify: Notify) -> MessagePreview {
         let title = notify.subject
         let body: String
@@ -502,7 +502,7 @@ struct MessagePreview: Identifiable, Hashable {
     let body: String
     let category: MessageCategory
     let timestamp: Date
-    
+
     init(title: String, body: String, category: MessageCategory, timestamp: Date) {
         self.id = UUID()
         self.title = title

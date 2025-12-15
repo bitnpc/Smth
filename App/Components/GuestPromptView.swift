@@ -10,13 +10,13 @@ import SwiftUI
 
 struct GuestPromptView: View {
     @Environment(\.colorScheme) private var colorScheme
-    
+
     let icon: String
     let title: String
     let subtitle: String
     let actionTitle: String
     let onLogin: () -> Void
-    
+
     init(
         icon: String = "person.crop.circle.badge.plus",
         title: String,
@@ -30,24 +30,24 @@ struct GuestPromptView: View {
         self.actionTitle = actionTitle
         self.onLogin = onLogin
     }
-    
+
     var body: some View {
         VStack(spacing: 18) {
             Image(systemName: icon)
                 .font(.system(size: 50, weight: .light))
                 .foregroundStyle(AppTheme.accentColor(for: colorScheme))
-            
+
             VStack(spacing: 6) {
                 Text(title)
                     .font(.system(.headline, design: .rounded))
                     .foregroundColor(.primary)
-                
+
                 Text(subtitle)
                     .font(.system(.subheadline, design: .rounded))
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
             }
-            
+
             Button(action: onLogin) {
                 Text(actionTitle)
                     .font(.system(.headline, design: .rounded))

@@ -16,12 +16,12 @@ final class ConversationDetailViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var isLoadingPage = false
     @Published private(set) var errorMessage: String?
-    
+
     private let repository: MessageRepositoryProtocol
     private let speakerId: String
     private var paginationState = PaginationState<InboxMessage>()
     private let pageSize = 20
-    
+
     init(
         speakerId: String,
         repository: MessageRepositoryProtocol = AppContainer.shared.resolve(MessageRepositoryProtocol.self)
@@ -29,17 +29,17 @@ final class ConversationDetailViewModel: ObservableObject {
         self.speakerId = speakerId
         self.repository = repository
     }
-    
+
     func loadInitialIfNeeded() async {
         guard messages.isEmpty else { return }
         await loadInitialPage()
     }
-    
+
     func loadNextPageIfNeeded() async {
         guard !isLoadingPage else { return }
         await loadNextPage()
     }
-    
+
     private func loadInitialPage() async {
         isLoading = true
         errorMessage = nil
@@ -48,7 +48,7 @@ final class ConversationDetailViewModel: ObservableObject {
         defer {
             isLoading = false
         }
-        
+
         // 同时加载消息和标记已读
         await withTaskGroup(of: Void.self) { group in
             group.addTask {
@@ -64,17 +64,17 @@ final class ConversationDetailViewModel: ObservableObject {
             }
         }
     }
-    
+
     private func loadNextPage() async {
         isLoadingPage = true
         defer { isLoadingPage = false }
         await loadPage()
     }
-    
+
     private func loadPage() async {
         let originalState = paginationState
         guard let nextPage = paginationState.startLoadingNextPage() else { return }
-        
+
         do {
             // API 页码从 1 开始
             let response = try await repository.fetchConversationMessages(
@@ -83,7 +83,7 @@ final class ConversationDetailViewModel: ObservableObject {
             )
             paginationState.completeLoading(with: response.messages, pageSize: pageSize)
             messages = paginationState.items
-            
+
             // 只在第一页时更新用户信息
             if nextPage == 1 {
                 speaker = response.speaker
@@ -95,7 +95,7 @@ final class ConversationDetailViewModel: ObservableObject {
             messages = originalState.items
         }
     }
-    
+
     func refresh() async {
         await loadInitialPage()
     }

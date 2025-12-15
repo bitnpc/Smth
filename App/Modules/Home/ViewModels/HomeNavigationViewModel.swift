@@ -13,19 +13,19 @@ final class HomeNavigationViewModel: ObservableObject {
     @Published private(set) var navigations: [Navigation] = []
     @Published private(set) var isLoading = false
     @Published private(set) var errorMessage: String?
-    
+
     private let repository: TopicRepositoryProtocol
     private var hasLoaded = false
-    
+
     init(repository: TopicRepositoryProtocol = AppContainer.shared.resolve(TopicRepositoryProtocol.self)) {
         self.repository = repository
     }
-    
+
     func loadNavigationsIfNeeded() async {
         guard !hasLoaded else { return }
         await loadNavigations()
     }
-    
+
     func loadNavigations() async {
         isLoading = true
         errorMessage = nil
@@ -39,7 +39,7 @@ final class HomeNavigationViewModel: ObservableObject {
         }
         isLoading = false
     }
-    
+
     func reset() {
         navigations = []
         isLoading = false

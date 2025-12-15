@@ -15,7 +15,7 @@ struct AllSectionView: View {
     init(viewModel: AllSectionsViewModel? = nil) {
         _viewModel = StateObject(wrappedValue: viewModel ?? AllSectionsViewModel())
     }
-    
+
     var body: some View {
         List {
             ForEach(viewModel.sections, id: \.id) { section in

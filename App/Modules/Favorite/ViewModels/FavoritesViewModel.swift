@@ -16,7 +16,7 @@ enum FavoriteRoute: Hashable {
 
 @MainActor
 final class FavoritesViewModel: ObservableObject {
-    
+
     @Published private(set) var favBoards: [FavBoard] = []
     @Published private(set) var favTopics: [Topic] = []
     @Published private(set) var favTopicsWithInfo: [FavTopic] = [] // 保存完整信息以便访问 hasNewReply
@@ -32,7 +32,7 @@ final class FavoritesViewModel: ObservableObject {
     init(repository: SectionRepositoryProtocol = AppContainer.shared.resolve(SectionRepositoryProtocol.self)) {
         self.repository = repository
     }
-    
+
     func hasNewReply(for topicId: String) -> Bool {
         favTopicsWithInfo.first { $0.topic.id == topicId }?.hasNewReply ?? false
     }
@@ -53,7 +53,7 @@ final class FavoritesViewModel: ObservableObject {
         }
         isLoading = false
     }
-    
+
     func loadInitialFavoriteTopics() async {
         isLoading = true
         errorMessage = nil
@@ -65,18 +65,18 @@ final class FavoritesViewModel: ObservableObject {
         }
         await loadFavoriteTopicsPage()
     }
-    
+
     func loadNextFavoriteTopicsPage() async {
         guard !isLoadingPage else { return }
         await loadFavoriteTopicsPage()
     }
-    
+
     private func loadFavoriteTopicsPage() async {
         let originalState = paginationState
         guard let nextPage = paginationState.startLoadingNextPage() else { return }
         isLoadingPage = true
         defer { isLoadingPage = false }
-        
+
         do {
             let newFavTopics = try await repository.fetchFavoriteTopicsWithInfo(
                 sort: defaultSort,
@@ -93,7 +93,7 @@ final class FavoritesViewModel: ObservableObject {
             favTopics = originalState.items
         }
     }
-    
+
     func reset() {
         favBoards = []
         favTopics = []

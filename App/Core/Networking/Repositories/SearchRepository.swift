@@ -22,11 +22,11 @@ protocol SearchRepositoryProtocol {
 
 struct SearchRepository: SearchRepositoryProtocol {
     private let apiService: APIService
-    
+
     init(apiService: APIService) {
         self.apiService = apiService
     }
-    
+
     func searchArticles(
         keyword: String,
         start: Int,
@@ -45,7 +45,7 @@ struct SearchRepository: SearchRepositoryProtocol {
             boards: boards,
             status: status
         ).toEndpoint()
-        
+
         let response: SearchResponse = try await apiService.request(endpoint)
         return response.data
     }

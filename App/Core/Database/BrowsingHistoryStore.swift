@@ -111,7 +111,10 @@ final class BrowsingHistoryStore: ObservableObject, BrowsingHistoryStoreProtocol
     }
 
     private static func makeStorageURL(using fileManager: FileManager) -> URL {
-        let directory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first ?? fileManager.temporaryDirectory
+        let directory = fileManager.urls(
+            for: .applicationSupportDirectory,
+            in: .userDomainMask
+        ).first ?? fileManager.temporaryDirectory
         return directory.appendingPathComponent("BrowsingHistory", conformingTo: .directory)
             .appendingPathComponent("topic_history.json")
     }

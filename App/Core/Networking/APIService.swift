@@ -11,10 +11,10 @@ import Foundation
 protocol APIService {
     /// 发送请求并解码为指定类型
     func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T
-    
+
     /// 发送请求并返回原始字符串
     func requestString(_ endpoint: Endpoint) async throws -> String
-    
+
     /// 发送请求并返回原始数据
     func requestData(_ endpoint: Endpoint) async throws -> Data
 }
@@ -50,7 +50,7 @@ final class DefaultAPIService: APIService {
             throw AppError.decoding(message: decodingError.localizedDescription)
         }
     }
-    
+
     func requestString(_ endpoint: Endpoint) async throws -> String {
         let data = try await requestData(endpoint)
         guard let string = String(data: data, encoding: .utf8) else {
@@ -58,7 +58,7 @@ final class DefaultAPIService: APIService {
         }
         return string
     }
-    
+
     func requestData(_ endpoint: Endpoint) async throws -> Data {
         let request = try endpoint.makeRequest(baseURL: configuration.baseURL)
         do {

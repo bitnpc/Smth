@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct SubBoardListView: View {
-    
+
     let boardName: String
     let boards: [Board]
-    
+
     var body: some View {
         List {
             ForEach(boards, id: \.id) { board in

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    
+
     @EnvironmentObject private var browsingHistory: BrowsingHistoryStore
     @Environment(\.colorScheme) private var colorScheme
 
@@ -18,14 +18,14 @@ struct HomeView: View {
     @State private var selectedIndex: Int = 0
     @State private var showProfileView = false
     @State private var hasInitializedFirstNavigation = false
-    
+
     private var currentNavigationType: String? {
         guard navigationViewModel.navigations.indices.contains(selectedIndex) else {
             return nil
         }
         return navigationViewModel.navigations[selectedIndex].type
     }
-    
+
     private var isAlbumView: Bool {
         currentNavigationType == "album"
     }
@@ -55,10 +55,14 @@ struct HomeView: View {
                         }
                     }
                 } header: {
+#if os(iOS)
                     NavigationSelector(
                         navigations: navigationViewModel.navigations,
                         selectedIndex: $selectedIndex
                     )
+#else
+                    EmptyView()
+#endif
                 }
             }
         }
@@ -96,8 +100,8 @@ struct HomeView: View {
                 await viewModel.switchNavigation(to: selectedNavigation)
             }
         }
-#if os(iOS)
         .toolbar {
+#if os(iOS)
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(value: SearchDestination.search) {
                     Image(systemName: "magnifyingglass")
@@ -111,13 +115,36 @@ struct HomeView: View {
                     Image(systemName: "person.crop.circle")
                 }
             }
+#elseif os(macOS)
+            ToolbarItem(placement: .automatic) {
+                HStack(spacing: 16) {
+                    NavigationLink(value: SearchDestination.search) {
+                        Image(systemName: "magnifyingglass")
+                            .font(.system(size: 18, weight: .semibold))
+                    }
+                    Button {
+                        showProfileView = true
+                    } label: {
+                        Image(systemName: "person.crop.circle")
+                    }
+                }
+            }
+#endif
         }
+#if os(iOS)
         .sheet(isPresented: $showProfileView) {
             NavigationStack {
                 ProfileView()
             }
             .presentationDetents([.large])
             .presentationDragIndicator(.visible)
+        }
+#elseif os(macOS)
+        .sheet(isPresented: $showProfileView) {
+            NavigationStack {
+                ProfileView()
+            }
+            .frame(minWidth: 600, minHeight: 500)
         }
 #endif
     }

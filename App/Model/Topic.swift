@@ -9,15 +9,15 @@
 import Foundation
 
 struct Topic: Codable, Hashable, Identifiable {
-    
+
     let id: String
     let subject: String
     let availables: Int
     let likeAvailables: Int
     let flushTime: TimeInterval
-    
+
     let board: Board?
-    
+
     let article: Article?
 }
 
@@ -63,7 +63,7 @@ struct FavTopic: Codable, Hashable, Identifiable {
     let topicWrapper: TopicWrapper
     let readOrder: Int
     let hasNewReply: Bool
-    
+
     // 转换为 Topic
     var topic: Topic {
         Topic(
