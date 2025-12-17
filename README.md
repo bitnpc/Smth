@@ -1,6 +1,7 @@
 # Smth
 
 > 基于 SwiftUI 打造的水木社区多端客户端（iOS / iPadOS / macOS）。采用 MVVM + Repository 架构，支持依赖注入、分页加载和多平台适配。
+> 项目详细介绍可以查看我的**博客文章** [Smth 客户端开发：从 MVVM 架构到多平台适配的 SwiftUI 实践](https://bitnpc.github.io/posts/smth/)
 
 ## 📱 功能亮点
 
